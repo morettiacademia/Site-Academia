@@ -8,7 +8,11 @@ const SITE = process.env.SITE_URL || 'https://academiadamagia.com.br';
 export default defineConfig({
   site: SITE,
   trailingSlash: 'never',
-  build: { format: 'file' },
+  build: {
+    format: 'file',
+    // Prévia publicada como página única: CSS embutido em cada HTML.
+    ...(process.env.INLINE_CSS ? { inlineStylesheets: 'always' } : {}),
+  },
   integrations: [
     sitemap({
       filter: (page) => !/\/(404|obrigado)$/.test(page),
