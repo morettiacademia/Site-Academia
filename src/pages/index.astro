@@ -193,13 +193,16 @@ const posts = await recentPosts(3);
   .play { margin-left: 6px; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, 0.6); background: transparent; color: var(--white); font-size: 13px; cursor: pointer; }
 
   @media (min-width: 1200px) {
-    .hero-media { height: clamp(600px, 88vh, 920px); }
+    /* Foto e texto dividem a mesma célula: a altura é a maior entre a foto e o texto,
+       então o título nunca sobe por baixo do cabeçalho em janelas baixas. */
+    .hero { display: grid; }
+    .hero-media { grid-area: 1 / 1; height: auto; min-height: clamp(600px, 88vh, 920px); }
     .hero-scrim {
       background:
         linear-gradient(90deg, rgba(12, 27, 61, .95) 0%, rgba(12, 27, 61, .75) 30%, rgba(12, 27, 61, 0) 52%),
         linear-gradient(0deg, rgba(12, 27, 61, .6) 0%, rgba(12, 27, 61, 0) 30%);
     }
-    .hero-text-wrap { position: absolute; inset: 0; pointer-events: none; }
+    .hero-text-wrap { grid-area: 1 / 1; position: relative; z-index: 1; pointer-events: none; }
     .hero-text-inner { padding-top: clamp(40px, 6vw, 88px); padding-bottom: clamp(40px, 6vw, 88px); }
     .hero-col { max-width: 40%; }
     .btn-row, .controls { pointer-events: auto; }
