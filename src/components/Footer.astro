@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/academia-da-magia.png';
+import { footerCols, whatsappHref, isExternal } from '../lib/site';
+const waExt = isExternal(whatsappHref);
+---
+<footer class="site-footer">
+  <div class="container inner">
+    <div class="top">
+      <p class="title">Vamos encontrar seu próximo passo?</p>
+      <div class="ctas">
+        <a href="/comece-aqui" class="btn btn-blue btn-sm f-blue" data-track="cta_comece_aqui" data-track-origem="rodape">Descubra seu próximo passo</a>
+        <a href={whatsappHref} class="btn btn-sm f-outline" data-track="whatsapp_click" data-track-origem="rodape" {...(waExt ? { target: '_blank', rel: 'noopener' } : {})}>Falar no WhatsApp</a>
+      </div>
+    </div>
+    <div class="cols">
+      <a href="/" aria-label="Academia da Magia — início" class="f-logo"><Image src={logo} alt="Academia da Magia" height={72} densities={[1, 2]} loading="eager" /></a>
+      {footerCols.map((c) => (
+        <nav aria-label={c.title} class="col">
+          <span class="col-title">{c.title}</span>
+          <ul>
+            {c.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+          </ul>
+        </nav>
+      ))}
+    </div>
+    <div class="legal">
+      <span>© {new Date().getFullYear()} Academia da Magia</span>
+      <ul>
+        <li><a href="/privacidade">Privacidade</a></li>
+        <li><a href="/termos">Termos</a></li>
+        <li><a href="/cookies">Cookies</a></li>
+        <li><button type="button" class="linklike" data-cookie-prefs>Preferências de cookies</button></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--navy-900); color: var(--muted-on-navy); }
+  .inner { padding-top: 72px; padding-bottom: 32px; display: flex; flex-direction: column; gap: 56px; }
+  .top { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; border-bottom: 1px solid var(--navy-line); padding-bottom: 48px; }
+  .title { font-family: var(--font-display); font-weight: 800; font-size: clamp(32px, 4vw, 56px); line-height: 1; letter-spacing: -0.03em; color: var(--white); max-width: 640px; }
+  .ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .f-blue { padding: 16px 24px; }
+  .f-blue:hover { background: var(--cyan-500); color: var(--navy-800); }
+  .f-outline { border: 1.5px solid var(--navy-line-3); color: var(--white); padding: 15px 24px; background: transparent; }
+  .f-outline:hover { border-color: var(--cyan-500); }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: 32px; }
+  .f-logo { align-self: start; }
+  .f-logo img { height: 72px; width: auto; }
+  .col { display: flex; flex-direction: column; gap: 10px; }
+  .col-title { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white); }
+  .col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .col a { font-size: 14.5px; transition: color .2s; }
+  .col a:hover, .legal a:hover, .linklike:hover { color: var(--white); }
+  .legal { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; }
+  .legal ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; flex-wrap: wrap; }
+  .linklike { background: none; border: 0; padding: 0; color: inherit; font-size: 13px; cursor: pointer; }
+</style>

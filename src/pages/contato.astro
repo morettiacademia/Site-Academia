@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { links, whatsappHref, isExternal } from '../lib/site';
+const redes = [
+  { label: 'Instagram', href: links.instagram },
+  { label: 'YouTube', href: links.youtube },
+  { label: 'Podcast Magic Makers', href: links.podcast },
+].filter((r) => r.href);
+const hasWa = isExternal(whatsappHref);
+---
+<Base title="Contato | Academia da Magia" description="Fale com o time da Academia da Magia. A gente escuta o seu momento e indica o melhor caminho.">
+  <PageHero selo="Contato" title="Fale com o <span class='hl'>nosso time</span>" lead="A gente escuta o seu momento e indica o melhor caminho, sem pressa e sem fórmula pronta." crumbs={[{ label: 'Início', href: '/' }, { label: 'Contato' }]}>
+    {hasWa && <a href={whatsappHref} target="_blank" rel="noopener" class="btn btn-white" data-track="whatsapp_click" data-track-origem="contato">Falar no WhatsApp →</a>}
+  </PageHero>
+
+  <section class="bg-light">
+    <div class="container section split">
+      <div class="stack" style="gap:16px">
+        <h2 class="h2">Mande uma mensagem</h2>
+        <p class="p">Conte um pouco sobre você e sobre o que procura. Respondemos por e-mail ou WhatsApp.</p>
+        {redes.length > 0 && (
+          <ul class="redes">
+            {redes.map((r) => <li><a href={r.href!} target="_blank" rel="noopener" class="chip">{r.label} ↗</a></li>)}
+          </ul>
+        )}
+      </div>
+      <form class="form" name="contato" method="POST" action="/obrigado" data-netlify="true" netlify-honeypot="empresa">
+        <input type="hidden" name="form-name" value="contato" />
+        <p class="sr-only"><label>Não preencha: <input name="empresa" tabindex="-1" autocomplete="off" /></label></p>
+        <div class="field"><label for="c-nome">Nome</label><input id="c-nome" name="nome" required autocomplete="name" /></div>
+        <div class="field"><label for="c-email">E-mail</label><input id="c-email" name="email" type="email" required autocomplete="email" /></div>
+        <div class="field"><label for="c-wa">WhatsApp <span class="opt">(opcional)</span></label><input id="c-wa" name="whatsapp" type="tel" autocomplete="tel" /></div>
+        <div class="field">
+          <label for="c-momento">Seu momento</label>
+          <select id="c-momento" name="momento">
+            <option>Estou começando no turismo</option>
+            <option>Quero me especializar</option>
+            <option>Tenho uma agência e quero crescer</option>
+            <option>Quero viver a experiência (eventos e comunidade)</option>
+            <option>Outro assunto</option>
+          </select>
+        </div>
+        <div class="field"><label for="c-msg">Mensagem</label><textarea id="c-msg" name="mensagem" required></textarea></div>
+        <label class="check"><input type="checkbox" name="consentimento" value="sim" required /><span>Concordo com o uso dos meus dados para receber uma resposta, conforme a <a href="/privacidade">Política de Privacidade</a>.</span></label>
+        <button type="submit" class="btn btn-blue" style="align-self:flex-start">Enviar mensagem →</button>
+      </form>
+    </div>
+  </section>
+</Base>
+<style>
+  .p { font-size: 17px; line-height: 1.6; color: var(--ink-body); max-width: 480px; }
+  .redes { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .form { display: flex; flex-direction: column; gap: 16px; background: var(--white); border: 1px solid var(--line-light-2); border-radius: 28px; padding: clamp(24px, 3vw, 36px); }
+  .opt { font-weight: 500; color: var(--ink-muted); }
+  .check a { color: var(--blue-600); text-decoration: underline; }
+</style>

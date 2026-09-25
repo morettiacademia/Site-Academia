@@ -1,0 +1,90 @@
+{
+  "comece-aqui": {
+    "title": "Comece aqui | Academia da Magia",
+    "description": "Descubra qual programa da Academia da Magia combina com o seu momento no turismo, de quem está começando a quem quer escalar a própria agência."
+  },
+  "magic-makers": {
+    "title": "Magic Makers | Torne-se agente de viagens especialista em Orlando",
+    "description": "A mentoria da Academia da Magia que leva quem é apaixonado por Orlando a abrir a própria agência de viagens do zero, com Joice Ferreira, Camila Moretti e Paulo Soares."
+  },
+  "agir": {
+    "title": "Mentoria AGIR | Estruture a sua agência de viagens",
+    "description": "Três meses de mentoria com Camila Moretti para construir a estrutura do seu negócio no turismo, em turmas de até 15 pessoas."
+  },
+  "mentoria-ia": {
+    "title": "Mentoria de IA para Agências de Viagens | Academia da Magia",
+    "description": "Três meses com Paulo Soares para aplicar inteligência artificial no marketing, nas vendas e na gestão da sua agência, em turmas de até 15 pessoas."
+  },
+  "excelencia": {
+    "title": null,
+    "description": null
+  },
+  "guiamento-virtual": {
+    "title": "Curso de Guiamento Virtual | Academia da Magia",
+    "description": "Aprenda a guiar passageiros nos parques de Orlando e da Califórnia à distância, pelo celular, com Camila Moretti, Joice Ferreira e Rebecca Cosendey."
+  },
+  "guias-de-orlando": {
+    "title": "Curso para Guias de Orlando | Academia da Magia",
+    "description": "Formação completa para guiar passageiros e grupos em Orlando: curso teórico online com Joice Ferreira e Luciana Ricco e curso prático em Orlando."
+  },
+  "creations": {
+    "title": "Creations | Marketing de conteúdo para agentes de viagens",
+    "description": "90 dias para dominar conteúdo e posicionamento no Instagram, TikTok e blog e transformar seguidores em clientes fiéis."
+  },
+  "moneys": {
+    "title": "Moneys | Gestão financeira para agências de viagens",
+    "description": "Controle financeiro, ferramentas e estratégias para a sua agência de viagens crescer de forma sustentável, com Priscila Vargas."
+  },
+  "hands-on": {
+    "title": "Hands On | Curso de operação de grupos para agentes de viagens",
+    "description": "Aprenda a operar grupos de viagem do relacionamento com fornecedores à organização de cada detalhe, com Joice Ferreira, Paulo Soares e Camila Moretti."
+  },
+  "orlando-lucrativo": {
+    "title": "Orlando Lucrativo | Tudo o que mudou em Orlando para agentes de viagens",
+    "description": "A atualização anual do destino Orlando para agentes de viagens: novidades, mudanças e oportunidades para vender mais, com Camila Moretti."
+  },
+  "parqueamento": {
+    "title": "Parqueamento | Estratégia de parques em Orlando",
+    "description": "Aprenda a montar o roteiro de parques ideal para cada família e aproveitar cada minuto em Orlando."
+  },
+  "disney-cruise-line": {
+    "title": "Disney Cruise Line para agentes de viagens | Academia da Magia",
+    "description": "Torne-se expert em cruzeiros Disney com Joice Ferreira e aumente a conversão e a fidelização dos seus passageiros."
+  },
+  "paris-alem-da-disney": {
+    "title": "Paris Além da Disney | Curso de Paris e Londres para agentes de viagens",
+    "description": "Aprenda a vender Paris e Londres com segurança, além da Disneyland Paris, com Joice Ferreira e Carolina Guerra. 100% online."
+  },
+  "rota-california": {
+    "title": "Rota Califórnia: da Disneyland a Hollywood | Academia da Magia",
+    "description": "Aprenda a vender a Califórnia com Rebecca Cosendey: Disneyland, Hollywood e a rota que os seus passageiros vão amar."
+  },
+  "japao": {
+    "title": "Japão para agentes de viagens | Academia da Magia",
+    "description": "Aprenda a vender o Japão, um destino que encanta famílias e fãs de parques, com Joice Ferreira."
+  },
+  "dubai": {
+    "title": null,
+    "description": null
+  },
+  "ferramentas": {
+    "title": "Ferramentas para agências de viagens | Academia da Magia",
+    "description": "E-books, playbooks, planilhas e treinamentos práticos para aplicar hoje na rotina da sua agência de viagens."
+  },
+  "magic-club": {
+    "title": "Magic Club | A comunidade da Academia da Magia",
+    "description": "Assinatura com aula semanal com os experts da Academia da Magia e benefícios exclusivos para profissionais do turismo."
+  },
+  "reality-guiamento-virtual": {
+    "title": "Reality de Guiamento Virtual | Academia da Magia",
+    "description": "Acompanhe ao vivo um expert da Academia da Magia guiando um passageiro real nos parques de Orlando, da Califórnia e de Paris."
+  },
+  "magic-makers-ao-vivo": {
+    "title": "Magic Makers ao Vivo 2027 | O maior encontro do trade de Orlando",
+    "description": "15 e 16 de maio de 2027, em Alphaville (SP). Palestras, networking e parcerias para agentes de viagens e profissionais do turismo apaixonados por Orlando."
+  },
+  "magic-makers-experience": {
+    "title": "Magic Makers Experience: Eu no Disney Treasure | Academia da Magia",
+    "description": "Uma imersão de aprendizado a bordo do Disney Treasure com Joice Ferreira, para profissionais do turismo que querem vender cruzeiros Disney com autoridade."
+  }
+}

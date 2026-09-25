@@ -1,0 +1,94 @@
+---
+/**
+ * Consentimento de cookies (LGPD). O Google Tag Manager só é carregado
+ * depois do aceite. Eventos de analytics são enfileirados no dataLayer
+ * via atributos data-track="evento" (+ data-track-* como parâmetros).
+ */
+import { GTM_ID } from '../lib/site';
+---
+<div class="cookie" data-cookie-banner hidden role="region" aria-label="Aviso de cookies">
+  <p>Usamos cookies para medir o uso do site e melhorar sua experiência. Você pode aceitar ou recusar os cookies de medição. <a href="/cookies">Saiba mais</a>.</p>
+  <div class="btns">
+    <button type="button" class="btn btn-sm btn-outline" data-cookie="denied">Recusar</button>
+    <button type="button" class="btn btn-sm btn-cyan" data-cookie="granted">Aceitar</button>
+  </div>
+</div>
+
+<script is:inline define:vars={{ gtmId: GTM_ID }}>
+  (function () {
+    var KEY = 'am_consent';
+    window.dataLayer = window.dataLayer || [];
+    var get = function () { try { return localStorage.getItem(KEY); } catch (e) { return null; } };
+    var set = function (v) { try { localStorage.setItem(KEY, v); } catch (e) {} };
+
+    // UTMs da sessão (enviadas junto com os eventos, somente com consentimento)
+    try {
+      var q = new URLSearchParams(location.search), utm = {};
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(function (k) { if (q.get(k)) utm[k] = q.get(k); });
+      if (Object.keys(utm).length) sessionStorage.setItem('am_utm', JSON.stringify(utm));
+    } catch (e) {}
+
+    var loaded = false;
+    function loadGtm() {
+      if (loaded || !gtmId) return;
+      loaded = true;
+      window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(gtmId);
+      document.head.appendChild(s);
+    }
+
+    window.amTrack = function (event, params) {
+      if (get() !== 'granted') return;
+      var utm = {};
+      try { utm = JSON.parse(sessionStorage.getItem('am_utm') || '{}'); } catch (e) {}
+      window.dataLayer.push(Object.assign({ event: event }, utm, params || {}));
+    };
+
+    function init() {
+      var banner = document.querySelector('[data-cookie-banner]');
+      if (!banner) return;
+      var state = get();
+      if (state === 'granted') loadGtm();
+      if (!state) banner.hidden = false;
+      banner.querySelectorAll('[data-cookie]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var v = b.getAttribute('data-cookie');
+          set(v);
+          banner.hidden = true;
+          if (v === 'granted') loadGtm();
+        });
+      });
+      document.querySelectorAll('[data-cookie-prefs]').forEach(function (b) {
+        b.addEventListener('click', function () { banner.hidden = false; });
+      });
+      document.addEventListener('click', function (e) {
+        var el = e.target.closest && e.target.closest('[data-track]');
+        if (!el) return;
+        var params = {};
+        Object.keys(el.dataset).forEach(function (k) {
+          if (k.indexOf('track') === 0 && k !== 'track') params[k.slice(5).toLowerCase()] = el.dataset[k];
+        });
+        window.amTrack(el.dataset.track, params);
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  })();
+</script>
+
+<style>
+  .cookie {
+    position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 60;
+    max-width: 720px; margin-inline: auto;
+    background: var(--navy-700); border: 1px solid var(--navy-line-2); border-radius: 20px;
+    box-shadow: 0 30px 70px rgba(4, 12, 32, 0.5);
+    padding: 20px 22px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;
+    color: var(--ink-on-navy); font-size: 14.5px; line-height: 1.5;
+  }
+  .cookie[hidden] { display: none; }
+  .cookie p { flex: 1 1 320px; }
+  .cookie a { color: var(--cyan-300); text-decoration: underline; }
+  .btns { display: flex; gap: 10px; }
+  .btns .btn { padding: 12px 20px; }
+</style>

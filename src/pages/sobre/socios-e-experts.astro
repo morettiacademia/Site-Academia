@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Socios from '../../components/Socios.astro';
+import Pending from '../../components/Pending.astro';
+import { programas } from '../../lib/programas';
+import { pv, SHOW_PENDING } from '../../lib/pending';
+import { socios, iniciais } from '../../lib/pessoas';
+
+// Experts convidados: agregados a partir dos programas (quem não é sócio).
+type Expert = { nome: string; bio: ReturnType<typeof pv>; programas: { nome: string; slug: string }[] };
+const map = new Map<string, Expert>();
+for (const [slug, p] of Object.entries(programas)) {
+  if (p.breve) continue;
+  for (const [n, b] of p.experts ?? []) {
+    const nome = pv(n);
+    if (!nome.show || !nome.text || nome.pending) continue;
+    if (socios.some((s) => s.nome === nome.text)) continue;
+    const bio = pv(b);
+    const e = map.get(nome.text) ?? { nome: nome.text, bio, programas: [] };
+    if (!e.bio.show && bio.show) e.bio = bio;
+    e.programas.push({ nome: p.nome, slug });
+    map.set(nome.text, e);
+  }
+}
+const experts = [...map.values()];
+---
+<Base title="Sócios e experts | Academia da Magia" description="Conheça os sócios e os experts que ensinam na Academia da Magia.">
+  <PageHero selo="Sobre nós" title="Sócios e <span class='hl'>experts</span>" lead="Quem cria e quem ensina na Academia da Magia." crumbs={[{ label: 'Início', href: '/' }, { label: 'Sobre nós', href: '/sobre' }, { label: 'Sócios e experts' }]} />
+  <Socios />
+  {experts.length > 0 && (
+    <section class="bg-light">
+      <div class="container section stack" style="gap:40px">
+        <h2 class="h2">Experts convidados</h2>
+        <div class="grid-auto" style="--min:260px;gap:32px 16px">
+          {experts.map((e) => (
+            <article class="stack ex">
+              <div class="mono" aria-hidden="true">
+                <span>{iniciais(e.nome)}</span>
+                {SHOW_PENDING && <span class="pending tag">Retrato autorizado pendente</span>}
+              </div>
+              <h3 class="ex-n">{e.nome}</h3>
+              {e.bio.show && e.bio.text && <p class="ex-b">{e.bio.text}</p>}
+              <Pending tag={e.bio.pending ? e.bio.tag : null} />
+              <ul class="ex-p">
+                {e.programas.map((p) => <li><a href={`/${p.slug}`} class="chip">{p.nome}</a></li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Base>
+<style>
+  .ex { gap: 14px; }
+  .mono { position: relative; aspect-ratio: 4 / 5; border-radius: 28px; background: var(--navy-800); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 88px; color: var(--cyan-300); }
+  .mono .tag { position: absolute; left: 12px; bottom: 12px; }
+  .ex-n { font-family: var(--font-display); font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
+  .ex-b { font-size: 15.5px; line-height: 1.55; color: var(--ink-body); }
+  .ex-p { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .ex-p .chip:hover { background: var(--navy-800); }
+</style>

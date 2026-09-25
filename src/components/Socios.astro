@@ -1,0 +1,47 @@
+---
+import ImgSlot from './ImgSlot.astro';
+import { socios } from '../lib/pessoas';
+interface Props { id?: string; as?: 'h1' | 'h2' }
+const { id, as: Heading = 'h2' } = Astro.props;
+---
+  <section id={id} class="bg-navy">
+    <div class="container stack socios">
+      <div class="head-row">
+        <Heading class="h2-socios">Pessoas por trás<br />da Academia.</Heading>
+        <p class="muted side-text">Três trajetórias diferentes, uma mesma visão.</p>
+      </div>
+      <div class="grid-auto" style="--min:300px">
+        {socios.map((s) => (
+          <article class="socio">
+            <ImgSlot src={s.foto} alt={`Retrato de ${s.nome}`} class="socio-img" widths={[360, 540, 720]} sizes="(min-width: 1320px) 424px, (min-width: 700px) 45vw, 100vw" />
+            <div class="socio-body">
+              <h3 class="socio-name">{s.nome}</h3>
+              <span class="socio-area">{s.area}</span>
+              <p class="socio-bio">{s.bio}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="juntos">
+        <span class="juntos-title">Juntos<span class="hl">.</span></span>
+        <p>Camila traz a execução, Joice a essência do turismo, Paulo a estratégia. Juntos constroem a Academia da Magia com um propósito: ajudar profissionais do turismo a construírem negócios melhores sem perder o que torna essa profissão extraordinária — as pessoas, as experiências e as conexões humanas.</p>
+      </div>
+    </div>
+  </section>
+
+
+<style>
+  .socios { padding-block: clamp(64px, 8vw, 120px); gap: 44px; }
+  .h2-socios { font-family: var(--font-display); font-weight: 800; font-size: clamp(36px, 4.6vw, 64px); line-height: .98; letter-spacing: -0.03em; }
+  .socio { display: flex; flex-direction: column; background: var(--navy-700); border: 1px solid var(--navy-line-2); border-radius: 28px; overflow: hidden; }
+  .socio :global(.socio-img) { aspect-ratio: 4 / 5; }
+  .socio-body { padding: 28px 28px 32px; display: flex; flex-direction: column; gap: 10px; }
+  .socio-name { font-family: var(--font-display); font-size: 30px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+  .socio-area { font-size: 12.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan-300); line-height: 1.4; }
+  .socio-bio { margin-top: 4px; font-size: 15.5px; line-height: 1.6; color: var(--ink-on-navy); }
+  .juntos { background: var(--blue-600); border-radius: 28px; padding: clamp(28px, 4vw, 56px); display: flex; flex-wrap: wrap; gap: 24px 56px; align-items: center; }
+  .juntos-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 5vw, 72px); letter-spacing: -0.035em; line-height: .95; }
+  .juntos p { font-size: clamp(17px, 1.4vw, 20px); line-height: 1.6; flex: 1 1 420px; }
+
+  .side-text { font-size: 17px; line-height: 1.55; max-width: 420px; }
+</style>

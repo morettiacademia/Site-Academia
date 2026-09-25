@@ -1,0 +1,15 @@
+---
+import Base from './Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Pending from '../components/Pending.astro';
+interface Props { title: string; description: string; heading: string; updated: string }
+const { title, description, heading, updated } = Astro.props;
+---
+<Base title={title} description={description}>
+  <PageHero title={heading} crumbs={[{ label: 'Início', href: '/' }, { label: heading }]} lead={`Última atualização: ${updated}`}>
+    <Pending tag="Texto-base — revisar com o jurídico antes de publicar" />
+  </PageHero>
+  <section class="bg-white">
+    <div class="container section"><div class="prose"><slot /></div></div>
+  </section>
+</Base>

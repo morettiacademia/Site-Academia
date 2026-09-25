@@ -1,0 +1,603 @@
+---
+/**
+ * Template único de programa (README do handoff, seção 8.3).
+ * Cada seção só aparece quando o campo existe e tem conteúdo publicável.
+ */
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import ImgSlot from '../components/ImgSlot.astro';
+import Star from '../components/Star.astro';
+import Pending from '../components/Pending.astro';
+import Faq from '../components/Faq.astro';
+import WaitlistForm from '../components/WaitlistForm.astro';
+import { programas, slugs, seoFor, menuGroup, logoFor, type Programa } from '../lib/programas';
+import { pv, SHOW_PENDING } from '../lib/pending';
+import { fotoDe, iniciais, socios } from '../lib/pessoas';
+import { whatsappHref, isExternal } from '../lib/site';
+
+export function getStaticPaths() {
+  return slugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params as { slug: string };
+const p: Programa = programas[slug];
+const { title, description } = seoFor(slug);
+const breve = !!p.breve;
+
+// Destino das ações de inscrição (checkout pendente → WhatsApp/contato)
+const ctaHref = p.checkout ?? whatsappHref;
+const ctaExt = isExternal(ctaHref) ? { target: '_blank', rel: 'noopener' } : {};
+
+const logo = logoFor(p);
+const heroPh = pv(p.imagem || 'Foto do programa');
+// Enquanto não há foto do programa, usa o retrato do sócio quando a foto pedida é dele (ex.: "Camila Moretti em um encontro")
+const heroSocio = socios.find((s) => heroPh.text.startsWith(s.nome));
+const heroFoto = heroSocio?.foto ?? null;
+const heroIsPerson = !!heroSocio;
+
+// Seções
+const intro = p.intro ? { titulo: p.intro.titulo, ...pv(p.intro.texto) } : null;
+const para = breve ? [] : (p.paraQuem ?? []).map(pv).filter((x) => x.show);
+const aprender = breve ? [] : (p.aprender ?? []).map(pv).filter((x) => x.show);
+const aprenderNota = pv(p.aprenderNota);
+const etapas = breve ? [] : (p.etapas ?? []);
+const grupos = breve ? [] : (p.grupos ?? []);
+const funciona = breve ? [] : (p.funciona ?? []).map(([label, v]) => ({ label, ...pv(v) })).filter((x) => x.show);
+const historia = breve ? [] : (p.historia ?? []).map(([ed, ano, part], i, a) => {
+  const n = parseInt(part.replace(/\D/g, ''), 10) || 0;
+  return { ed, ano, part, bar: Math.round(90 + (n / 300) * 180), last: i === a.length - 1 };
+});
+const grade = pv(p.grade);
+const hasGrade = !breve && !!p.grade && grade.show;
+const experts = breve ? [] : (p.experts ?? [])
+  .map(([n, b]) => {
+    const nome = pv(n);
+    const bio = pv(b);
+    return { nome, bio, foto: nome.text ? fotoDe(nome.text) : null };
+  })
+  .filter((x) => x.nome.show);
+const prova = pv(p.prova);
+const depo = pv(p.depoimentos);
+const hasProva = !breve && ((!!p.prova && prova.show) || (!!p.depoimentos && depo.show));
+const ferramentas = (p.ferramentas ?? []).map(([id, nome, titulo, texto, botao, preco]) => ({ id, nome, titulo, texto, botao, preco: pv(preco) }));
+
+// Oferta: preço único, planos ou ingressos
+type Card = { nome: string; preco: ReturnType<typeof pv>; sub: string };
+let ofertaTitulo = 'Investimento';
+let ofertaNota = pv('');
+let cards: Card[] = [];
+if (p.planos) {
+  ofertaTitulo = 'Planos';
+  ofertaNota = pv(p.planosNota);
+  cards = p.planos.map(([nome, preco, sub]) => ({ nome, preco: pv(preco), sub }));
+}
+if (p.ingressos) {
+  ofertaTitulo = 'Ingressos';
+  ofertaNota = pv(p.ingressosNota);
+  cards = p.ingressos.map(([nome, paraQuem, vagas, valor]) => ({ nome, preco: pv(valor), sub: `${paraQuem} · ${vagas} vagas` }));
+}
+// Uma nota de seção pendente (ex.: "confirmar valores") segura a seção inteira em produção.
+const hasCards = !breve && cards.length > 0 && (!ofertaNota.pending || SHOW_PENDING);
+const preco = pv(p.investimento);
+const hasPreco = !breve && !!p.investimento && preco.show && !p.planos && !p.ingressos;
+const extra = pv(p.extra);
+const parceiros = pv(p.parceiros);
+const hasOferta = hasPreco || hasCards;
+
+const faq = breve ? [] : (p.faq ?? []).map(([q, a]) => ({ q, a: pv(a) })).filter((x) => x.a.show);
+
+const [finalTitulo, finalBotao] = p.final;
+// Mantém o ritmo de fundos: se nada separa o hero (azul) da chamada final, ela vira navy.
+const introVisivel = !!intro && (intro.show || SHOW_PENDING);
+const finalBg = breve && !introVisivel ? 'bg-navy' : 'bg-blue';
+const finalHref = p.finalComece ? '/comece-aqui' : ctaHref;
+const heroHref = breve ? '#final' : hasOferta ? '#investimento' : '#final';
+
+const dias = p.contador ? Math.max(0, Math.ceil((new Date(p.contador).getTime() - Date.now()) / 86400000)) : 0;
+
+// Dados estruturados
+const base = Astro.site!;
+const jsonLd: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Início', item: new URL('/', base).href },
+      { '@type': 'ListItem', position: 2, name: menuGroup(p) },
+      { '@type': 'ListItem', position: 3, name: p.nome, item: new URL(`/${slug}`, base).href },
+    ],
+  },
+];
+const faqLd = faq.filter((f) => !f.a.pending && f.a.text);
+if (faqLd.length) {
+  jsonLd.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqLd.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a.text } })),
+  });
+}
+if (slug === 'magic-makers-ao-vivo' && p.contador) {
+  const local = funciona.find((f) => f.label === 'Local' && !f.pending)?.text;
+  jsonLd.push({
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: p.nome,
+    description,
+    startDate: p.contador,
+    endDate: '2027-05-16',
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    organizer: { '@type': 'Organization', name: 'Academia da Magia', url: new URL('/', base).href },
+    ...(local ? { location: { '@type': 'Place', name: local.split(',')[0], address: { '@type': 'PostalAddress', addressLocality: 'Alphaville', addressRegion: 'SP', addressCountry: 'BR' } } } : {}),
+  });
+}
+---
+<Base title={title} description={description} jsonLd={jsonLd}>
+  <!-- 1. Hero -->
+  <section class="bg-blue" data-programa={slug}>
+    <div class="container hero">
+      <div class="stack hero-text">
+        <nav aria-label="Você está em" class="crumbs">
+          <ol>
+            <li><a href="/">Início</a></li>
+            <li aria-hidden="true">›</li>
+            <li>{menuGroup(p)}</li>
+            <li aria-hidden="true">›</li>
+            <li aria-current="page">{p.nome}</li>
+          </ol>
+        </nav>
+        {logo && (
+          <div class:list={['logo-plate', { dark: p.logoDark }]}>
+            <Image src={logo} alt={p.nome} height={56} densities={[1, 2]} loading="eager" />
+          </div>
+        )}
+        <span class="badge">{p.selo}</span>
+        <h1 class="h1-prog">{p.titulo}</h1>
+        <p class="lead sub">{p.subtitulo}</p>
+        {p.contador && (
+          <div class="countdown" data-contador={p.contador}>
+            <span class="count-n" data-dias>{dias}</span><span class="count-l">dias para o {p.nome}</span>
+          </div>
+        )}
+        <div class="btn-row">
+          <a href={heroHref} class="btn btn-white">{p.botao} →</a>
+        </div>
+      </div>
+      <ImgSlot
+        src={heroFoto}
+        alt={heroSocio ? `Retrato de ${heroSocio.nome}` : ''}
+        label={heroPh.text}
+        class="hero-img"
+        widths={[480, 720, 960]}
+        sizes="(min-width: 1080px) 620px, 100vw"
+        loading="eager"
+        style={heroIsPerson ? '--pos: center 20%' : undefined}
+      />
+    </div>
+  </section>
+
+  <!-- 2. Introdução -->
+  {intro && (intro.show || SHOW_PENDING) && (
+    <section class="bg-cyan">
+      <div class="container section split intro">
+        <h2 class="h2-intro">{intro.titulo}</h2>
+        <div class="stack" style="gap:12px">
+          {intro.show && intro.text && <p class="intro-text">{intro.text}</p>}
+          <Pending tag={intro.pending ? intro.tag : null} />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 3. Para quem é -->
+  {para.length > 0 && (
+    <section class="bg-navy">
+      <div class="container section stack" style="gap:40px">
+        <h2 class="h2">Para quem <span class="hl-cyan">é</span></h2>
+        <div class="grid-auto" style="--min:250px">
+          {para.map((x, i) => (
+            <div class="card-navy para">
+              <span class="para-n">{String(i + 1).padStart(2, '0')}</span>
+              <span class="para-t">{x.text}</span>
+              <Pending tag={x.pending ? x.tag : null} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 4. O que você vai aprender -->
+  {aprender.length > 0 && (
+    <section class="bg-light">
+      <div class="container section split">
+        <div class="stack sticky-head" style="gap:14px">
+          <h2 class="h2">{p.aprenderTitulo || 'O que você vai aprender'}</h2>
+          <Pending tag={aprenderNota.pending ? aprenderNota.tag : null} />
+        </div>
+        <ul class="learn">
+          {aprender.map((x) => (
+            <li>
+              <span class="star-dot"><Star /></span>
+              <span class="stack" style="gap:8px">
+                {x.text && <span class="learn-t">{x.text}</span>}
+                <Pending tag={x.pending ? x.tag : null} />
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- 5. Etapas -->
+  {etapas.length > 0 && (
+    <section class="bg-white">
+      <div class="container section stack" style="gap:36px">
+        <div class="head-row">
+          <h2 class="h2">{etapas.length === 2 ? 'Duas etapas' : 'Etapas'}</h2>
+          {p.etapasNota && <p class="etapas-nota">{p.etapasNota}</p>}
+        </div>
+        <div class="grid-auto" style="--min:380px">
+          {etapas.map(([nome, formato, texto], i) => (
+            <div class:list={['etapa', i % 2 ? 'bg-navy' : 'bg-cyan']}>
+              <span class="eyebrow etapa-n">Etapa {i + 1}</span>
+              <h3 class="etapa-t">{nome}</h3>
+              <span class="etapa-f">{formato}</span>
+              <p class="etapa-x">{texto}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 6. Grupos + destinos -->
+  {grupos.length > 0 && (
+    <section class="bg-navy">
+      <div class="container section stack" style="gap:36px">
+        <h2 class="h2">Dois grupos, <span class="hl-cyan">ao mesmo tempo</span></h2>
+        <div class="grid-auto" style="--min:380px">
+          {grupos.map(([t, x]) => (
+            <div class="card-navy grupo">
+              <h3 class="grupo-t">{t}</h3>
+              <p class="grupo-x">{x}</p>
+            </div>
+          ))}
+        </div>
+        {p.destinos && (
+          <div class="destinos">
+            <span class="eyebrow muted" style="letter-spacing:.12em">Destinos</span>
+            <ul>{p.destinos.map((d) => <li>{d}</li>)}</ul>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- 7. Como funciona -->
+  {funciona.length > 0 && (
+    <section class="bg-blue">
+      <div class="container section stack" style="gap:40px">
+        <h2 class="h2">Como funciona</h2>
+        <dl class="fichas">
+          {funciona.map((f) => (
+            <div class="ficha">
+              <dt>{f.label}</dt>
+              <dd>
+                {f.text && <span>{f.text}</span>}
+                <Pending tag={f.pending ? f.tag : null} />
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  )}
+
+  <!-- 8. Uma história que só cresce -->
+  {historia.length > 0 && (
+    <section class="bg-navy">
+      <div class="container section stack" style="gap:40px">
+        <h2 class="h2">Uma história que <span class="hl-cyan">só cresce</span></h2>
+        <ol class="bars">
+          {historia.map((h) => (
+            <li>
+              <div class:list={['bar', { last: h.last }]} style={`height:${h.bar}px`}><span>{h.ano}</span></div>
+              <span class="bar-ed">{h.ed} edição</span>
+              <span class="bar-p">{h.part}{/^\d/.test(h.part) ? '' : ' participantes'}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
+
+  <!-- 9. Grade de aulas -->
+  {hasGrade && (
+    <section class="bg-light">
+      <div class="container section split" style="align-items:center">
+        <h2 class="h2-sm">{p.gradeTitulo || 'Grade de aulas'}</h2>
+        <div class="grade">
+          {grade.text && <span>{grade.text}</span>}
+          <Pending tag={grade.pending ? grade.tag : null} />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 10. Com quem você aprende -->
+  {experts.length > 0 && (
+    <section class="bg-navy">
+      <div class="container section stack" style="gap:40px">
+        <h2 class="h2">Com quem você <span class="hl-cyan">aprende</span></h2>
+        <div class="experts" style={experts.length === 1 ? '--max:420px' : undefined}>
+          {experts.map((x) => (
+            <article class="stack expert">
+              {x.foto ? (
+                <ImgSlot src={x.foto} alt={`Retrato de ${x.nome.text}`} class="expert-img" widths={[360, 540, 720]} sizes="(min-width: 1320px) 424px, (min-width: 700px) 45vw, 100vw" />
+              ) : (
+                <div class="expert-img monogram" aria-hidden="true">
+                  <span>{iniciais(x.nome.text || '?')}</span>
+                  {SHOW_PENDING && <span class="pending mono-tag">Retrato autorizado pendente</span>}
+                </div>
+              )}
+              {x.nome.text && <h3 class="expert-n">{x.nome.text}</h3>}
+              <Pending tag={x.nome.pending ? x.nome.tag : null} prefix="Expert" />
+              {x.bio.show && x.bio.text && <p class="expert-b">{x.bio.text}</p>}
+              <Pending tag={x.bio.pending ? x.bio.tag : null} />
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 11. Prova social / depoimentos -->
+  {hasProva && (
+    <section class="bg-cyan">
+      <div class="container section stack" style="gap:32px">
+        {p.prova && prova.show && (
+          <div class="stack" style="gap:10px">
+            <p class="prova">{prova.text}</p>
+            <Pending tag={prova.pending ? prova.tag : null} />
+          </div>
+        )}
+        {p.depoimentos && depo.show && (
+          <div class="stack" style="gap:20px">
+            <h2 class="h2-depo">Quem já viveu</h2>
+            <div class="grid-auto" style="--min:280px">
+              {[1, 2, 3].map(() => (
+                <div class="depo">
+                  <ImgSlot label="vídeo ou foto do depoimento" class="depo-img" />
+                  <div class="depo-b"><span class="depo-n">Nome do aluno</span><span class="depo-a">Agência</span></div>
+                </div>
+              ))}
+            </div>
+            <Pending tag={`${depo.text ? depo.text + ' · ' : ''}${depo.tag}`} />
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- 12. Ferramentas -->
+  {ferramentas.length > 0 && (
+    <section class="bg-light">
+      <div class="container section ferr">
+        {ferramentas.map((f) => (
+          <article id={f.id} class="ferr-card">
+            <span class="chip">{f.nome}</span>
+            <h2 class="ferr-t">{f.titulo}</h2>
+            <p class="ferr-x">{f.texto}</p>
+            <div class="ferr-foot">
+              <a href={ctaHref} class="btn btn-navy btn-sm" data-track="cta_inscricao_click" data-track-slug={`${slug}#${f.id}`} {...ctaExt}>{f.botao} →</a>
+              {f.preco.show && f.preco.text && <span class="ferr-p">{f.preco.text}</span>}
+              <Pending tag={f.preco.pending ? f.preco.tag : null} prefix="Preço" />
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- 13. Investimento / Planos / Ingressos -->
+  {hasOferta && (
+    <section id="investimento" class="bg-white">
+      <div class="container section stack" style="gap:36px">
+        <div class="head-row">
+          <h2 class="h2">{ofertaTitulo}</h2>
+          <Pending tag={ofertaNota.pending ? ofertaNota.tag : null} />
+        </div>
+        {hasCards && (
+          <div class="grid-auto" style="--min:280px">
+            {cards.map((c, i) => {
+              const hi = i === cards.length - 1;
+              return (
+                <div class:list={['plano', hi ? 'bg-blue' : 'plano-light']}>
+                  <h3 class="plano-n">{c.nome}</h3>
+                  {c.preco.show && c.preco.text && <span class="plano-p">{c.preco.text}</span>}
+                  <Pending tag={c.preco.pending ? c.preco.tag : null} prefix="Valor" />
+                  <span class="plano-s">{c.sub}</span>
+                  <a href={ctaHref} class:list={['btn btn-sm plano-b', hi ? 'btn-white' : 'btn-navy']} data-track="cta_inscricao_click" data-track-slug={slug} data-track-plano={c.nome} {...ctaExt}>{p.botao}</a>
+                </div>
+              );
+            })}
+          </div>
+        )}
+        {hasPreco && (
+          <div class="preco-box">
+            <div class="stack" style="gap:12px">
+              <span class="eyebrow preco-nome">{p.nome}</span>
+              {preco.text && <span class="preco">{preco.text}</span>}
+              <Pending tag={preco.pending ? preco.tag : null} />
+            </div>
+            <div class="stack" style="gap:16px;align-items:flex-start">
+              <a href={ctaHref} class="btn btn-white" data-track="cta_inscricao_click" data-track-slug={slug} {...ctaExt}>{p.botao} →</a>
+              {extra.show && extra.text && (
+                <a href={p.extraLink ? `/${p.extraLink}` : '#investimento'} class="extra">{extra.text}</a>
+              )}
+              <Pending tag={extra.pending ? extra.tag : null} />
+            </div>
+          </div>
+        )}
+        {parceiros.pending && SHOW_PENDING && (
+          <div class="parceiros"><span>Parceiros e patrocinadores · faixa de logos</span><Pending tag={parceiros.tag} /></div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- 14. Perguntas frequentes -->
+  {faq.length > 0 && (
+    <section class="bg-light">
+      <div class="container section split">
+        <h2 class="h2">Perguntas frequentes</h2>
+        <Faq items={faq} id={`faq-${slug}`} />
+      </div>
+    </section>
+  )}
+
+  <!-- 15. Chamada final -->
+  <section id="final" class={finalBg}>
+    <div class="container section-lg stack final">
+      <h2 class="h-giant final-t">{finalTitulo}</h2>
+      {p.finalTexto && <p class="final-x">{p.finalTexto}</p>}
+      {breve ? (
+        <WaitlistForm slug={slug} programa={p.nome} botao={finalBotao} />
+      ) : (
+        <a href={finalHref} class="btn btn-white final-b" {...(p.finalComece ? { 'data-track': 'cta_comece_aqui', 'data-track-origem': `final_${slug}` } : { 'data-track': 'cta_inscricao_click', 'data-track-slug': slug, ...ctaExt })}>{finalBotao} →</a>
+      )}
+    </div>
+  </section>
+</Base>
+
+<script is:inline define:vars={{ slug }}>
+  window.addEventListener('load', function () { window.amTrack && window.amTrack('programa_view', { slug: slug }); });
+</script>
+<script>
+  // Contador: dias até a data do evento, arredondados para cima, mínimo 0.
+  document.querySelectorAll<HTMLElement>('[data-contador]').forEach((el) => {
+    const alvo = new Date(el.dataset.contador!).getTime();
+    const n = Math.max(0, Math.ceil((alvo - Date.now()) / 86400000));
+    el.querySelector('[data-dias]')!.textContent = String(n);
+  });
+</script>
+
+<style>
+  /* Hero */
+  .hero { padding-block: clamp(40px, 6vw, 88px) clamp(56px, 7vw, 100px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: clamp(40px, 5vw, 64px); align-items: center; }
+  .hero-text { gap: 24px; }
+  .crumbs ol { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; flex-wrap: wrap; font-size: 13px; font-weight: 600; color: var(--cyan-200); }
+  .crumbs a:hover { color: var(--white); }
+  .crumbs [aria-current] { color: var(--white); }
+  .logo-plate { align-self: flex-start; background: var(--white); border-radius: 18px; padding: 16px 22px; display: flex; }
+  .logo-plate.dark { background: var(--navy-800); }
+  .logo-plate img { height: 56px; width: auto; max-width: 240px; object-fit: contain; }
+  .sub { color: var(--ink-on-blue); max-width: 560px; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.55; }
+  .countdown { align-self: flex-start; display: flex; align-items: baseline; gap: 10px; border: 1.5px solid var(--cyan-300); border-radius: 14px; padding: 12px 18px; }
+  .count-n { font-family: var(--font-display); font-size: 34px; font-weight: 800; }
+  .count-l { font-size: 14px; font-weight: 600; color: var(--ink-on-blue); }
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; padding-top: 4px; }
+  .hero :global(.hero-img) { height: clamp(380px, 42vw, 580px); border-radius: 260px 260px 28px 28px; background: var(--blue-500); }
+  .hero :global(.hero-img img) { object-position: var(--pos, center); }
+
+  /* Intro */
+  .intro { gap: 24px 64px; }
+  .h2-intro { font-family: var(--font-display); font-weight: 800; font-size: clamp(36px, 4.6vw, 68px); line-height: .96; letter-spacing: -0.03em; }
+  .intro-text { font-size: clamp(19px, 1.7vw, 24px); line-height: 1.5; font-weight: 500; }
+
+  /* Para quem */
+  .para { display: flex; flex-direction: column; gap: 20px; min-height: 200px; }
+  .para-n { font-family: var(--font-display); font-size: 40px; font-weight: 800; color: var(--cyan-500); line-height: 1; }
+  .para-t { font-size: 17px; line-height: 1.5; font-weight: 500; }
+
+  /* Aprender */
+  .sticky-head { position: sticky; top: 110px; }
+  @media (max-width: 820px) { .sticky-head { position: static; } }
+  .learn { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .learn li { display: grid; grid-template-columns: 48px 1fr; gap: 16px; padding: 22px 0; border-top: 1.5px solid var(--line-light); align-items: start; }
+  .learn-t { font-size: clamp(17px, 1.4vw, 20px); line-height: 1.45; font-weight: 600; }
+
+  /* Etapas */
+  .etapas-nota { font-size: 15px; font-weight: 600; color: var(--blue-600); max-width: 420px; }
+  .etapa { border-radius: 28px; padding: clamp(28px, 3vw, 44px); display: flex; flex-direction: column; gap: 16px; }
+  .etapa-n { opacity: .85; letter-spacing: .12em; }
+  .etapa-t { font-family: var(--font-display); font-size: 40px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+  .etapa-f { font-size: 16px; font-weight: 700; }
+  .etapa-x { font-size: 16px; line-height: 1.55; }
+
+  /* Grupos */
+  .grupo { border-radius: 28px; padding: clamp(28px, 3vw, 40px); display: flex; flex-direction: column; gap: 14px; }
+  .grupo-t { font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--cyan-300); line-height: 1.1; }
+  .grupo-x { font-size: 17px; line-height: 1.55; color: var(--ink-on-navy); }
+  .destinos { display: flex; gap: 10px 16px; flex-wrap: wrap; align-items: center; }
+  .destinos ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 10px; flex-wrap: wrap; }
+  .destinos li { font-size: 15px; font-weight: 600; border: 1.5px solid var(--cyan-500); padding: 10px 18px; border-radius: 999px; }
+
+  /* Como funciona */
+  .fichas { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 1px; background: var(--blue-line); border: 1px solid var(--blue-line); border-radius: 24px; overflow: hidden; }
+  .ficha { background: var(--blue-600); padding: 28px; display: flex; flex-direction: column; gap: 10px; }
+  .ficha dt { font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--cyan-200); }
+  .ficha dd { margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 18px; line-height: 1.45; font-weight: 600; }
+
+  /* História */
+  .bars { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 12px; align-items: end; }
+  .bars li { display: flex; flex-direction: column; gap: 12px; }
+  .bar { background: var(--cyan-300); border-radius: 20px 20px 6px 6px; display: flex; align-items: flex-start; padding: 18px; }
+  .bar.last { background: var(--cyan-500); }
+  .bar span { font-family: var(--font-display); font-size: 34px; font-weight: 800; color: var(--navy-800); line-height: 1; }
+  .bar-ed { font-size: 16px; font-weight: 700; }
+  .bar-p { font-size: 14px; color: var(--muted-on-navy); }
+
+  /* Grade */
+  .grade { border: 2px dashed var(--line-dashed); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 12px; font-size: 17px; line-height: 1.5; font-weight: 500; }
+
+  /* Experts */
+  .experts { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), var(--max, 1fr))); }
+  .expert { gap: 16px; }
+  .expert :global(.expert-img) { aspect-ratio: 4 / 5; border-radius: 28px; }
+  .monogram { position: relative; display: flex; align-items: center; justify-content: center; background: var(--navy-600); font-family: var(--font-display); font-weight: 800; font-size: clamp(64px, 8vw, 110px); color: var(--cyan-300); letter-spacing: -0.03em; }
+  .mono-tag { position: absolute; left: 12px; bottom: 12px; }
+  .expert-n { font-family: var(--font-display); font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
+  .expert-b { font-size: 15.5px; line-height: 1.55; color: var(--muted-on-navy); }
+
+  /* Prova */
+  .prova { font-family: var(--font-display); font-weight: 800; font-size: clamp(36px, 5vw, 76px); line-height: .96; letter-spacing: -0.035em; }
+  .h2-depo { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 3.4vw, 48px); line-height: 1; letter-spacing: -0.03em; }
+  .depo { background: var(--navy-800); color: var(--white); border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; }
+  .depo :global(.depo-img) { aspect-ratio: 16 / 10; }
+  .depo-b { padding: 20px 22px; display: flex; flex-direction: column; gap: 6px; }
+  .depo-n { font-size: 16px; font-weight: 700; }
+  .depo-a { font-size: 14px; color: var(--muted-on-navy); }
+
+  /* Ferramentas */
+  .ferr { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+  .ferr-card { background: var(--white); border: 1px solid var(--line-light-2); border-radius: 28px; padding: 28px; display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 100px; }
+  .ferr-card:target { border-color: var(--cyan-500); box-shadow: 0 0 0 3px var(--cyan-500); }
+  .ferr-t { font-family: var(--font-display); font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
+  .ferr-x { font-size: 15.5px; line-height: 1.55; color: var(--ink-body); }
+  .ferr-foot { margin-top: auto; padding-top: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .ferr-foot .btn { padding: 13px 20px; font-size: 14.5px; }
+  .ferr-p { font-family: var(--font-display); font-size: 24px; font-weight: 800; }
+
+  /* Oferta */
+  .plano { border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 12px; }
+  .plano-light { background: var(--surface-light); color: var(--navy-800); }
+  .plano-n { font-size: 14px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .plano-p { font-family: var(--font-display); font-size: 44px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+  .plano-s { font-size: 15px; line-height: 1.5; opacity: .9; }
+  .plano-b { margin-top: auto; align-self: flex-start; }
+  .preco-box { background: var(--blue-600); color: var(--white); border-radius: 32px; padding: clamp(28px, 4vw, 56px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 32px; align-items: center; }
+  .preco-nome { font-size: 14px; letter-spacing: .1em; color: var(--cyan-200); }
+  .preco { font-family: var(--font-display); font-size: clamp(40px, 5vw, 72px); font-weight: 800; letter-spacing: -0.035em; line-height: 1; }
+  .extra { font-size: 15.5px; line-height: 1.5; color: var(--ink-on-blue); border-top: 1px solid var(--blue-line); padding-top: 16px; }
+  .extra:hover { color: var(--white); text-decoration: underline; }
+  .parceiros { border: 2px dashed var(--line-dashed); border-radius: 20px; padding: 28px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; font-size: 16px; font-weight: 600; }
+
+  /* Final */
+  .final { gap: 28px; align-items: flex-start; }
+  .final-t { max-width: 1100px; }
+  .final-x { font-size: 19px; line-height: 1.55; color: var(--ink-on-blue); max-width: 620px; }
+  .final-b { font-size: 17px; padding: 20px 32px; }
+</style>

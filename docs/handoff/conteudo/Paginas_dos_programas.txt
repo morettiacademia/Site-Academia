@@ -1,0 +1,947 @@
+Academia da Magia · Páginas dos programas
+Sep 25, 2026 · @Academia da Magia
+Copy de todas as páginas de programa do novo site, organizado pelos menus do header.
+Trechos marcados com [A PREENCHER] ou [CONFIRMAR] precisam de informação da
+equipe antes de publicar.
+Mapa do menu
+Cada item do header abre um submenu com os programas abaixo. Cada programa tem
+página própria.
+Modelo de página de programa
+Todas as páginas seguem a mesma ordem de blocos, para o design reaproveitar o layout:
+1. Hero: selo, título, subtítulo, botão e imagem.
+2. Para quem é: 3 ou 4 perfis.
+3. O que você vai aprender (ou viver): principais entregas.
+Menu 	Submenu 	Páginas
+Comece aqui (link direto) 	/comece-aqui
+Formações 	Especializações Guiamento Virtual, Guias de Orlando, Creations,
+Moneys, Hands On
+Formações 	Destinos 	Orlando Lucrativo, Parqueamento, Disney Cruise
+Line, Paris Além da Disney, Rota Califórnia, Japão,
+Dubai
+Formações 	Ferramentas 	E-books, Biblioteca de Playbooks, Playbook de
+Guiamento Virtual, Planilha de Hotéis, Oratória
+Mentorias 	(lista) 	Magic Makers, AGIR, Mentoria de IA, Excelência
+(em breve)
+Comunidade (lista) 	Magic Club, Magic Makers ao Vivo, Magic Makers
+Experience, Reality de Guiamento Virtual
+Conteúdos 	(lista) 	Blog, Podcast Magic Makers (retomada em 2027),
+Instagram, YouTube
+Sobre nós 	(lista) 	Nossa história, Sócios e experts, Contato
+Academia da Magia · Páginas dos programas
+Page 1 of 25
+
+-- 1 of 25 --
+
+4. Como funciona: formato, duração, acesso.
+5. Grade de aulas: módulos e aulas.
+6. Com quem você aprende: card do expert.
+7. Depoimentos: alunos daquele programa.
+8. Investimento: preço e condições.
+9. Perguntas frequentes.
+10. Chamada final.
+Grade de aulas, depoimentos e investimento aparecem em todas as páginas; onde a
+informação ainda falta, o trecho está marcado.
+Comece aqui
+URL: /comece-aqui
+SEO title: Comece aqui | Academia da Magia
+Meta description: Descubra qual programa da Academia da Magia combina com o seu
+momento no turismo, de quem está começando a quem quer escalar a própria agência.
+Hero
+Selo: Seu próximo passo
+Título: Toda jornada mágica começa com uma escolha
+Subtítulo: Responda com o coração: em que momento você está hoje? A gente te
+mostra o caminho.
+Escolha o seu momento (4 cards clicáveis)
+Card Título 	Texto 	Programas indicados 	Botão
+1 	Estou
+começando
+Sou apaixonado por
+viagens e quero
+transformar isso em
+profissão.
+Magic Makers, Guias
+de Orlando,
+Guiamento Virtual
+Quero
+começar
+2 	Quero me
+especializar
+Já atuo no turismo e
+quero dominar um
+destino ou uma
+habilidade.
+Destinos, Creations,
+Hands On,
+Ferramentas
+Quero me
+especializar
+3 	Quero
+estruturar e
+crescer
+Já tenho agência e
+preciso de processos,
+finanças e tecnologia.
+AGIR, Mentoria de IA,
+Moneys
+Quero crescer
+Academia da Magia · Páginas dos programas
+Page 2 of 25
+
+-- 2 of 25 --
+
+Bloco de apoio
+Título: Ainda em dúvida?
+Texto: Fale com o nosso time. A gente escuta o seu momento e indica o melhor
+caminho, sem pressa e sem fórmula pronta.
+Botão: Falar no WhatsApp
+Mentorias
+Magic Makers
+URL: /magic-makers
+SEO title: Magic Makers | Torne-se agente de viagens especialista em Orlando
+Meta description: A mentoria da Academia da Magia que leva quem é apaixonado por
+Orlando a abrir a própria agência de viagens do zero, com Joice Ferreira, Camila
+Moretti e Paulo Soares.
+Hero
+Selo: Mentoria · Turma 2027
+Título: De apaixonado por Orlando a agente de viagens especialista
+Subtítulo: A formação que já transformou centenas de apaixonados pela Disney em
+profissionais do turismo agora é uma mentoria completa, com os três sócios da
+Academia ao seu lado.
+Botão: Quero entrar na lista de espera
+Imagem: turma do Magic Makers em Orlando ou os três sócios juntos
+O que é um Magic Maker
+Magic Maker é o agente de viagens que cria magia. Ele conhece Orlando nos detalhes,
+entende cada família que atende e transforma um sonho em uma viagem inesquecível. É
+isso que você vai se tornar.
+Para quem é
+Quem é apaixonado por Orlando e pela Disney e quer transformar essa paixão em
+profissão.
+Card Título 	Texto 	Programas indicados 	Botão
+4 	Quero viver a
+experiência
+Quero aprender na
+prática e estar perto
+de quem vive o
+mercado.
+Magic Club, Magic
+Makers ao Vivo, Magic
+Makers Experience,
+Reality
+Quero viver
+Academia da Magia · Páginas dos programas
+Page 3 of 25
+
+-- 3 of 25 --
+
+Quem quer abrir a própria agência de viagens do zero, com método.
+Quem já vende viagens de forma informal e quer se profissionalizar.
+O que você vai aprender
+O destino Orlando de ponta a ponta: parques, hotéis, ingressos, roteiros e
+experiências.
+Como abrir e estruturar a sua agência, dos primeiros passos à primeira venda.
+Como atender, encantar e fidelizar passageiros com os métodos de encantamento da
+Disney.
+Processos, estratégias de venda e posicionamento que funcionam na prática.
+Gestão, finanças e uso de inteligência artificial desde o primeiro dia do negócio.
+Como funciona
+Formato: mentoria com conteúdo online e encontros ao vivo [CONFIRMAR formato
+2027]
+Turma: abre uma vez por ano, com vagas limitadas
+Duração e número de encontros: [A PREENCHER]
+Acesso: [A PREENCHER]
+Grade de aulas: [A PREENCHER] (a versão anterior tinha 6 módulos e mais de 60
+videoaulas)
+Com quem você aprende: Joice Ferreira (o sonho e o destino), Camila Moretti (os
+processos e as estratégias) e Paulo Soares (a gestão, as finanças e a IA).
+Prova social: mais de 700 agentes formados no Magic Makers [CONFIRMAR número
+atual] + depoimentos em vídeo de ex-alunos [A PREENCHER]
+Investimento: [CONFIRMAR valor da turma 2027]
+Perguntas frequentes
+Preciso ter experiência no turismo? Não. O Magic Makers foi feito para quem está
+começando do zero.
+Preciso morar ou ter ido a Orlando? Não é obrigatório. Você aprende o destino em
+detalhes com quem vive ele há mais de 25 anos.
+Quando abre a próxima turma? As turmas abrem uma vez por ano. Entre na lista de
+espera para ser avisado primeiro.
+Chamada final
+Título: O seu sonho também pode virar a sua agência
+Botão: Quero entrar na lista de espera
+Academia da Magia · Páginas dos programas
+Page 4 of 25
+
+-- 4 of 25 --
+
+AGIR
+URL: /agir
+SEO title: Mentoria AGIR | Estruture a sua agência de viagens
+Meta description: Três meses de mentoria com Camila Moretti para construir a
+estrutura do seu negócio no turismo, em turmas de até 15 pessoas.
+Hero
+Selo: Mentoria · Turmas de até 15 pessoas
+Título: Pare de apagar incêndio. Comece a construir uma agência de verdade.
+Subtítulo: Em três meses, você sai do improviso e monta a estrutura que o seu negócio
+precisa para crescer: processos, estratégias e o que dá resultado na prática.
+Botão: Quero minha vaga no AGIR
+Imagem: Camila Moretti em um encontro com a turma
+Para quem é
+Donos de agência que vendem, mas sentem que tudo depende deles.
+Agentes que querem transformar o trabalho autônomo em empresa.
+Quem já tentou organizar o negócio sozinho e não conseguiu manter.
+O que você vai construir
+Um diagnóstico claro do momento da sua agência.
+Processos de atendimento, venda e pós-venda.
+Estratégias de posicionamento e captação de clientes.
+Rotina de gestão e indicadores para acompanhar o crescimento.
+Um plano de ação para os próximos meses.
+Como funciona
+Duração: 3 meses de acompanhamento
+Turmas: até 15 pessoas, com abertura e fechamento de inscrições
+Formato: encontros ao vivo em grupo [A PREENCHER frequência e dia]
+Grade dos encontros: [A PREENCHER]
+Com quem você aprende: Camila Moretti, fundadora da Magical Turismo e da Magical
+Corporate, sócia da Academia da Magia. Se a Joice mostra que você pode, a Camila mostra
+como.
+Depoimentos: alunos das turmas anteriores [A PREENCHER]
+Investimento: R$ 2.297 [CONFIRMAR]
+Academia da Magia · Páginas dos programas
+Page 5 of 25
+
+-- 5 of 25 --
+
+Quer ir além? Leve a mentoria completa com o upgrade AGIR + IA e aplique inteligência
+artificial em cada frente que você estruturar. [CONFIRMAR valor e condições]
+Perguntas frequentes
+Preciso ter agência aberta? O AGIR é para quem já vende viagens e quer estruturar o
+negócio.
+Serve para qualquer destino? Sim. A estrutura de negócio vale para qualquer nicho.
+E se eu perder um encontro? [CONFIRMAR se há gravação]
+Chamada final
+Título: A sua agência merece uma estrutura à altura dos seus sonhos
+Botão: Quero minha vaga no AGIR
+Mentoria de IA
+URL: /mentoria-ia
+SEO title: Mentoria de IA para Agências de Viagens | Academia da Magia
+Meta description: Três meses com Paulo Soares para aplicar inteligência artificial no
+marketing, nas vendas e na gestão da sua agência, em turmas de até 15 pessoas.
+Hero
+Selo: Mentoria · Turmas de até 15 pessoas
+Título: A inteligência artificial trabalhando para a sua agência
+Subtítulo: Aprenda a usar a IA para atrair clientes, vender mais e ganhar tempo, sem
+perder o toque humano que faz os seus passageiros voltarem.
+Botão: Quero minha vaga na mentoria
+Imagem: Paulo Soares conduzindo um encontro
+Para quem é
+Donos de agência que sentem que a IA está mudando o mercado e não querem ficar
+para trás.
+Quem já usa o ChatGPT de vez em quando, mas sem método e sem resultado concreto.
+Agentes de qualquer destino ou nicho que querem ganhar escala.
+O que você vai aprender
+Como montar o seu ambiente de trabalho com IA, pensado para a rotina da agência.
+Posicionamento, conteúdo e presença no Google e nas buscas por IA.
+Atendimento e vendas com apoio da IA, integrados ao seu CRM.
+Academia da Magia · Páginas dos programas
+Page 6 of 25
+
+-- 6 of 25 --
+
+Como evoluir da IA que atende para a IA que trabalha junto com você e, depois, no
+piloto automático.
+Como funciona
+Duração: 3 meses
+Encontros em grupo: 6 encontros ao vivo, a cada 14 dias
+Acompanhamento individual: 1 hora por mês com o mentor
+Diagnóstico: você recebe uma leitura personalizada da sua agência antes de começar
+Garantia: 7 dias a partir da compra
+Grade dos encontros: [A PREENCHER]
+Com quem você aprende: Paulo Soares, sócio da Academia da Magia e da Magic Blue
+Turismo, MBA em Administração e Gestão de Empresas, com passagens pela Ernst &
+Young e pela Cielo.
+Depoimentos: alunos da primeira turma [A PREENCHER]
+Investimento: R$ 2.197 [CONFIRMAR]
+Perguntas frequentes
+Preciso entender de tecnologia? Não. A mentoria parte do seu nível atual.
+Preciso vender Orlando? Não. A mentoria ajuda você a desenvolver o seu nicho, seja
+qual for.
+Preciso ter um CRM? Sim, o CRM é parte do método. Se você ainda não tem, a gente te
+orienta na escolha.
+Chamada final
+Título: O futuro do turismo já começou. A sua agência vai junto?
+Botão: Quero minha vaga na mentoria
+Excelência (em breve)
+URL: /excelencia
+Status: lançamento em 2027; página de lista de espera
+Hero
+Selo: Em breve · 2027
+Título: Para quem já é referência e quer ir além
+Subtítulo: Uma nova mentoria para agentes estabelecidos que buscam
+posicionamento, crescimento e um novo patamar no trade.
+Botão: Quero ser avisado do lançamento
+Academia da Magia · Páginas dos programas
+Page 7 of 25
+
+-- 7 of 25 --
+
+Texto: Você já construiu uma agência sólida e tem clientes fiéis. O Excelência nasce para
+te levar ao próximo nível, com o olhar da Joice Ferreira e os métodos de excelência que
+fizeram da Disney uma referência mundial. [CONFIRMAR expert e detalhes]
+Formações · Especializações
+Guiamento Virtual
+URL: /guiamento-virtual
+SEO title: Curso de Guiamento Virtual | Academia da Magia
+Meta description: Aprenda a guiar passageiros nos parques de Orlando e da Califórnia
+à distância, pelo celular, com Camila Moretti, Joice Ferreira e Rebecca Cosendey.
+Hero
+Selo: Especialização · 100% online
+Título: Guie os seus passageiros pelos parques, de onde você estiver
+Subtítulo: Emoção, aventura e diversão em cada dia de parque, tudo pelo celular e no
+conforto da sua casa.
+Botão: Quero ser guia virtual
+Imagem: guia no celular com mapa de parque na tela
+Para quem é
+Guias que querem oferecer um novo serviço aos seus passageiros.
+Quem está começando do zero e quer atuar como guia virtual, inclusive como
+freelancer.
+Agentes que querem diferenciar o atendimento e aumentar o ticket.
+Viajantes que querem usar as técnicas na própria viagem.
+O que você vai aprender
+Como planejar o dia de parque de cada família.
+As ferramentas e os aplicativos que tornam o guiamento possível.
+Como conduzir o passageiro em tempo real, resolver imprevistos e criar momentos
+mágicos.
+Como precificar e vender o serviço de guiamento virtual.
+Como funciona
+Formato: curso online, atualizado em 2024 com aulas regravadas em estúdio
+Destinos: Orlando e Califórnia
+Acesso: 1 ano
+Academia da Magia · Páginas dos programas
+Page 8 of 25
+
+-- 8 of 25 --
+
+Grade de aulas: [A PREENCHER]
+Com quem você aprende: Camila Moretti (Magical Turismo), Joice Ferreira (Magic Blue
+Turismo) e Rebecca Cosendey (Viajando com Becca).
+Depoimentos: [A PREENCHER]
+Investimento: R$ 1.497 [CONFIRMAR]
+Perguntas frequentes
+Preciso ser guia profissional? Não. O curso atende quem já é guia e quem está
+começando.
+Preciso estar nos Estados Unidos? Não. O guiamento acontece à distância.
+Quer ver na prática? Participe do Reality de Guiamento Virtual e acompanhe um
+guiamento ao vivo.
+Chamada final
+Título: Leve a magia até o seu passageiro, onde ele estiver
+Botão: Quero ser guia virtual
+Guias de Orlando
+URL: /guias-de-orlando
+SEO title: Curso para Guias de Orlando | Academia da Magia
+Meta description: Formação completa para guiar passageiros e grupos em Orlando:
+curso teórico online com Joice Ferreira e Luciana Ricco e curso prático em Orlando.
+Hero
+Selo: Especialização · Online + prática em Orlando
+Título: Guie os seus passageiros pela Terra da Magia e da Aventura
+Subtítulo: Aprenda as melhores técnicas de guiamento, entenda cada tipo de grupo e
+crie momentos inesquecíveis nos parques de Orlando.
+Botão: Quero ser guia em Orlando
+Imagem: grupo guiado em frente a um castelo de parque [usar foto própria]
+Para quem é
+Quem sonha em guiar passageiros e grupos em Orlando.
+Agentes que querem acompanhar os próprios grupos.
+Quem não tem experiência prévia: a gente ensina tudo.
+Duas etapas
+Academia da Magia · Páginas dos programas
+Page 9 of 25
+
+-- 9 of 25 --
+
+Para fazer o curso prático, é preciso ter concluído o teórico.
+Grade de aulas: [A PREENCHER]
+Com quem você aprende: Joice Ferreira, a Tia Joice, e Luciana Ricco, guia de Orlando.
+Depoimentos: alunos das turmas presenciais em Orlando [A PREENCHER]
+Investimento: teórico R$ 1.497 [CONFIRMAR] · prático [A PREENCHER valor e datas]
+Perguntas frequentes
+Preciso falar inglês? Não é obrigatório, mas é muito importante para ser um bom guia.
+Falamos sobre isso em uma das aulas.
+Preciso ter experiência? Não. O curso começa do zero.
+O prático é obrigatório? Não, mas é onde a teoria vira vivência.
+Chamada final
+Título: O seu lugar pode ser dentro dos parques
+Botão: Quero ser guia em Orlando
+Creations
+URL: /creations
+SEO title: Creations | Marketing de conteúdo para agentes de viagens
+Meta description: 90 dias para dominar conteúdo e posicionamento no Instagram,
+TikTok e blog e transformar seguidores em clientes fiéis.
+Hero
+Selo: Especialização · 90 dias
+Título: Transforme seguidores em passageiros fiéis
+Subtítulo: Conteúdo e posicionamento para agentes de viagens e empreendedores do
+turismo que querem ser lembrados, procurados e escolhidos.
+Botão: Quero criar com método
+Etapa 	Formato 	O que você vive
+Teórico 100% online, 8 módulos e mais de
+40 aulas
+Técnicas de guiamento, perfis de
+passageiros e grupos, como aproveitar os
+principais parques
+Prático Presencial em Orlando, cerca de 30
+vagas
+Liderar um grupo de verdade, errar,
+aprender e praticar ao lado da Joice
+Academia da Magia · Páginas dos programas
+Page 10 of 25
+
+-- 10 of 25 --
+
+Imagem: bastidores de gravação de conteúdo de viagem
+Para quem é
+Agentes que postam, mas não veem as redes virarem vendas.
+Quem quer se posicionar como especialista em um destino.
+Quem trava na hora de gravar, falar ou escrever.
+O que você vai aprender
+Posicionamento: como ser lembrado como o especialista do seu destino.
+Planejamento de conteúdo para Instagram, TikTok e blog.
+Roteiro, gravação e comunicação que gera impacto e conexão.
+Como converter audiência em clientes.
+Como funciona
+Formato: mentoria de 90 dias com encontros, em turmas com abertura e fechamento
+de inscrições
+Inclui: o Método Impacto de comunicação
+Grade de aulas: [A PREENCHER]
+Com quem você aprende: Monica Coscarella, jornalista e proprietária da revista Orlando
+Wish, e Camila Moretti [CONFIRMAR experts da nova versão]
+Depoimentos: [A PREENCHER]
+Investimento: R$ 1.497 [CONFIRMAR]
+Perguntas frequentes
+Preciso ter muitos seguidores? Não. O método funciona a partir de onde você está.
+Serve para qualquer destino? Sim.
+Chamada final
+Título: Quem é visto com autoridade, vende com autoridade
+Botão: Quero criar com método
+Moneys
+URL: /moneys
+SEO title: Moneys | Gestão financeira para agências de viagens
+Meta description: Controle financeiro, ferramentas e estratégias para a sua agência de
+viagens crescer de forma sustentável, com Priscila Vargas.
+Hero
+Academia da Magia · Páginas dos programas
+Page 11 of 25
+
+-- 11 of 25 --
+
+Selo: Especialização · 100% online
+Título: Vender bem é metade do caminho. A outra metade é saber para onde vai o
+dinheiro.
+Subtítulo: Uma gestão financeira sólida para a sua agência crescer de forma
+sustentável.
+Botão: Quero organizar minhas finanças
+Para quem é
+Donos de agência que faturam, mas não sabem quanto lucram.
+Quem mistura as finanças pessoais e as da empresa.
+Quem quer crescer sem perder o controle.
+O que você vai aprender
+Controle de entradas, saídas e fluxo de caixa.
+Precificação, comissões e margem.
+Ferramentas práticas para o dia a dia financeiro da agência.
+Indicadores para decidir com segurança.
+Como funciona: curso online, no seu ritmo, com acesso por 1 ano [CONFIRMAR]
+Grade de aulas: [A PREENCHER]
+Com quem você aprende: Priscila Vargas [A PREENCHER bio]
+Investimento: R$ 897 [CONFIRMAR]
+Chamada final
+Título: A magia também precisa fechar a conta
+Botão: Quero organizar minhas finanças
+Hands On
+URL: /hands-on
+SEO title: Hands On | Curso de operação de grupos para agentes de viagens
+Meta description: Aprenda a operar grupos de viagem do relacionamento com
+fornecedores à organização de cada detalhe, com Joice Ferreira, Paulo Soares e Camila
+Moretti.
+Hero
+Selo: Especialização · Vagas mediante avaliação
+Título: Grupos de viagem sem improviso, do primeiro contato ao último dia
+Academia da Magia · Páginas dos programas
+Page 12 of 25
+
+-- 12 of 25 --
+
+Subtítulo: A operação de grupos ensinada por quem vive isso na prática, temporada
+após temporada.
+Botão: Quero me candidatar
+Imagem: grupo de viajantes com camisetas da agência
+Para quem é
+Agentes que querem montar e operar grupos próprios.
+Quem já opera grupos e quer mais segurança e margem.
+O que você vai aprender
+Relacionamento e negociação com fornecedores e parceiros.
+Planejamento e organização de cada detalhe do grupo.
+Operação durante a viagem e gestão de imprevistos.
+Como garantir férias repletas de magia para cada passageiro.
+Como funciona: após a inscrição, os mentores fazem uma avaliação para confirmar se é o
+momento certo para você entrar nesta jornada intensiva. Conteúdo inédito, só na
+Academia da Magia. [A PREENCHER formato e duração]
+Grade de aulas: [A PREENCHER]
+Com quem você aprende: Joice Ferreira, Paulo Soares e Camila Moretti.
+Investimento: [A PREENCHER]
+Chamada final
+Título: O seu grupo merece uma operação à altura da viagem
+Botão: Quero me candidatar
+Formações · Destinos
+Orlando Lucrativo
+URL: /orlando-lucrativo
+SEO title: Orlando Lucrativo | Tudo o que mudou em Orlando para agentes de viagens
+Meta description: A atualização anual do destino Orlando para agentes de viagens:
+novidades, mudanças e oportunidades para vender mais, com Camila Moretti.
+Hero
+Selo: Destino · Edição anual
+Título: Orlando muda todo ano. O seu conhecimento também precisa mudar.
+Academia da Magia · Páginas dos programas
+Page 13 of 25
+
+-- 13 of 25 --
+
+Subtítulo: Novos parques, novas atrações, novas regras. Tudo o que você precisa saber
+para vender Orlando com segurança e lucro na próxima temporada.
+Botão: Quero garantir minha vaga
+Para quem é: agentes e guias que vendem Orlando e não podem ficar desatualizados.
+O que você vai aprender
+As principais novidades e mudanças dos parques e do destino.
+Oportunidades de venda para a próxima temporada.
+Como apresentar as novidades aos seus passageiros.
+Como funciona: encontro ao vivo uma vez por ano, com grupo exclusivo de alunos durante
+o período do programa. [A PREENCHER data da próxima edição]
+Com quem você aprende: Camila Moretti, fundadora da Magical Turismo.
+Investimento: R$ 297 [CONFIRMAR]
+Chamada final
+Título: Chegue na próxima temporada um passo à frente
+Botão: Quero garantir minha vaga
+Parqueamento
+URL: /parqueamento
+SEO title: Parqueamento | Estratégia de parques em Orlando
+Meta description: Aprenda a montar o roteiro de parques ideal para cada família e
+aproveitar cada minuto em Orlando.
+Hero
+Selo: Destino · Orlando
+Título: O roteiro de parques certo transforma a viagem inteira
+Subtítulo: Qual parque em qual dia, em que ordem, com qual estratégia. Aprenda a
+planejar os parques de Orlando para cada perfil de família.
+Botão: Quero dominar os parques
+Para quem é: agentes e guias que querem entregar roteiros de parques mais inteligentes e
+encantar os passageiros.
+O que você vai aprender [CONFIRMAR conteúdo]
+Como escolher e distribuir os parques ao longo da viagem.
+Estratégias para filas, horários e atrações mais disputadas.
+Academia da Magia · Páginas dos programas
+Page 14 of 25
+
+-- 14 of 25 --
+
+Como adaptar o roteiro para cada perfil de família.
+Como funciona: [A PREENCHER formato e duração]
+Com quem você aprende: [A PREENCHER]
+Investimento: [A PREENCHER]
+Chamada final
+Título: Cada dia de parque bem planejado vira uma memória para sempre
+Botão: Quero dominar os parques
+Disney Cruise Line
+URL: /disney-cruise-line
+SEO title: Disney Cruise Line para agentes de viagens | Academia da Magia
+Meta description: Torne-se expert em cruzeiros Disney com Joice Ferreira e aumente a
+conversão e a fidelização dos seus passageiros.
+Hero
+Selo: Destino · 100% online
+Título: O mapa do tesouro para vender cruzeiros Disney
+Subtítulo: Um plano de aula completo e intensivo para você conhecer o produto Disney
+Cruise Line a fundo e vender com autoridade.
+Botão: Quero ser expert em DCL
+Imagem: navio da Disney Cruise Line [usar foto própria das imersões]
+Para quem é: agentes que querem incluir ou fortalecer os cruzeiros Disney no portfólio.
+O que você vai aprender
+Os navios, os roteiros e as experiências a bordo.
+Como oferecer um serviço personalizado para cada família.
+Como aumentar a conversão e a fidelização dos passageiros.
+Como funciona: online, no seu ritmo [CONFIRMAR prazo de acesso]
+Com quem você aprende: Joice Ferreira, que já levou grupos de profissionais para
+imersões a bordo do Disney Wish.
+Investimento: R$ 497 [CONFIRMAR]
+Quer viver na prática? Conheça o Magic Makers Experience a bordo do Disney Treasure.
+Chamada final
+Academia da Magia · Páginas dos programas
+Page 15 of 25
+
+-- 15 of 25 --
+
+Título: Leve os seus passageiros para uma viagem mágica em alto-mar
+Botão: Quero ser expert em DCL
+Paris Além da Disney
+URL: /paris-alem-da-disney
+SEO title: Paris Além da Disney | Curso de Paris e Londres para agentes de viagens
+Meta description: Aprenda a vender Paris e Londres com segurança, além da
+Disneyland Paris, com Joice Ferreira e Carolina Guerra. 100% online.
+Hero
+Selo: Destino · 100% online
+Título: A magia continua do outro lado do oceano
+Subtítulo: Paris e Londres muito além da Disneyland Paris: tudo para você vender a
+Europa com segurança e encantar os seus passageiros.
+Botão: Quero vender a Europa
+Para quem é
+Agentes que vendem Orlando e querem ampliar o portfólio.
+Quem recebe pedidos de Europa e não se sente seguro para atender.
+Iniciantes: não é preciso experiência prévia.
+O que você vai aprender
+Documentação, transporte e logística entre Paris e Londres.
+Roteiros, pontos culturais e entretenimento.
+Compras e gastronomia.
+A Disneyland Paris e como encaixá-la no roteiro.
+Como funciona: online, no seu ritmo, de qualquer lugar [CONFIRMAR prazo de acesso]
+Grade de aulas: [A PREENCHER]
+Com quem você aprende: Joice Ferreira e Carolina Guerra [A PREENCHER bio da
+Carolina]
+Investimento: R$ 897 [CONFIRMAR]
+Chamada final
+Título: Um novo destino, a mesma magia
+Botão: Quero vender a Europa
+Academia da Magia · Páginas dos programas
+Page 16 of 25
+
+-- 16 of 25 --
+
+Rota Califórnia
+URL: /rota-california
+SEO title: Rota Califórnia: da Disneyland a Hollywood | Academia da Magia
+Meta description: Aprenda a vender a Califórnia com Rebecca Cosendey: Disneyland,
+Hollywood e a rota que os seus passageiros vão amar.
+Hero
+Selo: Destino · Califórnia
+Título: Da Disneyland a Hollywood: a Califórnia que os seus passageiros sonham
+Subtítulo: A Disney onde tudo começou e a costa oeste mais desejada dos Estados
+Unidos, ensinadas por quem já trabalhou na Disney e vive o destino.
+Botão: Quero vender a Califórnia
+Para quem é: agentes que vendem Orlando e querem oferecer a Califórnia como próximo
+destino dos seus passageiros.
+O que você vai aprender
+Disneyland Resort e os principais parques da região.
+Hollywood, Los Angeles e a rota pela costa.
+Como montar e vender o roteiro completo.
+Como funciona: curso gravado com acesso contínuo e aulão ao vivo [CONFIRMAR data].
+Bônus para os 10 primeiros: participação no Reality de Guiamento Virtual na Califórnia.
+Com quem você aprende: Rebecca Cosendey, a Becca. Trabalhou na Disney três vezes e
+fundou a Becca Turismo para mostrar a Califórnia aos brasileiros.
+Investimento: R$ 397 [CONFIRMAR]
+Chamada final
+Título: A próxima viagem dos seus passageiros pode ser na costa oeste
+Botão: Quero vender a Califórnia
+Japão
+URL: /japao
+SEO title: Japão para agentes de viagens | Academia da Magia
+Meta description: Aprenda a vender o Japão, um destino que encanta famílias e fãs de
+parques, com Joice Ferreira.
+Hero
+Academia da Magia · Páginas dos programas
+Page 17 of 25
+
+-- 17 of 25 --
+
+Selo: Destino · Novo
+Título: O Japão também pode estar no seu portfólio
+Subtítulo: Cultura, tecnologia, parques e experiências únicas. Aprenda a vender um
+dos destinos mais desejados do mundo.
+Botão: Quero vender o Japão
+O que você vai aprender: [A PREENCHER tópicos]
+Como funciona: curso gravado com acesso contínuo e aulão ao vivo [CONFIRMAR data]
+Com quem você aprende: Joice Ferreira
+Investimento: R$ 397 [CONFIRMAR]
+Dubai
+URL: /dubai
+Status: em breve; página de lista de espera
+Hero
+Selo: Destino · Em breve
+Título: Dubai: luxo, deserto e experiências inesquecíveis
+Subtítulo: Prepare-se para vender um destino que encanta passageiros exigentes, com
+Joice Ferreira.
+Botão: Quero ser avisado do lançamento
+Formações · Ferramentas
+Página hub de Ferramentas
+URL: /ferramentas
+SEO title: Ferramentas para agências de viagens | Academia da Magia
+Meta description: E-books, playbooks, planilhas e treinamentos práticos para aplicar
+hoje na rotina da sua agência de viagens.
+Hero
+Selo: Ferramentas
+Título: Pronto para usar hoje
+Subtítulo: Materiais criados por quem vive o mercado, para você ganhar tempo e
+aplicar na sua agência a partir de agora.
+Cards das ferramentas (cada um leva à sua página ou ao checkout)
+Academia da Magia · Páginas dos programas
+Page 18 of 25
+
+-- 18 of 25 --
+
+Chamada final
+Título: Quer ir além das ferramentas?
+Texto: Conheça as nossas especializações e mentorias e leve a sua carreira para o
+próximo nível.
+Botão: Descubra seu próximo passo (leva a /comece-aqui)
+Ferramenta 	Título do card 	Texto do card 	Botão 	Preço
+E-books 	Conhecimento
+direto ao ponto
+Guias sobre
+destinos e sobre o
+negócio de viagens,
+para ler e aplicar.
+Ver e-
+books
+[A
+PREENCHER]
+Biblioteca de
+Playbooks
+Processos prontos
+para a sua agência
+Roteiros, modelos e
+passo a passo para
+atendimento, venda
+e operação.
+Acessar a
+biblioteca
+[A
+PREENCHER]
+Playbook de
+Guiamento
+Virtual
+O guiamento em
+um passo a passo
+Tudo o que você
+precisa para
+conduzir um
+guiamento virtual
+do planejamento ao
+último dia de
+parque.
+Quero o
+playbook
+[A
+PREENCHER]
+Planilha de
+Hotéis
+Recomende hotéis
+com segurança
+Uma planilha pronta
+para comparar
+hospedagens e
+indicar a opção
+certa para cada
+família.
+Quero a
+planilha
+[A
+PREENCHER]
+Oratória 	Fale com
+confiança
+Treinamento para
+comunicar com
+clareza e segurança
+na venda, nas redes
+e no palco.
+Quero falar
+melhor
+[A
+PREENCHER]
+Academia da Magia · Páginas dos programas
+Page 19 of 25
+
+-- 19 of 25 --
+
+Comunidade
+Magic Club
+URL: /magic-club
+SEO title: Magic Club | A comunidade da Academia da Magia
+Meta description: Assinatura com aula semanal com os experts da Academia da Magia
+e benefícios exclusivos para profissionais do turismo.
+Hero
+Selo: Comunidade · Assinatura
+Título: Toda semana, um encontro com quem vive o turismo
+Subtítulo: Aula semanal com os experts da Academia, troca com outros profissionais e
+benefícios exclusivos para quem não quer parar de crescer.
+Botão: Quero fazer parte
+Imagem: print de uma aula ao vivo com vários participantes
+Para quem é
+Profissionais do turismo que querem aprender sempre, sem esperar a próxima turma.
+Quem quer estar perto dos experts e de outros agentes.
+Ex-alunos que querem continuar na comunidade.
+O que você recebe
+Uma aula por semana com os experts da Academia.
+Uma comunidade de profissionais que se ajudam.
+Benefícios exclusivos para assinantes [A PREENCHER lista].
+Planos
+[CONFIRMAR valores]
+Perguntas frequentes
+Posso cancelar quando quiser? [CONFIRMAR regra de cancelamento]
+Plano 	Valor
+Mensal 	R$ 75 por mês
+Anual parcelado 12x de R$ 65 (R$ 780)
+Anual à vista 	R$ 650
+Academia da Magia · Páginas dos programas
+Page 20 of 25
+
+-- 20 of 25 --
+
+As aulas ficam gravadas? [CONFIRMAR]
+Chamada final
+Título: Ninguém cresce sozinho. Venha crescer com a gente.
+Botão: Quero fazer parte
+Reality de Guiamento Virtual
+URL: /reality-guiamento-virtual
+SEO title: Reality de Guiamento Virtual | Academia da Magia
+Meta description: Acompanhe ao vivo um expert da Academia da Magia guiando um
+passageiro real nos parques de Orlando, da Califórnia e de Paris.
+Hero
+Selo: Evento virtual · Datas selecionadas
+Título: Veja um guiamento virtual acontecer, ao vivo, do começo ao fim
+Subtítulo: Um dos nossos experts guia um passageiro de verdade dentro dos parques.
+Você acompanha cada mensagem, cada decisão e cada momento mágico em tempo
+real.
+Botão: Quero participar do próximo Reality
+Imagem: celular com conversa de guiamento e foto de parque ao fundo
+Como funciona (componente em 2 colunas)
+Destinos
+Parques de Orlando
+Parques da Califórnia
+Parques de Paris
+Próximas datas: [A PREENCHER]
+Para quem é: alunos do Guiamento Virtual e qualquer profissional que queira ver o
+guiamento na prática antes de começar.
+Investimento: [A PREENCHER]
+Grupo 1 · Guiamento 	Grupo 2 · Bastidores
+Você acompanha toda a troca de mensagens
+entre o guia e o passageiro e vê como cada
+situação é conduzida.
+Você troca ideias, faz perguntas, dá
+sugestões e compartilha a experiência com
+outros alunos enquanto o guiamento
+acontece.
+Academia da Magia · Páginas dos programas
+Page 21 of 25
+
+-- 21 of 25 --
+
+Chamada final
+Título: Aprender vendo acontecer é outra história
+Botão: Quero participar do próximo Reality
+Magic Makers ao Vivo
+URL: /magic-makers-ao-vivo
+SEO title: Magic Makers ao Vivo 2027 | O maior encontro do trade de Orlando
+Meta description: 15 e 16 de maio de 2027, em Alphaville (SP). Palestras, networking e
+parcerias para agentes de viagens e profissionais do turismo apaixonados por Orlando.
+Hero
+Selo: 5ª edição · 15 e 16 de maio de 2027 · Alphaville, SP
+Título: Imagine o que você pode construir quando está entre as pessoas certas
+Subtítulo: Um dia inteiro de palestras transformadoras, networking, parcerias e muito
+entretenimento, com um pré-evento exclusivo na noite anterior.
+Botão: Garanta o seu ingresso
+Imagem ou vídeo: aftermovie da edição 2025
+Contador: faltam X dias para o Magic Makers ao Vivo
+Para quem é
+Agentes de viagens que estão começando o seu negócio.
+Agentes experientes, especialistas nos destinos mais desejados dos Estados Unidos.
+Empreendedores e profissionais de todo o trade de turismo.
+Apaixonados pela Flórida que querem viver essa jornada com quem pensa e sente
+como eles.
+O que você vai viver
+Pré-evento: noite exclusiva para participantes VIP.
+Dia principal: da manhã até a noite, com palestras, painéis e ativações dos parceiros.
+Networking: conexão com profissionais engajados e com as grandes marcas do
+destino.
+Insights que viram ação: ideias para levar o seu negócio a um novo patamar.
+Uma história que só cresce
+Edição 	Ano Participantes
+1ª 	2020 cerca de 150
+Academia da Magia · Páginas dos programas
+Page 22 of 25
+
+-- 22 of 25 --
+
+Ingressos
+[CONFIRMAR quais ingressos incluem o pré-evento VIP e o lote vigente]
+Parceiros e patrocinadores: faixa de logos [CONFIRMAR patrocinadores 2027]
+Local: Apogeo Nobre, Alphaville, SP
+Perguntas frequentes
+Preciso trabalhar com turismo para participar? Não. O evento também é para
+apaixonados pela Flórida.
+Posso parcelar? [CONFIRMAR condições]
+Chamada final
+Título: A sua próxima grande virada pode começar em um dia
+Botão: Garanta o seu ingresso
+Magic Makers Experience
+URL: /magic-makers-experience
+SEO title: Magic Makers Experience: Eu no Disney Treasure | Academia da Magia
+Meta description: Uma imersão de aprendizado a bordo do Disney Treasure com Joice
+Ferreira, para profissionais do turismo que querem vender cruzeiros Disney com
+autoridade.
+Hero
+Selo: Imersão presencial · 2ª edição
+Edição 	Ano Participantes
+2ª 	2021 cerca de 200
+3ª · Fire 	2024 cerca de 250
+4ª · Rocket 2025 cerca de 300
+5ª 	2027 300 vagas
+Ingresso Para quem 	Vagas Valor
+SPARK 	Quem quer viver o dia principal 	160 	[A PREENCHER]
+INSPIRE 	Dia principal com alimentação e extras 	80 	[A PREENCHER]
+IMAGINE Experiência completa, com todos os benefícios 60 	[A PREENCHER]
+Academia da Magia · Páginas dos programas
+Page 23 of 25
+
+-- 23 of 25 --
+
+Título: Eu no Disney Treasure
+Subtítulo: Explore de proa a popa o sexto navio da frota Disney e volte pronto para
+transmitir aos seus passageiros toda a magia de um cruzeiro Disney.
+Botão: Quero embarcar nessa
+Imagem: grupo da edição 2022 a bordo do Disney Wish
+A primeira edição: em 2022, levamos mais de 40 profissionais do turismo a bordo do
+Disney Wish, em uma experiência de aprendizado que combinou Orlando e alto-mar. Foi o
+primeiro grupo brasileiro de agentes de viagens no navio.
+O que você vai viver
+Conhecer o navio por dentro, das áreas de lazer às acomodações.
+Entender como oferecer as melhores experiências para cada perfil de passageiro.
+Ampliar a sua visão de negócio e aumentar as chances de conversão.
+Viver tudo isso ao lado da Joice Ferreira.
+Datas, roteiro e investimento: [A PREENCHER]
+Vagas: limitadas [A PREENCHER número]
+Chamada final
+Título: Quem vive a magia, vende a magia
+Botão: Quero embarcar nessa
+O que falta para publicar
+Seção interna, não vai para o site.
+Em todas as páginas
+Por programa
+Grade de aulas ou de encontros de cada programa.
+Depoimentos de alunos por programa (vídeo ou texto, com nome e agência).
+Confirmação dos preços e das condições de parcelamento.
+Fotos próprias: evitar imagens oficiais de Disney e Universal sem autorização.
+Magic Makers: formato, duração e valor da turma 2027.
+AGIR: frequência dos encontros, gravação e valor do upgrade AGIR + IA.
+Excelência: expert e detalhes para a lista de espera.
+Guias de Orlando prático: valor, datas e duração.
+Creations: confirmar experts da nova versão.
+Academia da Magia · Páginas dos programas
+Page 24 of 25
+
+-- 24 of 25 --
+
+Moneys: bio da Priscila Vargas.
+Hands On: formato, duração e valor.
+Parqueamento: conteúdo, expert, formato e valor.
+Orlando Lucrativo, Rota Califórnia e Japão: datas dos próximos encontros ao vivo.
+Paris Além da Disney: bio da Carolina Guerra.
+Ferramentas: preços e links de checkout.
+Magic Club: lista de benefícios e regra de cancelamento.
+Reality de Guiamento Virtual: próximas datas e valor.
+Magic Makers ao Vivo: valores dos ingressos, o que cada um inclui e patrocinadores
+2027.
+Magic Makers Experience: datas, roteiro, vagas e valor.
+Academia da Magia · Páginas dos programas
+Page 25 of 25
+
+-- 25 of 25 --
+

@@ -1,0 +1,50 @@
+---
+/**
+ * Captura de lista de espera (páginas "Em breve").
+ * Usa Netlify Forms por padrão (atributo data-netlify). Em outra hospedagem,
+ * aponte `action` para o endpoint do CRM/ferramenta de e-mail.
+ */
+interface Props { slug: string; programa: string; botao: string }
+const { slug, programa, botao } = Astro.props;
+const name = `lista-de-espera`;
+---
+<form class="wl" name={name} method="POST" action="/obrigado" data-netlify="true" netlify-honeypot="empresa" data-waitlist={slug}>
+  <input type="hidden" name="form-name" value={name} />
+  <input type="hidden" name="programa" value={slug} />
+  <p class="sr-only"><label>Não preencha: <input name="empresa" tabindex="-1" autocomplete="off" /></label></p>
+  <div class="grid">
+    <div class="field">
+      <label for={`wl-nome-${slug}`}>Nome</label>
+      <input id={`wl-nome-${slug}`} name="nome" required autocomplete="name" />
+    </div>
+    <div class="field">
+      <label for={`wl-email-${slug}`}>E-mail</label>
+      <input id={`wl-email-${slug}`} name="email" type="email" required autocomplete="email" />
+    </div>
+    <div class="field">
+      <label for={`wl-wa-${slug}`}>WhatsApp <span class="opt">(opcional)</span></label>
+      <input id={`wl-wa-${slug}`} name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" />
+    </div>
+  </div>
+  <label class="check">
+    <input type="checkbox" name="consentimento" value="sim" required />
+    <span>Aceito receber comunicações da Academia da Magia sobre o lançamento de {programa}, conforme a <a href="/privacidade">Política de Privacidade</a>. Posso cancelar quando quiser.</span>
+  </label>
+  <button type="submit" class="btn btn-white">{botao} →</button>
+</form>
+
+<style>
+  .wl { display: flex; flex-direction: column; gap: 18px; width: 100%; max-width: 860px; }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+  .field label { color: var(--white); }
+  .opt { font-weight: 500; color: var(--ink-on-blue); }
+  .check { color: var(--ink-on-blue); }
+  .check a { color: var(--white); text-decoration: underline; }
+  .btn { align-self: flex-start; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-waitlist]').forEach((f) =>
+    f.addEventListener('submit', () => (window as any).amTrack?.('lista_espera_submit', { slug: f.dataset.waitlist })),
+  );
+</script>

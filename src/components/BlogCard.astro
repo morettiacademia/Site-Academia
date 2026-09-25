@@ -1,0 +1,20 @@
+---
+import ImgSlot from './ImgSlot.astro';
+import type { Post } from '../lib/blog';
+interface Props { post: Post }
+const { post } = Astro.props;
+const { title, category, cover, coverAlt, draft } = post.data;
+---
+<a href={`/blog/${post.id}`} class="card">
+  <ImgSlot src={cover} alt={coverAlt ?? ''} label="imagem do artigo" class="card-img" widths={[400, 640, 880]} sizes="(min-width: 1320px) 424px, (min-width: 700px) 45vw, 100vw" />
+  <span class="chip">{category}</span>
+  <span class="card-title">{title}</span>
+  {draft && <span class="pending">Rascunho — não publicado</span>}
+</a>
+
+<style>
+  .card { display: flex; flex-direction: column; gap: 14px; color: var(--navy-800); transition: color .2s; }
+  .card:hover { color: var(--blue-600); }
+  .card :global(.card-img) { aspect-ratio: 4 / 3; border-radius: 24px; background: var(--ink-on-navy); }
+  .card :global(.card-img .slot-motif) { color: var(--blue-600); }
+</style>

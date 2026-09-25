@@ -1,0 +1,7 @@
+---
+/** Etiqueta amarela de conteúdo pendente. Só renderiza no modo revisão. */
+import { SHOW_PENDING } from '../lib/pending';
+interface Props { tag?: string | null; prefix?: string }
+const { tag, prefix } = Astro.props;
+---
+{SHOW_PENDING && tag && <span class="pending">{prefix ? `${prefix} ` : ''}{tag}</span>}

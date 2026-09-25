@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Socios from '../../components/Socios.astro';
+---
+<Base title="Nossa história | Academia da Magia" description="Conheça a Academia da Magia: formação, prática e comunidade para profissionais do turismo, criada por Camila Moretti, Joice Ferreira e Paulo Soares.">
+  <PageHero
+    selo="Nossa história"
+    title="Conhecimento que sai da aula e entra no <span class='hl'>seu trabalho.</span>"
+    lead="Formação, prática e comunidade juntas: entender o cliente, dominar destinos, organizar o negócio e construir relações no mercado."
+    crumbs={[{ label: 'Início', href: '/' }, { label: 'Sobre nós' }]}
+  />
+
+  <section class="bg-cyan">
+    <div class="container section split">
+      <h2 class="h2">O que nos move</h2>
+      <p class="big">Ajudar profissionais do turismo a construírem negócios melhores sem perder o que torna essa profissão extraordinária — as pessoas, as experiências e as conexões humanas.</p>
+    </div>
+  </section>
+
+  <Socios />
+
+  <section class="bg-light">
+    <div class="container section stack" style="gap:36px">
+      <h2 class="h2">Como a Academia ensina</h2>
+      <div class="grid-auto" style="--min:260px">
+        <div class="pilar"><span class="n">01</span><h3>Formações</h3><p>Especializações e destinos para dominar uma competência ou um produto e vender com segurança.</p><a href="/comece-aqui">Ver formações →</a></div>
+        <div class="pilar"><span class="n">02</span><h3>Mentorias</h3><p>Acompanhamento de perto para começar, estruturar e fazer crescer a sua agência.</p><a href="/agir">Ver mentorias →</a></div>
+        <div class="pilar"><span class="n">03</span><h3>Comunidade</h3><p>Aula semanal, eventos, imersões e encontros com quem vive o mercado de turismo.</p><a href="/magic-club">Ver comunidade →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-blue">
+    <div class="container section-lg stack final">
+      <h2 class="h-giant">Vamos encontrar o seu próximo passo?</h2>
+      <a href="/comece-aqui" class="btn btn-white" data-track="cta_comece_aqui" data-track-origem="sobre">Descubra seu próximo passo →</a>
+    </div>
+  </section>
+</Base>
+<style>
+  .big { font-size: clamp(19px, 1.7vw, 24px); line-height: 1.5; font-weight: 500; }
+  .pilar { background: var(--white); border: 1px solid var(--line-light-2); border-radius: 28px; padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+  .pilar .n { font-family: var(--font-display); font-size: 40px; font-weight: 800; color: var(--blue-600); line-height: 1; }
+  .pilar h3 { font-family: var(--font-display); font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
+  .pilar p { font-size: 15.5px; line-height: 1.55; color: var(--ink-body); }
+  .pilar a { margin-top: auto; color: var(--blue-600); font-weight: 700; }
+  .pilar a:hover { color: var(--navy-800); }
+  .final { gap: 28px; align-items: flex-start; }
+</style>

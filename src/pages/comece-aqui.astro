@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+import ImgSlot from '../components/ImgSlot.astro';
+import { seoFor } from '../lib/programas';
+import { whatsappHref, isExternal } from '../lib/site';
+
+const { title, description } = seoFor('comece-aqui');
+const P = (s: string) => '/' + s;
+const cards = [
+  { titulo: 'Estou começando', texto: 'Sou apaixonado por viagens e quero transformar isso em profissão.', botao: 'Quero começar', momento: 'comecando',
+    programas: [['Magic Makers', 'magic-makers'], ['Guias de Orlando', 'guias-de-orlando'], ['Guiamento Virtual', 'guiamento-virtual']] },
+  { titulo: 'Quero me especializar', texto: 'Já atuo no turismo e quero dominar um destino ou uma habilidade.', botao: 'Quero me especializar', momento: 'especializar',
+    programas: [['Destinos', 'orlando-lucrativo'], ['Creations', 'creations'], ['Hands On', 'hands-on'], ['Ferramentas', 'ferramentas']] },
+  { titulo: 'Quero estruturar e crescer', texto: 'Já tenho agência e preciso de processos, finanças e tecnologia.', botao: 'Quero crescer', momento: 'crescer',
+    programas: [['AGIR', 'agir'], ['Mentoria de IA', 'mentoria-ia'], ['Money’s', 'moneys']] },
+  { titulo: 'Quero viver a experiência', texto: 'Quero aprender na prática e estar perto de quem vive o mercado.', botao: 'Quero viver', momento: 'experiencia',
+    programas: [['Magic Club', 'magic-club'], ['Magic Makers ao Vivo', 'magic-makers-ao-vivo'], ['Magic Makers Experience', 'magic-makers-experience'], ['Reality', 'reality-guiamento-virtual']] },
+];
+const waExt = isExternal(whatsappHref) ? { target: '_blank', rel: 'noopener' } : {};
+---
+<Base title={title} description={description}>
+  <section class="bg-blue">
+    <div class="container hero stack">
+      <span class="badge">Seu próximo passo</span>
+      <h1 class="h1-xl">Toda jornada mágica começa com uma <span class="hl">escolha</span></h1>
+      <p class="hero-p">Responda com o coração: em que momento você está hoje? A gente te mostra o caminho.</p>
+    </div>
+  </section>
+
+  <section class="bg-blue" aria-label="Escolha o seu momento">
+    <div class="container cards grid-auto" style="--min:280px" data-cards>
+      {cards.map((c, i) => (
+        <article class:list={['card', { on: i === 0 }]} data-card>
+          <span class="num" aria-hidden="true">0{i + 1}</span>
+          <h2 class="title">{c.titulo}</h2>
+          <p class="text">{c.texto}</p>
+          <div class="progs">
+            <h3 class="progs-h">Programas indicados</h3>
+            <ul>
+              {c.programas.map(([label, s]) => (
+                <li><a href={P(s)} class="chip-o" data-track="momento_card_click" data-track-momento={c.momento}>{label}</a></li>
+              ))}
+            </ul>
+          </div>
+          <a href={P(c.programas[0][1])} class="cta" data-track="momento_card_click" data-track-momento={c.momento}>{c.botao} →</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-navy">
+    <div class="container duvida">
+      <div class="stack" style="gap:20px">
+        <h2 class="h2-duvida">Ainda em <span class="hl-cyan">dúvida?</span></h2>
+        <p class="muted duvida-p">Fale com o nosso time. A gente escuta o seu momento e indica o melhor caminho, sem pressa e sem fórmula pronta.</p>
+        <a href={whatsappHref} class="btn btn-cyan" style="align-self:flex-start" data-track="whatsapp_click" data-track-origem="comece_aqui" {...waExt}>Falar no WhatsApp →</a>
+      </div>
+      <ImgSlot label="time de atendimento" class="time" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding-block: clamp(56px, 8vw, 120px) clamp(48px, 6vw, 80px); gap: 24px; align-items: flex-start; }
+  .h1-xl { max-width: 1100px; }
+  .hero-p { font-size: clamp(18px, 1.5vw, 22px); line-height: 1.5; color: var(--ink-on-blue); max-width: 620px; }
+  .cards { padding-bottom: clamp(64px, 8vw, 120px); }
+
+  /* Card: padrão navy; ativo (hover/foco) branco */
+  .card {
+    --bg: var(--navy-800); --fg: var(--white); --num: var(--cyan-500); --chip: var(--navy-line-3); --btn-bg: var(--cyan-500); --btn-fg: var(--navy-800);
+    background: var(--bg); color: var(--fg); border-radius: 28px; padding: 28px;
+    display: flex; flex-direction: column; gap: 18px; min-height: 460px;
+    transition: background-color .2s, color .2s;
+  }
+  .card.on { --bg: var(--white); --fg: var(--navy-800); --num: var(--blue-600); --chip: var(--line-light); --btn-bg: var(--blue-600); --btn-fg: var(--white); }
+  .num { font-family: var(--font-display); font-size: 56px; font-weight: 800; line-height: 1; color: var(--num); transition: color .2s; }
+  .title { font-family: var(--font-display); font-size: 30px; font-weight: 800; line-height: 1.02; letter-spacing: -0.02em; }
+  .text { font-size: 16px; line-height: 1.5; }
+  .progs { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+  .progs-h { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .75; }
+  .progs ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip-o { display: inline-block; font-size: 13.5px; font-weight: 600; color: var(--fg); border: 1.5px solid var(--chip); padding: 7px 12px; border-radius: 999px; transition: background-color .2s, color .2s, border-color .2s; }
+  .chip-o:hover { background: var(--white); color: var(--navy-800); border-color: var(--white); }
+  .card.on .chip-o:hover { background: var(--navy-800); color: var(--white); border-color: var(--navy-800); }
+  .cta { display: block; text-align: center; background: var(--btn-bg); color: var(--btn-fg); font-weight: 700; font-size: 16px; padding: 16px 20px; border-radius: 12px; transition: background-color .2s, color .2s; }
+
+  .duvida { padding-block: clamp(64px, 8vw, 120px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 40px 72px; align-items: center; }
+  .h2-duvida { font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 5.4vw, 84px); line-height: .94; letter-spacing: -0.035em; }
+  .duvida-p { font-size: 19px; line-height: 1.55; max-width: 520px; }
+  .duvida :global(.time) { aspect-ratio: 1 / 1; max-height: 480px; width: 100%; max-width: 480px; justify-self: center; border-radius: 50%; }
+</style>
+
+<script>
+  // O card ativo segue o hover/foco.
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-card]')];
+  const activate = (c: HTMLElement) => cards.forEach((x) => x.classList.toggle('on', x === c));
+  cards.forEach((c) => {
+    c.addEventListener('mouseenter', () => activate(c));
+    c.addEventListener('focusin', () => activate(c));
+  });
+</script>

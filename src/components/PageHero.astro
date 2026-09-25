@@ -1,0 +1,33 @@
+---
+/** Hero simples (azul) para páginas institucionais. */
+interface Props { selo?: string; title: string; lead?: string; crumbs?: { label: string; href?: string }[] }
+const { selo, title, lead, crumbs } = Astro.props;
+---
+<section class="bg-blue">
+  <div class="container ph stack">
+    {crumbs && (
+      <nav aria-label="Você está em" class="crumbs">
+        <ol>
+          {crumbs.map((c, i) => (
+            <>
+              {i > 0 && <li aria-hidden="true">›</li>}
+              <li>{c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>
+            </>
+          ))}
+        </ol>
+      </nav>
+    )}
+    {selo && <span class="badge">{selo}</span>}
+    <h1 class="h1-prog"><Fragment set:html={title} /></h1>
+    {lead && <p class="ph-lead">{lead}</p>}
+    <slot />
+  </div>
+</section>
+<style>
+  .ph { padding-block: clamp(56px, 8vw, 112px) clamp(48px, 6vw, 88px); gap: 24px; align-items: flex-start; }
+  .h1-prog { max-width: 1000px; }
+  .ph-lead { font-size: clamp(17px, 1.4vw, 21px); line-height: 1.55; color: var(--ink-on-blue); max-width: 640px; }
+  .crumbs ol { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; flex-wrap: wrap; font-size: 13px; font-weight: 600; color: var(--cyan-200); }
+  .crumbs a:hover { color: var(--white); }
+  .crumbs [aria-current] { color: var(--white); }
+</style>

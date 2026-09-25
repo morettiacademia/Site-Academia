@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+---
+<Base title="Página não encontrada | Academia da Magia" description="A página que você procura não existe ou mudou de endereço." noindex>
+  <PageHero selo="Erro 404" title="Essa página <span class='hl'>não existe.</span>" lead="Ela pode ter mudado de endereço. Que tal descobrir o seu próximo passo?">
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a href="/comece-aqui" class="btn btn-white">Descubra seu próximo passo →</a>
+      <a href="/" class="btn btn-outline">Ir para o início</a>
+    </div>
+  </PageHero>
+</Base>

@@ -1,0 +1,85 @@
+---
+import '@fontsource-variable/bricolage-grotesque/opsz.css';
+import '@fontsource/montserrat/400.css';
+import '@fontsource/montserrat/500.css';
+import '@fontsource/montserrat/600.css';
+import '@fontsource/montserrat/700.css';
+import '@fontsource/montserrat/800.css';
+import '../styles/global.css';
+import bricolageUrl from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url';
+import montserrat400Url from '@fontsource/montserrat/files/montserrat-latin-400-normal.woff2?url';
+import montserrat700Url from '@fontsource/montserrat/files/montserrat-latin-700-normal.woff2?url';
+import { getImage } from 'astro:assets';
+import ogDefault from '../assets/hero-socios.png';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import { SITE_NAME, links } from '../lib/site';
+import { SHOW_PENDING } from '../lib/pending';
+
+interface Props {
+  title: string;
+  description: string;
+  /** JSON-LD adicionais desta página. */
+  jsonLd?: Record<string, unknown>[];
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+}
+const { title, description, jsonLd = [], ogType = 'website', noindex = false } = Astro.props;
+
+const path = Astro.url.pathname.replace(/\/$/, '').replace(/\.html$/, '') || '/';
+const canonical = new URL(path, Astro.site).href;
+const og = await getImage({ src: ogDefault, width: 1200, format: 'jpg', quality: 80 });
+const ogUrl = new URL(og.src, Astro.site).href;
+
+const sameAs = [links.instagram, links.youtube].filter(Boolean);
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE_NAME,
+  url: new URL('/', Astro.site).href,
+  logo: new URL('/logo-academia-da-magia.png', Astro.site).href,
+  ...(sameAs.length ? { sameAs } : {}),
+};
+const ld = [organization, ...jsonLd];
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {(noindex || SHOW_PENDING) && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#0c1b3d" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <link rel="preload" href={bricolageUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={montserrat400Url} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={montserrat700Url} as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {ld.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+    <Header />
+    <main id="conteudo" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <CookieBanner />
+  </body>
+</html>

@@ -1,0 +1,281 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import ImgSlot from '../components/ImgSlot.astro';
+import Star from '../components/Star.astro';
+import Pending from '../components/Pending.astro';
+import BlogCard from '../components/BlogCard.astro';
+import heroSocios from '../assets/hero-socios.png';
+import Socios from '../components/Socios.astro';
+import { SHOW_PENDING } from '../lib/pending';
+import { links } from '../lib/site';
+import { recentPosts } from '../lib/blog';
+
+// Slide 1 tem foto; os demais aguardam fotos reais (seção 11 do handoff).
+const slideDefs = [
+  { src: heroSocios, alt: 'Camila Moretti, Joice Ferreira e Paulo Soares, sócios da Academia da Magia' },
+  { src: null, alt: 'Alunos da Academia em Orlando' },
+  { src: null, alt: 'Magic Makers ao Vivo — plateia' },
+  { src: null, alt: 'Imersão a bordo / Magic Makers Experience' },
+  { src: null, alt: 'Turma em aula ou mentoria' },
+];
+const slides = slideDefs.filter((s) => s.src || SHOW_PENDING);
+
+// Pré-carrega o LCP (slide 1)
+const lcp = await getImage({ src: heroSocios, width: 1600, format: 'avif', quality: 70 });
+
+const portals = [
+  { label: 'Especializações', short: 'especializações', text: 'Desenvolva uma competência que fortaleça sua entrega.', bg: '#1b5aa8', ph: 'aula / especialização' },
+  { label: 'Destinos', short: 'destinos', text: 'Conhecimento de produto para vender com segurança.', bg: '#2a6bb8', ph: 'destino' },
+  { label: 'Comunidade', short: 'comunidade', text: 'Eventos, imersões e aula semanal com quem vive o turismo.', bg: '#36b6e9', ph: 'Magic Makers ao Vivo' },
+  { label: 'Mentorias', short: 'mentorias', text: 'Comece, estruture e faça crescer a sua agência com acompanhamento.', bg: '#1f3566', ph: 'mentoria' },
+];
+
+const quizOptions = ['Quero começar no turismo', 'Sou agente em início de carreira', 'Quero me especializar', 'Tenho uma agência e quero crescer'];
+const posts = await recentPosts(3);
+---
+<Base
+  title="Academia da Magia — Formação para profissionais do turismo"
+  description="Cursos, mentorias, comunidade e experiências para profissionais do turismo. Descubra seu próximo passo."
+>
+  <link slot="head" rel="preload" as="image" href={lcp.src} type="image/avif" fetchpriority="high" />
+
+  <!-- 1. Hero em carrossel -->
+  <section class="hero" aria-roledescription="carrossel" aria-label="Destaques" data-carousel>
+    <div class="hero-media">
+      {slides.map((s, i) => (
+        <div class:list={['slide', { active: i === 0 }]} aria-hidden={i === 0 ? undefined : 'true'} aria-roledescription="slide" aria-label={`${i + 1} de ${slides.length}`} data-slide>
+          {s.src ? (
+            <Picture src={s.src} alt={s.alt} formats={['avif']} fallbackFormat="webp" widths={[640, 960, 1280, 1600, 2000].filter((w) => w <= s.src!.width)} sizes="100vw" quality={70} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />
+          ) : (
+            <ImgSlot label={s.alt} style="width:100%;height:100%;background:#1b5aa8" />
+          )}
+        </div>
+      ))}
+      <div class="hero-scrim" aria-hidden="true"></div>
+    </div>
+    <div class="hero-text-wrap">
+      <div class="container hero-text-inner">
+        <div class="hero-col">
+          <div class="eyebrow hero-eyebrow"><span class="stars" aria-hidden="true"><Star size="13" /><Star size="13" /><Star size="13" /></span>Formação · Estratégia · Experiências</div>
+          <h1 class="h1-home">Sua paixão por viagens vira <span class="hl">autoridade</span> e negócio.</h1>
+          <p class="lead hero-lead">Cursos, mentorias, comunidade e experiências para quem está começando no turismo — e para quem quer crescer com mais direção.</p>
+          <div class="btn-row">
+            <a href="/comece-aqui" class="btn btn-cyan" data-track="cta_comece_aqui" data-track-origem="home_hero">Descubra seu próximo passo →</a>
+            <a href="#caminhos" class="btn btn-outline">Explore as formações</a>
+          </div>
+        </div>
+        {slides.length > 1 && (
+          <div class="controls">
+            {slides.map((_, i) => (
+              <button type="button" class:list={['dot', { on: i === 0 }]} aria-label={`Imagem ${i + 1}`} aria-current={i === 0 ? 'true' : 'false'} data-dot={i}></button>
+            ))}
+            <button type="button" class="play" aria-label="Pausar carrossel" data-play>❚❚</button>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Caminhos -->
+  <section id="caminhos" class="bg-navy">
+    <div class="container stack caminhos">
+      <div class="head-row">
+        <h2 class="h2-caminhos">Existe um próximo passo para o <span class="hl-cyan">seu momento.</span></h2>
+        <p class="muted side-text">A jornada não é igual para todo mundo. Escolha por onde seguir.</p>
+      </div>
+      <div class="grid-auto" style="--min:290px">
+        {portals.map((p, i) => (
+          <a href="/comece-aqui" class="portal" style={`background:${p.bg}`} data-track="cta_comece_aqui" data-track-origem={`portal_${p.short}`}>
+            <ImgSlot label={p.ph} class="portal-img" style={`background:${p.bg}`} />
+            <div class="portal-scrim" aria-hidden="true"></div>
+            <div class="portal-body">
+              <span class="portal-num">0{i + 1}</span>
+              <span class="portal-title">{p.label}</span>
+              <span class="portal-text">{p.text}</span>
+              <span class="portal-pill">Ver {p.short} →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Manifesto -->
+  <section class="bg-cyan">
+    <div class="container section-lg stack manifesto">
+      <h2 class="h-manifesto">Conhecimento que sai da aula e entra no seu trabalho.</h2>
+      <div class="head-row">
+        <p class="manifesto-text">Formação, prática e comunidade juntas: entender o cliente, dominar destinos, organizar o negócio e construir relações no mercado.</p>
+        <a href="/sobre" class="btn btn-navy btn-pill btn-navy-on-cyan">Conheça a Academia →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Sócios -->
+  <Socios id="sobre" />
+
+  <!-- 5. Chamada do quiz -->
+  <section id="quiz" class="bg-blue">
+    <div class="container quiz">
+      <div class="stack" style="gap:22px">
+        <h2 class="h2-quiz">Qual formação faz sentido <span class="hl">agora?</span></h2>
+        <p class="quiz-text">Perguntas rápidas. Uma recomendação explicada. Sem pedir contato antes do resultado.</p>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-meta"><span>1 de 6</span><span>Seu momento</span></div>
+        <div class="quiz-bar"><div></div></div>
+        <p class="quiz-q" id="quiz-q">Como você descreve sua situação hoje?</p>
+        <div role="radiogroup" aria-labelledby="quiz-q" class="quiz-opts" data-quiz>
+          {quizOptions.map((o) => (
+            <button type="button" role="radio" aria-checked="false" class="quiz-opt">{o}</button>
+          ))}
+        </div>
+        <a href="/comece-aqui" class="btn btn-navy btn-pill btn-sm quiz-go" data-track="cta_comece_aqui" data-track-origem="home_quiz">Descobrir meu próximo passo →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Protagonistas -->
+  <section id="protagonistas" class="bg-navy">
+    <div class="container quiz">
+      <ImgSlot label="Protagonistas" class="protag-img" />
+      <div class="stack" style="gap:22px">
+        <span class="eyebrow hl-cyan">Protagonistas</span>
+        <h2 class="h2">Aprender abre caminhos para participar ainda mais.</h2>
+        <p class="muted protag-text">Pessoas que crescem com a Academia e passam a compartilhar conhecimento, representar destinos e movimentar a comunidade.</p>
+        {links.protagonistas ? (
+          <a href={links.protagonistas} target="_blank" rel="noopener" class="btn btn-outline-cyan btn-pill btn-sm" style="align-self:flex-start" data-track="protagonistas_outbound">Conhecer o Protagonistas ↗</a>
+        ) : (
+          <Pending tag="URL do site oficial do Protagonistas" prefix="Pendente:" />
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Do blog -->
+  {posts.length > 0 && (
+    <section id="blog" class="bg-light">
+      <div class="container section stack" style="gap:36px">
+        <div class="head-row">
+          <h2 class="h2-sm">Do blog</h2>
+          <a href="/blog" class="more-link">Ver todos os artigos →</a>
+        </div>
+        <div class="grid-auto" style="--min:300px;gap:24px">
+          {posts.map((p) => <BlogCard post={p} />)}
+        </div>
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  /* Hero */
+  .hero { position: relative; background: var(--navy-800); display: flex; flex-direction: column; }
+  .hero-media { position: relative; height: clamp(280px, 58vw, 620px); overflow: hidden; background: var(--blue-600); }
+  .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease; pointer-events: none; }
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 70% center; }
+  .slide :global(picture) { display: block; width: 100%; height: 100%; }
+  .hero-scrim { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg, #0c1b3d 0%, rgba(12, 27, 61, 0) 35%); }
+  .hero-text-wrap { position: relative; }
+  .hero-text-inner { height: 100%; padding-top: 8px; padding-bottom: 56px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .hero-col { display: flex; flex-direction: column; gap: 24px; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 12px; color: var(--cyan-200); }
+  .stars { display: inline-flex; gap: 4px; color: var(--white); }
+  .hero-lead { color: var(--ink-on-blue); max-width: 540px; }
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .controls { display: flex; align-items: center; gap: 10px; padding-top: 28px; }
+  .dot { all: unset; cursor: pointer; width: 8px; height: 8px; border-radius: 8px; background: rgba(255, 255, 255, 0.45); transition: width .3s; position: relative; }
+  .dot::after { content: ''; position: absolute; inset: -18px -4px; } /* alvo de toque ≥ 44px */
+  .dot.on { width: 28px; background: var(--white); }
+  .dot:focus-visible { outline: 3px solid var(--cyan-500); outline-offset: 3px; }
+  .play { margin-left: 6px; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, 0.6); background: transparent; color: var(--white); font-size: 13px; cursor: pointer; }
+
+  @media (min-width: 1200px) {
+    .hero-media { height: clamp(600px, 88vh, 920px); }
+    .hero-scrim {
+      background:
+        linear-gradient(90deg, rgba(12, 27, 61, .95) 0%, rgba(12, 27, 61, .75) 30%, rgba(12, 27, 61, 0) 52%),
+        linear-gradient(0deg, rgba(12, 27, 61, .6) 0%, rgba(12, 27, 61, 0) 30%);
+    }
+    .hero-text-wrap { position: absolute; inset: 0; pointer-events: none; }
+    .hero-text-inner { padding-top: clamp(40px, 6vw, 88px); padding-bottom: clamp(40px, 6vw, 88px); }
+    .hero-col { max-width: 40%; }
+    .btn-row, .controls { pointer-events: auto; }
+  }
+
+  /* Caminhos */
+  .caminhos { padding-block: clamp(64px, 8vw, 120px); gap: 48px; }
+  .h2-caminhos { font-family: var(--font-display); font-weight: 800; font-size: clamp(38px, 5vw, 72px); line-height: .98; letter-spacing: -0.03em; max-width: 780px; }
+  .side-text { font-size: 17px; line-height: 1.55; max-width: 400px; }
+  .portal { position: relative; display: block; height: clamp(380px, 34vw, 480px); border-radius: 28px; overflow: hidden; color: var(--white); }
+  .portal :global(.portal-img) { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .portal-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12, 27, 61, 0) 30%, rgba(12, 27, 61, 0.88) 100%); }
+  .portal-body { position: absolute; left: 0; right: 0; bottom: 0; padding: 28px; display: flex; flex-direction: column; gap: 10px; }
+  .portal-num { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: var(--cyan-300); }
+  .portal-title { font-family: var(--font-display); font-size: clamp(28px, 2.6vw, 38px); font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+  .portal-text { font-size: 15px; line-height: 1.45; color: var(--ink-on-navy); }
+  .portal-pill { align-self: flex-start; margin-top: 8px; background: var(--white); color: var(--navy-800); font-weight: 700; font-size: 14px; padding: 10px 18px; border-radius: 999px; transition: background-color .2s, color .2s; }
+  .portal:hover .portal-pill { background: var(--cyan-500); }
+
+  /* Manifesto */
+  .manifesto { gap: 36px; }
+  .h-manifesto { font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 6.6vw, 104px); line-height: .94; letter-spacing: -0.035em; }
+  .manifesto-text { font-size: 18px; line-height: 1.55; font-weight: 500; max-width: 560px; }
+
+  /* Quiz / Protagonistas */
+  .quiz { padding-block: clamp(64px, 8vw, 120px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 48px; align-items: center; }
+  .h2-quiz { font-family: var(--font-display); font-weight: 800; font-size: clamp(38px, 5vw, 72px); line-height: .96; letter-spacing: -0.03em; }
+  .quiz-text { font-size: 18px; line-height: 1.55; color: var(--ink-on-blue); max-width: 480px; }
+  .quiz-card { background: var(--white); color: var(--navy-800); border-radius: 28px; padding: clamp(24px, 3vw, 36px); display: flex; flex-direction: column; gap: 18px; box-shadow: 0 30px 80px rgba(4, 12, 32, 0.35); }
+  .quiz-meta { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; color: var(--ink-muted); }
+  .quiz-bar { height: 6px; background: #e8f2fb; border-radius: 6px; }
+  .quiz-bar div { width: 16%; height: 100%; background: var(--cyan-500); border-radius: 6px; }
+  .quiz-q { font-family: var(--font-display); font-size: 24px; font-weight: 700; line-height: 1.15; }
+  .quiz-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 10px; }
+  .quiz-opt { text-align: left; border: 2px solid var(--line-light-2); background: var(--white); color: var(--navy-800); font-size: 15px; font-weight: 600; padding: 16px; border-radius: 16px; cursor: pointer; min-height: 64px; transition: border-color .2s, background-color .2s; }
+  .quiz-opt:hover { border-color: var(--cyan-300); }
+  .quiz-opt[aria-checked='true'] { border-color: var(--cyan-500); background: #e8f2fb; }
+  .quiz-go { align-self: flex-start; padding: 16px 26px; }
+  :global(.protag-img) { aspect-ratio: 4 / 3; border-radius: 28px; }
+  .protag-text { font-size: 17px; line-height: 1.6; max-width: 520px; }
+
+  .more-link { color: var(--blue-600); font-weight: 700; font-size: 15px; }
+  .more-link:hover { color: var(--navy-800); }
+</style>
+
+<script>
+  // Carrossel do hero: crossfade de 1.2s, troca a cada 5.5s, pausado com prefers-reduced-motion.
+  const root = document.querySelector<HTMLElement>('[data-carousel]');
+  const slides = root ? [...root.querySelectorAll<HTMLElement>('[data-slide]')] : [];
+  if (root && slides.length > 1) {
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-dot]')];
+    const play = root.querySelector<HTMLButtonElement>('[data-play]')!;
+    let current = 0;
+    let playing = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const go = (i: number) => {
+      current = (i + slides.length) % slides.length;
+      slides.forEach((s, k) => {
+        const on = k === current;
+        s.classList.toggle('active', on);
+        if (on) s.removeAttribute('aria-hidden'); else s.setAttribute('aria-hidden', 'true');
+      });
+      dots.forEach((d, k) => { d.classList.toggle('on', k === current); d.setAttribute('aria-current', String(k === current)); });
+    };
+    const renderPlay = () => {
+      play.textContent = playing ? '❚❚' : '▶';
+      play.setAttribute('aria-label', playing ? 'Pausar carrossel' : 'Reproduzir carrossel');
+    };
+    renderPlay();
+    dots.forEach((d) => d.addEventListener('click', () => go(Number(d.dataset.dot))));
+    play.addEventListener('click', () => { playing = !playing; renderPlay(); });
+    setInterval(() => { if (playing && !document.hidden) go(current + 1); }, 5500);
+  }
+
+  // Prévia do quiz: seleção ilustrativa (o quiz completo fica em /comece-aqui)
+  document.querySelectorAll<HTMLElement>('[data-quiz]').forEach((g) => {
+    const opts = [...g.querySelectorAll<HTMLButtonElement>('[role="radio"]')];
+    opts.forEach((o) => o.addEventListener('click', () => opts.forEach((x) => x.setAttribute('aria-checked', String(x === o)))));
+  });
+</script>

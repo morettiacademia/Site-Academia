@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { allPosts } from '../../lib/blog';
+const posts = await allPosts();
+---
+<Base title="Blog | Academia da Magia" description="Artigos sobre carreira no turismo, destinos, gestão de agências e tecnologia para profissionais de viagens.">
+  <PageHero selo="Conteúdos" title="Do <span class='hl'>blog</span>" lead="Artigos, bastidores e aprendizados para o seu dia a dia no turismo." crumbs={[{ label: 'Início', href: '/' }, { label: 'Blog' }]} />
+  <section class="bg-light">
+    <div class="container section">
+      {posts.length > 0 ? (
+        <div class="grid-auto" style="--min:300px;gap:40px 24px">
+          {posts.map((p) => <BlogCard post={p} />)}
+        </div>
+      ) : (
+        <div class="empty stack">
+          <h2 class="h2-sm">Os primeiros artigos estão a caminho.</h2>
+          <p>Enquanto isso, descubra qual formação faz sentido para o seu momento.</p>
+          <a href="/comece-aqui" class="btn btn-blue" style="align-self:flex-start">Descubra seu próximo passo →</a>
+        </div>
+      )}
+    </div>
+  </section>
+</Base>
+<style>
+  .empty { gap: 18px; max-width: 640px; }
+  .empty p { font-size: 17px; color: var(--ink-body); }
+</style>

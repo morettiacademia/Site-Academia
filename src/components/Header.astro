@@ -1,0 +1,255 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/academia-da-magia.png';
+import Star from './Star.astro';
+import { nav, academia365Href, isExternal } from '../lib/site';
+
+const menus = nav.filter((n) => n.menu);
+const aluno = { href: academia365Href, ext: isExternal(academia365Href) };
+---
+<header class="site-header" data-header>
+  <div class="bar container">
+    <a href="/" class="logo" aria-label="Academia da Magia — início">
+      <Image src={logo} alt="Academia da Magia" height={54} densities={[1, 2]} loading="eager" fetchpriority="high" />
+    </a>
+
+    <nav class="nav-desktop" aria-label="Principal">
+      <ul>
+        {nav.map((n) => (
+          <li>
+            {n.menu ? (
+              <button type="button" class="nav-link" aria-expanded="false" aria-controls={`mega-${n.key}`} data-menu-trigger={n.key}>
+                {n.label}<span class="caret" aria-hidden="true"></span>
+              </button>
+            ) : (
+              <a class="nav-link" href={n.href} data-menu-plain>{n.label}</a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <a href="/comece-aqui" class="cta-comece" data-track="cta_comece_aqui" data-track-origem="header">
+        <span class="l1">Comece aqui <Star size="12" /></span>
+        <span class="l2">Descubra seu próximo passo</span>
+      </a>
+      <a href={aluno.href} class="cta-aluno" aria-label="Área do aluno — Academia 365" data-track="area_aluno_click" {...(aluno.ext ? { target: '_blank', rel: 'noopener' } : {})}>Área do aluno</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="menu-mobile" data-mobile-toggle>
+        <span data-label>Menu</span>
+      </button>
+    </div>
+  </div>
+
+  {menus.map((n) => {
+    const m = n.menu!;
+    const single = m.cols.length === 1;
+    return (
+      <div class="mega-wrap" id={`mega-${n.key}`} data-menu-panel={n.key} hidden>
+        <div class:list={['mega', { single }]} style={single ? undefined : `--cols:${m.cols.length + 1}`}>
+          <div class="mega-intro">
+            <span class="mega-title">{m.introTitle}</span>
+            <span class="mega-text">{m.introText}</span>
+            <a href={m.introHref} class="btn btn-blue btn-sm mega-cta">{m.introCta}</a>
+          </div>
+          {m.cols.map((c, i) => (
+            <div class:list={['mega-col', { alt: i % 2 === 1 }]}>
+              <div class="mega-col-head">
+                <span class="mega-title">{c.title}</span>
+                <span class="mega-sub">{c.sub}</span>
+              </div>
+              <ul class:list={['mega-items', { wide: c.wide }]}>
+                {c.items.map((it) => (
+                  <li>
+                    <a href={it.href} class="mega-item">
+                      <span class="dot"><Star size="14" /></span>
+                      <span class="mega-item-text">
+                        <span>{it.label}</span>
+                        {it.tag && <span class="mega-tag">{it.tag}</span>}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  })}
+
+  <nav class="nav-mobile" id="menu-mobile" aria-label="Principal (mobile)" hidden>
+    <div class="container nav-mobile-inner">
+      {nav.map((n) => (
+        <div class="m-group">
+          <a href={n.menu ? n.menu.introHref : n.href} class="m-title">{n.label}</a>
+          {n.menu && (
+            <ul class="m-chips">
+              {n.menu.cols.flatMap((c) => c.items).map((it) => (
+                <li><a href={it.href} class="m-chip">{it.label}</a></li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+      <a href="/comece-aqui" class="btn btn-cyan m-cta" data-track="cta_comece_aqui" data-track-origem="menu_mobile">Comece aqui <Star size="13" /> Descubra seu próximo passo</a>
+      <a href={aluno.href} class="btn btn-outline m-cta" data-track="area_aluno_click" {...(aluno.ext ? { target: '_blank', rel: 'noopener' } : {})}>Área do aluno · Academia 365</a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: 30;
+    background: var(--navy-800); border-bottom: 1px solid var(--navy-line); color: var(--white);
+  }
+  .bar { display: flex; align-items: center; gap: 20px; padding-block: 10px; }
+  .logo { display: flex; flex-shrink: 0; }
+  .logo img { height: 54px; width: auto; }
+
+  .nav-desktop { display: none; flex: 1; justify-content: center; }
+  .nav-desktop ul { display: flex; gap: 2px; align-items: center; list-style: none; margin: 0; padding: 0; }
+  .nav-link {
+    display: flex; align-items: center; gap: 6px; min-height: 44px;
+    color: var(--white); font-size: 14px; font-weight: 500; padding: 14px 8px; white-space: nowrap;
+    background: none; border: 0; cursor: pointer; transition: color .2s;
+  }
+  .nav-link:hover, .nav-link[aria-expanded='true'] { color: var(--cyan-300); }
+  .caret::before { content: '▼'; font-size: 9px; }
+  .nav-link[aria-expanded='true'] .caret::before { content: '▲'; }
+
+  .actions { display: flex; gap: 10px; align-items: center; margin-left: auto; }
+  .cta-comece {
+    display: none; flex-direction: column; gap: 1px; line-height: 1.15; white-space: nowrap;
+    background: var(--cyan-500); color: var(--navy-800); padding: 8px 16px; border-radius: 12px;
+    transition: background-color .2s;
+  }
+  .cta-comece:hover { background: var(--white); }
+  .cta-comece .l1 { display: inline-flex; align-items: center; gap: 5px; font-size: 14.5px; font-weight: 800; }
+  .cta-comece .l2 { font-size: 11px; font-weight: 600; }
+  .cta-aluno {
+    display: none; border: 1.5px solid var(--white); color: var(--white); font-size: 14px; font-weight: 700;
+    padding: 12px 18px; border-radius: 12px; white-space: nowrap; transition: background-color .2s, color .2s;
+  }
+  .cta-aluno:hover { background: var(--white); color: var(--navy-800); }
+  .menu-toggle {
+    border: 1.5px solid var(--cyan-500); background: transparent; border-radius: 999px;
+    height: 46px; padding: 0 18px; font-size: 14px; font-weight: 700; color: var(--white); cursor: pointer;
+  }
+
+  @media (min-width: 1180px) {
+    .nav-desktop { display: flex; }
+    .cta-comece { display: flex; }
+    .cta-aluno { display: inline-block; }
+    .menu-toggle, .nav-mobile { display: none !important; }
+  }
+  @media (max-width: 1179.98px) {
+    .mega-wrap { display: none !important; }
+  }
+
+  /* Mega menu */
+  .mega-wrap { position: absolute; top: 100%; left: 0; right: 0; padding: 0 var(--gutter); z-index: 40; }
+  .mega {
+    max-width: 1272px; margin: 0 auto; background: var(--white); color: var(--navy-800);
+    border-radius: 0 0 24px 24px; overflow: hidden; box-shadow: 0 30px 70px rgba(4, 12, 32, 0.5);
+    display: grid; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+  }
+  .mega.single { grid-template-columns: 320px minmax(0, 1fr); }
+  .mega-intro { background: var(--surface-alt); padding: 32px 32px 36px; display: flex; flex-direction: column; gap: 10px; }
+  .mega-title { font-family: var(--font-display); font-size: 21px; font-weight: 700; color: var(--blue-600); }
+  .mega-text { font-size: 15px; line-height: 1.5; color: var(--ink-body); }
+  .mega-cta { align-self: flex-start; margin-top: 14px; padding: 15px 22px; }
+  .mega-col { background: var(--white); padding: 32px 28px 36px; display: flex; flex-direction: column; gap: 18px; }
+  .mega-col.alt { background: var(--surface-alt); }
+  .mega-col-head { display: flex; flex-direction: column; gap: 6px; }
+  .mega-sub { font-size: 14.5px; line-height: 1.5; color: var(--ink-body); }
+  .mega-items { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 4px 20px; }
+  .mega-items.wide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mega-item { display: flex; align-items: center; gap: 12px; padding: 6px 0; color: var(--navy-800); font-size: 15.5px; font-weight: 500; transition: color .2s; }
+  .mega-item:hover { color: var(--blue-600); }
+  .mega-item .dot { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--navy-800); color: var(--white); display: flex; align-items: center; justify-content: center; }
+  .mega-item-text { display: flex; flex-direction: column; gap: 2px; line-height: 1.25; }
+  .mega-tag { font-size: 12px; font-weight: 700; color: var(--blue-600); }
+
+  /* Menu mobile */
+  .nav-mobile { border-top: 1px solid var(--navy-line); max-height: 80vh; overflow: auto; overscroll-behavior: contain; }
+  .nav-mobile-inner { padding-top: 8px; padding-bottom: 24px; display: grid; gap: 4px; }
+  .m-group { border-bottom: 1px solid var(--navy-line); padding: 10px 0; }
+  .m-title { display: block; color: var(--white); font-family: var(--font-display); font-size: 22px; font-weight: 700; padding: 8px 0; }
+  .m-chips { list-style: none; margin: 0; padding: 6px 0 4px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .m-chip { display: inline-block; color: #cfe6f7; font-size: 14px; font-weight: 600; border: 1px solid var(--navy-line-3); padding: 10px 14px; border-radius: 999px; }
+  .m-chip:hover { border-color: var(--cyan-500); color: var(--white); }
+  .m-cta { margin-top: 12px; font-size: 15px; padding: 14px; }
+  .m-cta + .m-cta { margin-top: 0; }
+</style>
+
+<script>
+  function initHeader() {
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    if (!header || header.dataset.ready) return;
+    header.dataset.ready = '1';
+
+    const triggers = [...header.querySelectorAll<HTMLButtonElement>('[data-menu-trigger]')];
+    const panels = [...header.querySelectorAll<HTMLElement>('[data-menu-panel]')];
+    let open: string | null = null;
+
+    const setOpen = (key: string | null) => {
+      open = key;
+      triggers.forEach((t) => t.setAttribute('aria-expanded', String(t.dataset.menuTrigger === key)));
+      panels.forEach((p) => (p.hidden = p.dataset.menuPanel !== key));
+    };
+    const canHover = () => window.matchMedia('(hover: hover) and (min-width: 1180px)').matches;
+
+    triggers.forEach((t) => {
+      const key = t.dataset.menuTrigger!;
+      t.addEventListener('mouseenter', () => canHover() && setOpen(key));
+      t.addEventListener('click', () => setOpen(open === key ? null : key));
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          setOpen(key);
+          header.querySelector<HTMLElement>(`[data-menu-panel="${key}"] a`)?.focus();
+        }
+      });
+    });
+    header.querySelectorAll<HTMLElement>('[data-menu-plain]').forEach((a) =>
+      a.addEventListener('mouseenter', () => canHover() && setOpen(null)),
+    );
+    header.addEventListener('mouseleave', () => canHover() && setOpen(null));
+    header.addEventListener('focusout', (e) => {
+      const next = e.relatedTarget as Node | null;
+      if (next && !header.contains(next)) setOpen(null);
+    });
+
+    // Menu mobile
+    const toggle = header.querySelector<HTMLButtonElement>('[data-mobile-toggle]')!;
+    const mobile = header.querySelector<HTMLElement>('#menu-mobile')!;
+    const setMobile = (on: boolean) => {
+      mobile.hidden = !on;
+      toggle.setAttribute('aria-expanded', String(on));
+      toggle.querySelector('[data-label]')!.textContent = on ? 'Fechar' : 'Menu';
+    };
+    toggle.addEventListener('click', () => setMobile(mobile.hidden === true));
+    mobile.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) setMobile(false);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (open) {
+        const t = triggers.find((x) => x.dataset.menuTrigger === open);
+        setOpen(null);
+        t?.focus();
+      }
+      if (!mobile.hidden) {
+        setMobile(false);
+        toggle.focus();
+      }
+    });
+    // Fecha os painéis ao navegar por âncoras
+    panels.forEach((p) => p.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) setOpen(null);
+    }));
+  }
+  initHeader();
+</script>
