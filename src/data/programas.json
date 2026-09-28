@@ -20,7 +20,7 @@
  "final": ["O seu sonho também pode virar a sua agência", "Quero entrar na lista de espera"]
 },
 "agir": {
- "nome": "AGIR", "menu": "Mentorias", "logo": "assets/agir.png", "logoDark": true,
+ "checkout":"https://agir.academiadamagia.com.br","nome": "AGIR", "menu": "Mentorias", "logo": "assets/agir.png", "logoDark": true,
  "seo": "Mentoria AGIR | Estruture a sua agência de viagens",
  "selo": "Mentoria · Turmas de até 15 pessoas",
  "titulo": "Pare de apagar incêndio. Comece a construir uma agência de verdade.",
@@ -41,7 +41,7 @@
  "final": ["A sua agência merece uma estrutura à altura dos seus sonhos", "Quero minha vaga no AGIR"]
 },
 "mentoria-ia": {
- "nome": "Mentoria de IA", "menu": "Mentorias",
+ "checkout":"https://mentoria.academiadamagia.com.br/?v=3","nome": "Mentoria de IA", "menu": "Mentorias",
  "seo": "Mentoria de IA para Agências de Viagens | Academia da Magia",
  "selo": "Mentoria · Turmas de até 15 pessoas",
  "titulo": "A inteligência artificial trabalhando para a sua agência",
@@ -295,7 +295,7 @@
  "final": ["Aprender vendo acontecer é outra história", "Quero participar do próximo Reality"]
 },
 "magic-makers-ao-vivo": {
- "nome": "Magic Makers ao Vivo", "menu": "Comunidade",
+ "checkout":"https://magicmakersaovivo27.academiadamagia.com.br","nome": "Magic Makers ao Vivo", "menu": "Comunidade",
  "selo": "5ª edição · 15 e 16 de maio de 2027 · Alphaville, SP",
  "titulo": "Imagine o que você pode construir quando está entre as pessoas certas",
  "subtitulo": "Um dia inteiro de palestras transformadoras, networking, parcerias e muito entretenimento, com um pré-evento exclusivo na noite anterior.",

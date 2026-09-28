@@ -10,6 +10,7 @@ import Socios from '../components/Socios.astro';
 import { SHOW_PENDING } from '../lib/pending';
 import { links } from '../lib/site';
 import { recentPosts } from '../lib/blog';
+import { destaque, diasPara } from '../data/destaque';
 
 // Slide 1 tem foto; os demais aguardam fotos reais (seção 11 do handoff).
 const slideDefs = [
@@ -19,7 +20,10 @@ const slideDefs = [
   { src: null, alt: 'Imersão a bordo / Magic Makers Experience' },
   { src: null, alt: 'Turma em aula ou mentoria' },
 ];
-const slides = slideDefs.filter((s) => s.src || SHOW_PENDING);
+const fotos = slideDefs.filter((s) => s.src || SHOW_PENDING);
+// Com um evento em destaque, ele abre o carrossel.
+const total = fotos.length + (destaque.ativo ? 1 : 0);
+const dias = diasPara(destaque.inicio);
 
 // Pré-carrega o LCP (slide 1)
 const lcp = await getImage({ src: heroSocios, width: 1600, format: 'avif', quality: 70 });
@@ -42,40 +46,103 @@ const posts = await recentPosts(3);
 
   <!-- 1. Hero em carrossel -->
   <section class="hero" aria-roledescription="carrossel" aria-label="Destaques" data-carousel>
-    <div class="hero-media">
-      {slides.map((s, i) => (
-        <div class:list={['slide', { active: i === 0 }]} aria-hidden={i === 0 ? undefined : 'true'} aria-roledescription="slide" aria-label={`${i + 1} de ${slides.length}`} data-slide>
-          {s.src ? (
-            <Picture src={s.src} alt={s.alt} formats={['avif']} fallbackFormat="webp" widths={[640, 960, 1280, 1600, 2000].filter((w) => w <= s.src!.width)} sizes="100vw" quality={70} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />
-          ) : (
-            <ImgSlot label={s.alt} style="width:100%;height:100%;background:#1b5aa8" />
-          )}
-        </div>
-      ))}
-      <div class="hero-scrim" aria-hidden="true"></div>
-    </div>
-    <div class="hero-text-wrap">
-      <div class="container hero-text-inner">
-        <div class="hero-col">
-          <div class="eyebrow hero-eyebrow"><span class="stars" aria-hidden="true"><Star size="13" /><Star size="13" /><Star size="13" /></span>Formação · Estratégia · Experiências</div>
-          <h1 class="h1-home">Sua paixão por viagens vira <span class="hl">autoridade</span> e negócio.</h1>
-          <p class="lead hero-lead">Cursos, mentorias, comunidade e experiências para quem está começando no turismo — e para quem quer crescer com mais direção.</p>
-          <div class="btn-row">
-            <a href="/comece-aqui" class="btn btn-cyan" data-track="cta_comece_aqui" data-track-origem="home_hero">Descubra seu próximo passo →</a>
-            <a href="#caminhos" class="btn btn-outline">Explore as formações</a>
+    <h1 class="sr-only">Academia da Magia: cursos, mentorias, comunidade e experiências para profissionais do turismo</h1>
+    <div class="slides">
+      {destaque.ativo && (
+        <div class="slide active" data-slide aria-roledescription="slide" aria-label={`1 de ${total}: ${destaque.nome} ${destaque.ano}`}>
+          <div class="media media-evento" aria-hidden="true">
+            <div class="ticket">
+              <div class="ticket-stub"><span>{destaque.edicao}</span></div>
+              <div class="ticket-main">
+                <span class="t-kicker"><Star size="12" /> Ingresso</span>
+                <span class="t-name">{destaque.nome}</span>
+                <span class="t-date">{destaque.quandoCurto}</span>
+                <span class="t-place">{destaque.onde}</span>
+              </div>
+            </div>
+            <div class="scrim scrim-evento"></div>
+          </div>
+          <div class="text-wrap">
+            <div class="container text-inner">
+              <div class="col">
+                <div class="eyebrow ev-eyebrow"><span class="live"><span class="pulse"></span>{destaque.selo}</span><span>{destaque.edicao} · {destaque.quando}</span></div>
+                <h2 class="h1-home">{destaque.nome} <span class="hl">{destaque.ano}</span></h2>
+                <p class="lead hero-lead">{destaque.chamada} {destaque.onde.split(' · ').pop()}, {destaque.vagas}.</p>
+                <div class="count" data-contador={destaque.inicio}><span class="count-n" data-dias>{dias}</span><span class="count-l">dias para o evento</span></div>
+                <div class="btn-row">
+                  <a href={destaque.url} target="_blank" rel="noopener" class="btn btn-cyan" data-track="cta_inscricao_click" data-track-slug={destaque.slug} data-track-origem="home_hero">{destaque.cta} →</a>
+                  <a href={`/${destaque.slug}`} class="btn btn-outline">Conheça o evento</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        {slides.length > 1 && (
+      )}
+      {fotos.map((f, k) => {
+        const i = k + (destaque.ativo ? 1 : 0);
+        return (
+          <div class:list={['slide', { active: i === 0 }]} data-slide aria-roledescription="slide" aria-label={`${i + 1} de ${total}`} aria-hidden={i === 0 ? undefined : 'true'}>
+            <div class="media">
+              {f.src ? (
+                <Picture src={f.src} alt={f.alt} formats={['avif']} fallbackFormat="webp" widths={[640, 960, 1280, 1600, 2000].filter((w) => w <= f.src!.width)} sizes="100vw" quality={70} loading="eager" fetchpriority={k === 0 ? 'high' : 'auto'} />
+              ) : (
+                <ImgSlot label={f.alt} style="width:100%;height:100%;background:#1b5aa8" />
+              )}
+              <div class="scrim" aria-hidden="true"></div>
+            </div>
+            <div class="text-wrap">
+              <div class="container text-inner">
+                <div class="col">
+                  <div class="eyebrow hero-eyebrow"><span class="stars" aria-hidden="true"><Star size="13" /><Star size="13" /><Star size="13" /></span>Formação · Estratégia · Experiências</div>
+                  <h2 class="h1-home">Sua paixão por viagens vira <span class="hl">autoridade</span> e negócio.</h2>
+                  <p class="lead hero-lead">Cursos, mentorias, comunidade e experiências para quem está começando no turismo — e para quem quer crescer com mais direção.</p>
+                  <div class="btn-row">
+                    <a href="/comece-aqui" class="btn btn-cyan" data-track="cta_comece_aqui" data-track-origem="home_hero">Descubra seu próximo passo →</a>
+                    <a href="#caminhos" class="btn btn-outline">Explore as formações</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+    {total > 1 && (
+      <div class="controls-wrap">
+        <div class="container">
           <div class="controls">
-            {slides.map((_, i) => (
-              <button type="button" class:list={['dot', { on: i === 0 }]} aria-label={`Imagem ${i + 1}`} aria-current={i === 0 ? 'true' : 'false'} data-dot={i}></button>
+            {Array.from({ length: total }, (_, i) => (
+              <button type="button" class:list={['dot', { on: i === 0 }]} aria-label={`Destaque ${i + 1}`} aria-current={i === 0 ? 'true' : 'false'} data-dot={i}></button>
             ))}
             <button type="button" class="play" aria-label="Pausar carrossel" data-play>❚❚</button>
           </div>
-        )}
+        </div>
       </div>
-    </div>
+    )}
   </section>
+
+  <!-- 1b. Evento em destaque -->
+  {destaque.ativo && (
+    <section class="bg-blue evento" aria-labelledby="evento-t">
+      <div class="container evento-inner">
+        <div class="stack" style="gap:14px">
+          <span class="eyebrow ev-kicker"><Star size="12" /> {destaque.selo} · {destaque.edicao}</span>
+          <h2 class="h2" id="evento-t">{destaque.nome} <span class="hl">{destaque.ano}</span></h2>
+          <p class="evento-p">{destaque.texto}</p>
+        </div>
+        <dl class="evento-facts">
+          <div><dt>Quando</dt><dd>{destaque.quando}</dd></div>
+          <div><dt>Onde</dt><dd>{destaque.onde}</dd></div>
+          <div><dt>Vagas</dt><dd>{destaque.vagas}</dd></div>
+          <div data-contador={destaque.inicio}><dt>Faltam</dt><dd><span data-dias>{dias}</span> dias</dd></div>
+        </dl>
+        <div class="evento-ctas">
+          <a href={destaque.url} target="_blank" rel="noopener" class="btn btn-white" data-track="cta_inscricao_click" data-track-slug={destaque.slug} data-track-origem="home_secao_evento">{destaque.cta} →</a>
+          <a href={`/${destaque.slug}`} class="evento-more">Ver a programação e os ingressos</a>
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- 2. Caminhos -->
   <section id="caminhos" class="bg-navy">
@@ -170,22 +237,56 @@ const posts = await recentPosts(3);
 </Base>
 
 <style>
-  /* Hero */
-  .hero { position: relative; background: var(--navy-800); display: flex; flex-direction: column; }
-  .hero-media { position: relative; height: clamp(280px, 58vw, 620px); overflow: hidden; background: var(--blue-600); }
-  .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease; pointer-events: none; }
-  .slide.active { opacity: 1; pointer-events: auto; }
-  .slide :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 70% center; }
-  .slide :global(picture) { display: block; width: 100%; height: 100%; }
-  .hero-scrim { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg, #0c1b3d 0%, rgba(12, 27, 61, 0) 35%); }
-  .hero-text-wrap { position: relative; }
-  .hero-text-inner { height: 100%; padding-top: 8px; padding-bottom: 56px; display: flex; flex-direction: column; justify-content: flex-end; }
-  .hero-col { display: flex; flex-direction: column; gap: 24px; }
+  /* Hero: cada slide tem foto e texto; os slides dividem a mesma célula do grid */
+  .hero { position: relative; background: var(--navy-800); }
+  .slides { display: grid; }
+  .slide { grid-area: 1 / 1; display: flex; flex-direction: column; opacity: 0; visibility: hidden; transition: opacity 1.2s ease, visibility 0s linear 1.2s; }
+  .slide.active { opacity: 1; visibility: visible; transition: opacity 1.2s ease; }
+  .media { position: relative; height: clamp(280px, 58vw, 620px); overflow: hidden; background: var(--blue-600); }
+  .media :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 70% center; }
+  .media :global(picture) { display: block; width: 100%; height: 100%; }
+  .scrim { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg, #0c1b3d 0%, rgba(12, 27, 61, 0) 35%); }
+  .text-wrap { position: relative; }
+  .text-inner { padding-top: 8px; padding-bottom: 104px; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+  .col { display: flex; flex-direction: column; gap: 24px; }
   .hero-eyebrow { display: flex; align-items: center; gap: 12px; color: var(--cyan-200); }
   .stars { display: inline-flex; gap: 4px; color: var(--white); }
   .hero-lead { color: var(--ink-on-blue); max-width: 540px; }
   .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .controls { display: flex; align-items: center; gap: 10px; padding-top: 28px; }
+
+  /* Slide do evento */
+  .media-evento {
+    display: flex; align-items: center; justify-content: center;
+    background:
+      radial-gradient(1.5px 1.5px at 12% 22%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 28% 68%, #cfe6f7 50%, transparent 51%),
+      radial-gradient(2px 2px at 46% 14%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 63% 42%, #cfe6f7 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 78% 80%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 88% 26%, #fff 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 94% 58%, #cfe6f7 50%, transparent 51%),
+      radial-gradient(ellipse at 72% 45%, #2f72c4 0%, #1b5aa8 35%, #0c1b3d 80%);
+  }
+  .ticket { position: relative; z-index: 1; display: flex; width: min(86%, 560px); transform: rotate(-4deg); filter: drop-shadow(0 30px 60px rgba(4, 12, 32, .5)); }
+  .ticket-stub { background: var(--cyan-500); color: var(--navy-800); border-radius: 20px 0 0 20px; padding: 18px 12px; display: flex; align-items: center; justify-content: center; border-right: 3px dashed var(--navy-800); }
+  .ticket-stub span { writing-mode: vertical-rl; transform: rotate(180deg); font-weight: 800; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; }
+  .ticket-main { flex: 1; background: var(--white); color: var(--navy-800); border-radius: 0 20px 20px 0; padding: clamp(18px, 3vw, 32px); display: flex; flex-direction: column; gap: 6px; }
+  .t-kicker { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue-600); }
+  .t-name { font-family: var(--font-display); font-weight: 800; font-size: clamp(24px, 3.4vw, 44px); line-height: .95; letter-spacing: -0.03em; }
+  .t-date { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 4.6vw, 60px); line-height: 1; letter-spacing: -0.03em; color: var(--blue-600); }
+  .t-place { font-size: clamp(12px, 1.2vw, 15px); font-weight: 600; color: var(--ink-muted); }
+  .scrim-evento { background: linear-gradient(0deg, #0c1b3d 0%, rgba(12, 27, 61, 0) 30%); }
+  .ev-eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; color: var(--cyan-200); }
+  .live { display: inline-flex; align-items: center; gap: 8px; background: var(--cyan-500); color: var(--navy-800); padding: 6px 12px; border-radius: 999px; letter-spacing: .1em; }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--navy-800); animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: .25; } }
+  .count { align-self: flex-start; display: flex; align-items: baseline; gap: 10px; border: 1.5px solid var(--cyan-300); border-radius: 14px; padding: 10px 16px; }
+  .count-n { font-family: var(--font-display); font-size: 34px; font-weight: 800; line-height: 1; }
+  .count-l { font-size: 14px; font-weight: 600; color: var(--ink-on-blue); }
+
+  /* Controles */
+  .controls-wrap { position: absolute; left: 0; right: 0; bottom: 28px; z-index: 2; pointer-events: none; }
+  .controls { display: flex; align-items: center; gap: 10px; pointer-events: auto; width: max-content; }
   .dot { all: unset; cursor: pointer; width: 8px; height: 8px; border-radius: 8px; background: rgba(255, 255, 255, 0.45); transition: width .3s; position: relative; }
   .dot::after { content: ''; position: absolute; inset: -18px -4px; } /* alvo de toque ≥ 44px */
   .dot.on { width: 28px; background: var(--white); }
@@ -193,20 +294,36 @@ const posts = await recentPosts(3);
   .play { margin-left: 6px; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, 0.6); background: transparent; color: var(--white); font-size: 13px; cursor: pointer; }
 
   @media (min-width: 1200px) {
-    /* Foto e texto dividem a mesma célula: a altura é a maior entre a foto e o texto,
+    /* Foto e texto na mesma célula: a altura é a maior entre os dois,
        então o título nunca sobe por baixo do cabeçalho em janelas baixas. */
-    .hero { display: grid; }
-    .hero-media { grid-area: 1 / 1; height: auto; min-height: clamp(600px, 88vh, 920px); }
-    .hero-scrim {
+    .slide { display: grid; }
+    .media { grid-area: 1 / 1; height: auto; min-height: clamp(600px, 88vh, 920px); }
+    .scrim {
       background:
         linear-gradient(90deg, rgba(12, 27, 61, .95) 0%, rgba(12, 27, 61, .75) 30%, rgba(12, 27, 61, 0) 52%),
         linear-gradient(0deg, rgba(12, 27, 61, .6) 0%, rgba(12, 27, 61, 0) 30%);
     }
-    .hero-text-wrap { grid-area: 1 / 1; position: relative; z-index: 1; pointer-events: none; }
-    .hero-text-inner { padding-top: clamp(40px, 6vw, 88px); padding-bottom: clamp(40px, 6vw, 88px); }
-    .hero-col { max-width: 40%; }
-    .btn-row, .controls { pointer-events: auto; }
+    .scrim-evento { background: linear-gradient(90deg, rgba(12, 27, 61, .9) 0%, rgba(12, 27, 61, .5) 34%, rgba(12, 27, 61, 0) 50%); }
+    .media-evento { justify-content: flex-end; padding-right: max(24px, calc((100vw - 1320px) / 2 + 24px)); }
+    .ticket { width: min(46%, 600px); }
+    .text-wrap { grid-area: 1 / 1; z-index: 1; pointer-events: none; }
+    .text-inner { padding-top: clamp(40px, 6vw, 88px); padding-bottom: calc(clamp(40px, 6vw, 88px) + 56px); }
+    .col { max-width: 40%; }
+    .btn-row { pointer-events: auto; }
+    .controls-wrap { bottom: clamp(32px, 4vw, 60px); }
   }
+
+  /* Seção do evento */
+  .evento-inner { padding-block: clamp(48px, 6vw, 88px); display: grid; gap: 32px 56px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); align-items: center; }
+  .ev-kicker { display: inline-flex; align-items: center; gap: 8px; color: var(--cyan-200); }
+  .evento-p { font-size: 17px; line-height: 1.55; color: var(--ink-on-blue); max-width: 560px; }
+  .evento-facts { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--blue-line); border: 1px solid var(--blue-line); border-radius: 24px; overflow: hidden; }
+  .evento-facts > div { background: var(--blue-600); padding: 20px 22px; display: flex; flex-direction: column; gap: 6px; }
+  .evento-facts dt { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--cyan-200); }
+  .evento-facts dd { margin: 0; font-size: 17px; font-weight: 700; line-height: 1.35; }
+  .evento-ctas { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; }
+  .evento-more { font-weight: 700; color: var(--white); text-decoration: underline; text-underline-offset: 4px; }
+  .evento-more:hover { color: var(--cyan-300); }
 
   /* Caminhos */
   .caminhos { padding-block: clamp(64px, 8vw, 120px); gap: 48px; }
@@ -273,8 +390,20 @@ const posts = await recentPosts(3);
     renderPlay();
     dots.forEach((d) => d.addEventListener('click', () => go(Number(d.dataset.dot))));
     play.addEventListener('click', () => { playing = !playing; renderPlay(); });
-    setInterval(() => { if (playing && !document.hidden) go(current + 1); }, 5500);
+    // Pausa enquanto o visitante interage com o slide (mouse ou teclado).
+    let hold = false;
+    root.addEventListener('mouseenter', () => (hold = true));
+    root.addEventListener('mouseleave', () => (hold = false));
+    root.addEventListener('focusin', () => (hold = true));
+    root.addEventListener('focusout', () => (hold = false));
+    setInterval(() => { if (playing && !hold && !document.hidden) go(current + 1); }, 5500);
   }
+
+  // Contadores de dias para o evento em destaque
+  document.querySelectorAll<HTMLElement>('[data-contador]').forEach((el) => {
+    const n = Math.max(0, Math.ceil((new Date(el.dataset.contador!).getTime() - Date.now()) / 86400000));
+    el.querySelectorAll('[data-dias]').forEach((d) => (d.textContent = String(n)));
+  });
 
   // Prévia do quiz: seleção ilustrativa (o quiz completo fica em /comece-aqui)
   document.querySelectorAll<HTMLElement>('[data-quiz]').forEach((g) => {

@@ -16,6 +16,8 @@ export type Programa = {
   funciona?: [string, string][];
   historia?: [string, string, string][];
   gradeTitulo?: string; grade?: string;
+  /** Grade de aulas em módulos: [título do módulo, resumo, aulas (opcional)]. Tem prioridade sobre `grade`. */
+  modulos?: [string, string, string[]?][];
   experts?: [string, string][];
   prova?: string; depoimentos?: string;
   investimento?: string; extra?: string; extraLink?: string;

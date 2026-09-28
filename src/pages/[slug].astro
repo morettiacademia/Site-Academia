@@ -48,7 +48,8 @@ const historia = breve ? [] : (p.historia ?? []).map(([ed, ano, part], i, a) => 
   return { ed, ano, part, bar: Math.round(90 + (n / 300) * 180), last: i === a.length - 1 };
 });
 const grade = pv(p.grade);
-const hasGrade = !breve && !!p.grade && grade.show;
+const modulos = breve ? [] : (p.modulos ?? []).map(([titulo, resumo, aulas]) => ({ titulo, resumo: pv(resumo), aulas: (aulas ?? []).map(pv).filter((a) => a.show) }));
+const hasGrade = !breve && modulos.length === 0 && !!p.grade && grade.show;
 const experts = breve ? [] : (p.experts ?? [])
   .map(([n, b]) => {
     const nome = pv(n);
@@ -91,7 +92,9 @@ const [finalTitulo, finalBotao] = p.final;
 const introVisivel = !!intro && (intro.show || SHOW_PENDING);
 const finalBg = breve && !introVisivel ? 'bg-navy' : 'bg-blue';
 const finalHref = p.finalComece ? '/comece-aqui' : ctaHref;
-const heroHref = breve ? '#final' : hasOferta ? '#investimento' : '#final';
+// Com página de vendas própria, o botão do topo leva direto para ela.
+const heroDireto = !breve && !!p.checkout;
+const heroHref = breve ? '#final' : heroDireto ? ctaHref : hasOferta ? '#investimento' : '#final';
 
 const dias = p.contador ? Math.max(0, Math.ceil((new Date(p.contador).getTime() - Date.now()) / 86400000)) : 0;
 
@@ -160,7 +163,7 @@ if (slug === 'magic-makers-ao-vivo' && p.contador) {
           </div>
         )}
         <div class="btn-row">
-          <a href={heroHref} class="btn btn-white">{p.botao} →</a>
+          <a href={heroHref} class="btn btn-white" {...(heroDireto ? { 'data-track': 'cta_inscricao_click', 'data-track-slug': slug, 'data-track-origem': 'hero', ...ctaExt } : {})}>{p.botao} →</a>
         </div>
       </div>
       <ImgSlot
@@ -322,6 +325,30 @@ if (slug === 'magic-makers-ao-vivo' && p.contador) {
           {grade.text && <span>{grade.text}</span>}
           <Pending tag={grade.pending ? grade.tag : null} />
         </div>
+      </div>
+    </section>
+  )}
+
+  {modulos.length > 0 && (
+    <section class="bg-light">
+      <div class="container section split">
+        <div class="stack sticky-head" style="gap:14px">
+          <h2 class="h2">{p.gradeTitulo || 'Grade de aulas'}</h2>
+          <p class="mod-count">{modulos.length} {modulos.length === 1 ? 'módulo' : 'módulos'}{modulos.some((m) => m.aulas.length) ? ` · ${modulos.reduce((n, m) => n + m.aulas.length, 0)} aulas` : ''}</p>
+        </div>
+        <ol class="mods">
+          {modulos.map((m, i) => (
+            <li class="mod">
+              <span class="mod-n">Módulo {String(i + 1).padStart(2, '0')}</span>
+              <h3 class="mod-t">{m.titulo}</h3>
+              {m.resumo.show && m.resumo.text && <p class="mod-r">{m.resumo.text}</p>}
+              <Pending tag={m.resumo.pending ? m.resumo.tag : null} />
+              {m.aulas.length > 0 && (
+                <ul class="mod-aulas">{m.aulas.map((a) => <li>{a.text}</li>)}</ul>
+              )}
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   )}
@@ -549,6 +576,15 @@ if (slug === 'magic-makers-ao-vivo' && p.contador) {
   .bar span { font-family: var(--font-display); font-size: 34px; font-weight: 800; color: var(--navy-800); line-height: 1; }
   .bar-ed { font-size: 16px; font-weight: 700; }
   .bar-p { font-size: 14px; color: var(--muted-on-navy); }
+
+  /* Grade em módulos */
+  .mod-count { font-size: 15px; font-weight: 700; color: var(--blue-600); }
+  .mods { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .mod { background: var(--white); border: 1px solid var(--line-light-2); border-radius: 24px; padding: 24px 28px; display: flex; flex-direction: column; gap: 8px; }
+  .mod-n { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--blue-600); }
+  .mod-t { font-family: var(--font-display); font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .mod-r { font-size: 16px; line-height: 1.55; color: var(--ink-body); }
+  .mod-aulas { margin: 6px 0 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; font-size: 15px; color: var(--ink-body); }
 
   /* Grade */
   .grade { border: 2px dashed var(--line-dashed); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 12px; font-size: 17px; line-height: 1.5; font-weight: 500; }
