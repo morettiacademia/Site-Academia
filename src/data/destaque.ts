@@ -1,6 +1,6 @@
 /**
  * Destaque do momento (vendas abertas). Aparece na faixa do topo de todas as
- * páginas, no primeiro slide da Home e numa seção própria logo abaixo do hero.
+ * páginas e numa seção própria no meio da Home.
  * Para desligar, `ativo: false`. Para trocar de evento, edite os campos.
  */
 export const destaque = {

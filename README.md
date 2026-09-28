@@ -32,7 +32,7 @@ Copie `.env.example` para `.env` e preencha o que já estiver definido.
 - **Programas:** `src/data/programas.json` (mesmo formato do handoff). SEO title e meta description vêm de `src/data/seo.json` (extraídos do PDF de copy).
 - **Links de checkout / página de vendas:** campo `"checkout": "https://..."` no programa. Com ele, o botão do topo e os botões de inscrição levam direto para essa página. Hoje estão definidos para AGIR, Mentoria de IA e Magic Makers ao Vivo. Sem ele, os botões levam ao WhatsApp (ou a `/contato`).
 - **Grade de aulas em módulos:** campo `"modulos": [["Título do módulo", "Resumo", ["Aula 1", "Aula 2"]], ...]`. Quando existe, substitui o campo `grade`.
-- **Destaque do momento:** `src/data/destaque.ts` (hoje, Magic Makers ao Vivo 2027). Ele alimenta a faixa no topo de todas as páginas, o primeiro slide do carrossel da Home e a seção logo abaixo do hero. Use `ativo: false` para desligar.
+- **Destaque do momento:** `src/data/destaque.ts` (hoje, Magic Makers ao Vivo 2027). Ele alimenta a faixa no topo de todas as páginas e a seção do evento no meio da Home (entre o manifesto e os sócios). Use `ativo: false` para desligar.
 - **Blog:** crie um `.md` em `src/content/blog/` com `title`, `description`, `category`, `pubDate` e, se quiser, `cover` (imagem em `src/assets/`). Os três artigos atuais são rascunhos (`draft: true`) com os títulos ilustrativos do protótipo e não são publicados. O bloco "Do blog" da Home só aparece quando houver artigos publicados.
 - **Fotos pendentes:** os espaços sem foto mostram um bloco da marca com a estrela. Para trocar, coloque a imagem em `src/assets/` e passe `src` no `ImgSlot` correspondente (slides do hero em `index.astro`, portais, Protagonistas, time em `comece-aqui.astro`).
 
