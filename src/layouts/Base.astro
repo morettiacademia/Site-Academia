@@ -84,6 +84,9 @@ const ld = [organization, ...jsonLd];
     </main>
     <Footer />
     <WhatsAppFloat />
+    <script is:inline>
+      if (/[?&]erro=1/.test(location.search)) document.querySelectorAll('[data-form-erro]').forEach(function (e) { e.hidden = false; e.scrollIntoView({ block: 'center' }); });
+    </script>
     <CookieBanner />
   </body>
 </html>

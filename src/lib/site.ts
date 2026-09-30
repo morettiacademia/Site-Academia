@@ -28,6 +28,8 @@ export const academia365Href = links.academia365 ?? '/contato';
 export const isExternal = (href: string) => /^https?:\/\//.test(href);
 
 export const SITE_NAME = 'Academia da Magia';
+/** Para onde os formulários enviam (GoDaddy: script PHP em public/enviar.php). */
+export const FORM_ACTION = url(env.PUBLIC_FORM_ACTION) ?? '/enviar.php';
 export const GTM_ID = url(env.PUBLIC_GTM_ID);
 
 export type NavItem = { label: string; href: string; tag?: string };

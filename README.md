@@ -23,7 +23,7 @@ Copie `.env.example` para `.env` e preencha o que já estiver definido.
 | `/<slug>` (21 programas) | `src/pages/[slug].astro` (dados em `src/data/programas.json`) |
 | `/blog`, `/blog/<slug>` | `src/pages/blog/` (artigos em `src/content/blog/*.md`) |
 | `/sobre`, `/sobre/socios-e-experts` | `src/pages/sobre/` |
-| `/contato`, `/obrigado` | formulários (Netlify Forms) |
+| `/contato`, `/obrigado` | formulários (enviados por `public/enviar.php`: e-mail + cópia em CSV) |
 | `/privacidade`, `/termos`, `/cookies` | texto-base, **revisar com o jurídico** |
 | `/404`, `/robots.txt`, `/sitemap-index.xml` | gerados no build |
 
@@ -33,7 +33,7 @@ Copie `.env.example` para `.env` e preencha o que já estiver definido.
 - **Links de checkout / página de vendas:** campo `"checkout": "https://..."` no programa. Com ele, o botão do topo e os botões de inscrição levam direto para essa página. Hoje estão definidos para AGIR, Mentoria de IA e Magic Makers ao Vivo. Sem ele, os botões levam ao WhatsApp (ou a `/contato`).
 - **Grade de aulas em módulos:** campo `"modulos": [["Título do módulo", "Resumo", ["Aula 1", "Aula 2"]], ...]`. Quando existe, substitui o campo `grade`.
 - **Destaque do momento:** `src/data/destaque.ts` (hoje, Magic Makers ao Vivo 2027). Ele alimenta a faixa no topo de todas as páginas e a seção do evento no meio da Home (entre o manifesto e os sócios). Use `ativo: false` para desligar.
-- **Blog:** o marketing publica pelo painel em `/admin` (Decap CMS). Configuração e passo a passo em `docs/COMO-PUBLICAR-NO-BLOG.md`. Também dá para criar um `.md` direto em `src/content/blog/` com `title`, `description`, `category`, `pubDate` e, se quiser, `cover` (imagem em `src/assets/`). Os três artigos atuais são rascunhos (`draft: true`) com os títulos ilustrativos do protótipo e não são publicados. O bloco "Do blog" da Home só aparece quando houver artigos publicados.
+- **Blog:** o marketing publica pelo painel em `/admin` (Sveltia CMS). Configuração e passo a passo em `docs/COMO-PUBLICAR-NO-BLOG.md`. Também dá para criar um `.md` direto em `src/content/blog/` com `title`, `description`, `category`, `pubDate` e, se quiser, `cover` (imagem em `src/assets/`). Os três artigos atuais são rascunhos (`draft: true`) com os títulos ilustrativos do protótipo e não são publicados. O bloco "Do blog" da Home só aparece quando houver artigos publicados.
 - **Fotos pendentes:** os espaços sem foto mostram um bloco da marca com a estrela. Para trocar, coloque a imagem em `src/assets/` e passe `src` no `ImgSlot` correspondente (slides do hero em `index.astro`, portais, Protagonistas, time em `comece-aqui.astro`).
 
 ### Conteúdo pendente (`[A PREENCHER]` / `[CONFIRMAR]`)
@@ -58,11 +58,13 @@ Copie `.env.example` para `.env` e preencha o que já estiver definido.
 
 ## Deploy
 
-Funciona em Netlify (`netlify.toml`; os formulários usam Netlify Forms) ou Vercel (`vercel.json` com `cleanUrls`). O build usa `build.format: 'file'` e `trailingSlash: 'never'`, gerando URLs sem barra final, como `/agir`.
+**Hospedagem oficial: GoDaddy (cPanel).** A cada push, o GitHub Actions (`.github/workflows/publicar-godaddy.yml`) gera o site e envia a pasta `dist/` por FTP para o `public_html`. O `public/.htaccess` cuida das URLs limpas (`/agir` serve `agir.html`), do HTTPS, do redirecionamento de `www`, da página 404 e do cache; os formulários usam `public/enviar.php`. Passo a passo em `docs/PUBLICAR-NA-GODADDY.md`.
+
+O build usa `build.format: 'file'` e `trailingSlash: 'never'`. Também funciona em Netlify (`netlify.toml`) ou Vercel (`vercel.json`), mas lá os formulários precisam de outro destino (`PUBLIC_FORM_ACTION`).
 
 ## Próximos passos (handoff, seção 15)
 
 - Quiz completo de 5 a 7 perguntas em `/comece-aqui` (briefing, seção 4).
 - Migrar `programas.json` para um CMS headless (Sanity, Payload, Decap ou Storyblok), com as entidades Turma, Expert e Depoimento.
-- Redirects 301 das URLs antigas (em `netlify.toml` ou `vercel.json`).
+- Redirects 301 das URLs antigas (no `public/.htaccess`).
 - Pedir o logo oficial em SVG.

@@ -1,8 +1,6 @@
-# Painel do blog (Decap CMS) — https://decapcms.org/docs/
-# Cada artigo publicado vira um commit no GitHub e a hospedagem (Netlify)
-# refaz o site sozinha em 1–2 minutos.
-
-locale: pt
+# Painel do blog (Sveltia CMS, compatível com Decap CMS) — https://github.com/sveltia/sveltia-cms
+# Cada artigo salvo vira um commit no GitHub; a publicação automática
+# (.github/workflows/publicar-godaddy.yml) gera o site e envia para a GoDaddy.
 
 backend:
   name: github
@@ -16,16 +14,13 @@ backend:
     uploadMedia: 'Blog: envia imagem "{{path}}"'
     deleteMedia: 'Blog: remove imagem "{{path}}"'
 
-# Para testar no computador: rode `npx decap-server` e `npm run dev` e abra /admin
-local_backend: true
-
 site_url: https://academiadamagia.com.br
 display_url: https://academiadamagia.com.br
 logo_url: /logo-academia-da-magia.png
 
-# Imagens enviadas pelo painel (otimizadas automaticamente no build)
-media_folder: src/assets/blog
-public_folder: ../../assets/blog
+# Imagens soltas (fora dos artigos)
+media_folder: public/uploads
+public_folder: /uploads
 
 collections:
   - name: blog
@@ -33,6 +28,9 @@ collections:
     label_singular: Artigo
     description: Artigos publicados em /blog. Deixe "Rascunho" ligado até o texto estar pronto.
     folder: src/content/blog
+    # Imagens dos artigos ficam em src/assets/blog e são otimizadas no build
+    media_folder: ../../assets/blog
+    public_folder: ../../assets/blog
     create: true
     slug: '{{slug}}'
     preview_path: 'blog/{{slug}}'

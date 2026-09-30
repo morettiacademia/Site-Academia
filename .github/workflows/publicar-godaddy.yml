@@ -1,0 +1,55 @@
+# Publica o site na hospedagem da GoDaddy a cada mudança (inclusive artigos
+# salvos pelo painel do blog). Configuração em docs/PUBLICAR-NA-GODADDY.md.
+name: Publicar na GoDaddy
+
+on:
+  push:
+    branches: [main, claude/new-session-mul9z7]
+  workflow_dispatch:
+
+concurrency:
+  group: publicar-godaddy
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Gerar o site
+        run: npm run build
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://academiadamagia.com.br' }}
+          PUBLIC_WHATSAPP_NUMERO: ${{ vars.PUBLIC_WHATSAPP_NUMERO }}
+          PUBLIC_ACADEMIA365_URL: ${{ vars.PUBLIC_ACADEMIA365_URL }}
+          PUBLIC_INSTAGRAM_URL: ${{ vars.PUBLIC_INSTAGRAM_URL }}
+          PUBLIC_YOUTUBE_URL: ${{ vars.PUBLIC_YOUTUBE_URL }}
+          PUBLIC_PODCAST_URL: ${{ vars.PUBLIC_PODCAST_URL }}
+          PUBLIC_PROTAGONISTAS_URL: ${{ vars.PUBLIC_PROTAGONISTAS_URL }}
+          PUBLIC_GTM_ID: ${{ vars.PUBLIC_GTM_ID }}
+
+      - name: Enviar para a GoDaddy (FTP)
+        if: env.FTP_SERVER != ''
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
+          server-dir: ${{ vars.FTP_DIR || 'public_html/' }}
+          local-dir: ./dist/
+
+      - name: Aviso
+        if: env.FTP_SERVER == ''
+        run: |
+          echo "::warning::Site gerado, mas não enviado. Configure os secrets FTP_SERVER, FTP_USERNAME e FTP_PASSWORD (docs/PUBLICAR-NA-GODADDY.md)."

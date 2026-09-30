@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import { links, whatsappHref, isExternal } from '../lib/site';
+import { links, whatsappHref, isExternal, FORM_ACTION } from '../lib/site';
 const redes = [
   { label: 'Instagram', href: links.instagram },
   { label: 'YouTube', href: links.youtube },
@@ -25,7 +25,8 @@ const hasWa = isExternal(whatsappHref);
           </ul>
         )}
       </div>
-      <form class="form" name="contato" method="POST" action="/obrigado" data-netlify="true" netlify-honeypot="empresa">
+      <form class="form" name="contato" method="POST" action={FORM_ACTION}>
+        <p class="form-erro" role="alert" hidden data-form-erro>Confira o nome, o e-mail e o consentimento e envie de novo.</p>
         <input type="hidden" name="form-name" value="contato" />
         <p class="sr-only"><label>Não preencha: <input name="empresa" tabindex="-1" autocomplete="off" /></label></p>
         <div class="field"><label for="c-nome">Nome</label><input id="c-nome" name="nome" required autocomplete="name" /></div>
@@ -54,4 +55,5 @@ const hasWa = isExternal(whatsappHref);
   .form { display: flex; flex-direction: column; gap: 16px; background: var(--white); border: 1px solid var(--line-light-2); border-radius: 28px; padding: clamp(24px, 3vw, 36px); }
   .opt { font-weight: 500; color: var(--ink-muted); }
   .check a { color: var(--blue-600); text-decoration: underline; }
+  .form-erro { background: var(--pending); color: var(--navy-800); font-weight: 700; padding: 10px 14px; border-radius: 12px; }
 </style>

@@ -1,14 +1,15 @@
 ---
 /**
  * Captura de lista de espera (páginas "Em breve").
- * Usa Netlify Forms por padrão (atributo data-netlify). Em outra hospedagem,
- * aponte `action` para o endpoint do CRM/ferramenta de e-mail.
+ * Envia para public/enviar.php (e-mail + cópia em CSV na hospedagem).
  */
+import { FORM_ACTION } from '../lib/site';
 interface Props { slug: string; programa: string; botao: string }
 const { slug, programa, botao } = Astro.props;
 const name = `lista-de-espera`;
 ---
-<form class="wl" name={name} method="POST" action="/obrigado" data-netlify="true" netlify-honeypot="empresa" data-waitlist={slug}>
+<form class="wl" name={name} method="POST" action={FORM_ACTION} data-waitlist={slug}>
+  <p class="form-erro" role="alert" hidden data-form-erro>Confira o nome, o e-mail e o consentimento e envie de novo.</p>
   <input type="hidden" name="form-name" value={name} />
   <input type="hidden" name="programa" value={slug} />
   <p class="sr-only"><label>Não preencha: <input name="empresa" tabindex="-1" autocomplete="off" /></label></p>
@@ -41,6 +42,7 @@ const name = `lista-de-espera`;
   .check { color: var(--ink-on-blue); }
   .check a { color: var(--white); text-decoration: underline; }
   .btn { align-self: flex-start; }
+  .form-erro { background: var(--pending); color: var(--navy-800); font-weight: 700; padding: 10px 14px; border-radius: 12px; }
 </style>
 
 <script>
