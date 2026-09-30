@@ -1,0 +1,78 @@
+# Painel do blog (Decap CMS) — https://decapcms.org/docs/
+# Cada artigo publicado vira um commit no GitHub e a hospedagem (Netlify)
+# refaz o site sozinha em 1–2 minutos.
+
+locale: pt
+
+backend:
+  name: github
+  repo: morettiacademia/Site-Academia
+  # Troque para "main" se o site passar a ser publicado a partir da branch main.
+  branch: claude/new-session-mul9z7
+  commit_messages:
+    create: 'Blog: cria "{{slug}}"'
+    update: 'Blog: atualiza "{{slug}}"'
+    delete: 'Blog: remove "{{slug}}"'
+    uploadMedia: 'Blog: envia imagem "{{path}}"'
+    deleteMedia: 'Blog: remove imagem "{{path}}"'
+
+# Para testar no computador: rode `npx decap-server` e `npm run dev` e abra /admin
+local_backend: true
+
+site_url: https://academiadamagia.com.br
+display_url: https://academiadamagia.com.br
+logo_url: /logo-academia-da-magia.png
+
+# Imagens enviadas pelo painel (otimizadas automaticamente no build)
+media_folder: src/assets/blog
+public_folder: ../../assets/blog
+
+collections:
+  - name: blog
+    label: Artigos do blog
+    label_singular: Artigo
+    description: Artigos publicados em /blog. Deixe "Rascunho" ligado até o texto estar pronto.
+    folder: src/content/blog
+    create: true
+    slug: '{{slug}}'
+    preview_path: 'blog/{{slug}}'
+    sortable_fields: ['pubDate', 'title', 'category']
+    summary: '{{title}} — {{pubDate | date("DD/MM/YYYY")}}{{draft | ternary(" (rascunho)", "")}}'
+    view_filters:
+      - label: Rascunhos
+        field: draft
+        pattern: true
+      - label: Publicados
+        field: draft
+        pattern: false
+    fields:
+      - { label: Título, name: title, widget: string }
+      - label: Resumo (aparece no Google e nos cards)
+        name: description
+        widget: text
+        hint: Uma ou duas frases, até uns 155 caracteres.
+      - label: Categoria
+        name: category
+        widget: select
+        options:
+          - Começar no turismo
+          - Destinos
+          - Vendas e gestão
+          - Tecnologia e IA
+          - Carreira
+          - Comunidade e eventos
+      - label: Data de publicação
+        name: pubDate
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: DD/MM/YYYY
+        time_format: false
+      - { label: Autor, name: author, widget: string, default: Academia da Magia }
+      - { label: Imagem de capa, name: cover, widget: image, required: false, hint: 'Horizontal, de preferência 1600 × 1200 px.' }
+      - { label: Descrição da imagem (acessibilidade), name: coverAlt, widget: string, required: false }
+      - label: Rascunho
+        name: draft
+        widget: boolean
+        default: true
+        hint: Ligado = não aparece no site. Desligue para publicar.
+      - { label: Texto do artigo, name: body, widget: markdown }

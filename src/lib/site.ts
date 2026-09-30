@@ -3,9 +3,19 @@ import { SHOW_PENDING } from './pending';
 const env = import.meta.env;
 const url = (v?: string) => (v && v.trim() ? v.trim() : null);
 
+/**
+ * WhatsApp do atendimento (Adriana). Preencha com DDI + DDD + número, só dígitos,
+ * ex.: '5511999998888' — ou defina PUBLIC_WHATSAPP_NUMERO na hospedagem.
+ */
+const WHATSAPP_NUMERO = (env.PUBLIC_WHATSAPP_NUMERO || '').replace(/\D/g, '');
+const WHATSAPP_MENSAGEM = 'Olá! Vim pelo site da Academia da Magia e gostaria de ajuda para escolher meu próximo passo.';
+const whatsappDoNumero = WHATSAPP_NUMERO
+  ? `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(WHATSAPP_MENSAGEM)}`
+  : null;
+
 /** Links globais. Enquanto estiverem vazios, os elementos que dependem deles ficam ocultos ou usam um destino interno. */
 export const links = {
-  whatsapp: url(env.PUBLIC_WHATSAPP_URL),
+  whatsapp: whatsappDoNumero ?? url(env.PUBLIC_WHATSAPP_URL),
   academia365: url(env.PUBLIC_ACADEMIA365_URL),
   instagram: url(env.PUBLIC_INSTAGRAM_URL),
   youtube: url(env.PUBLIC_YOUTUBE_URL),
