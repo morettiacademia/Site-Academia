@@ -7,6 +7,7 @@ import Pending from '../components/Pending.astro';
 import BlogCard from '../components/BlogCard.astro';
 import heroSocios from '../assets/hero-socios.png';
 import fotoDestinos from '../assets/portais/destinos.jpg';
+import fotoMentorias from '../assets/portais/mentorias.jpg';
 import Socios from '../components/Socios.astro';
 import { SHOW_PENDING } from '../lib/pending';
 import { links } from '../lib/site';
@@ -30,7 +31,7 @@ const portals = [
   { label: 'Especializações', short: 'especializações', text: 'Desenvolva uma competência que fortaleça sua entrega.', bg: '#1b5aa8', ph: 'aula / especialização' },
   { label: 'Destinos', short: 'destinos', text: 'Conhecimento de produto para vender com segurança.', bg: '#2a6bb8', ph: 'destino', foto: fotoDestinos, alt: 'Viajante em frente ao castelo de um parque da Disney' },
   { label: 'Comunidade', short: 'comunidade', text: 'Eventos, imersões e aula semanal com quem vive o turismo.', bg: '#36b6e9', ph: 'Magic Makers ao Vivo' },
-  { label: 'Mentorias', short: 'mentorias', text: 'Comece, estruture e faça crescer a sua agência com acompanhamento.', bg: '#1f3566', ph: 'mentoria' },
+  { label: 'Mentorias', short: 'mentorias', text: 'Comece, estruture e faça crescer a sua agência com acompanhamento.', bg: '#1f3566', ph: 'mentoria', foto: fotoMentorias, alt: 'Paulo Soares, Joice Ferreira e Camila Moretti no Magic Makers ao Vivo', pos: 'center center' },
 ];
 
 const quizOptions = ['Quero começar no turismo', 'Sou agente em início de carreira', 'Quero me especializar', 'Tenho uma agência e quero crescer'];
@@ -90,7 +91,7 @@ const dias = diasPara(destaque.inicio);
       <div class="grid-auto" style="--min:290px">
         {portals.map((p, i) => (
           <a href="/comece-aqui" class="portal" style={`background:${p.bg}`} data-track="cta_comece_aqui" data-track-origem={`portal_${p.short}`}>
-            <ImgSlot src={p.foto} alt={p.alt} label={p.ph} class="portal-img" style={`background:${p.bg}`} widths={[400, 700, 1000]} sizes="(min-width: 1320px) 320px, (min-width: 700px) 45vw, 100vw" />
+            <ImgSlot src={p.foto} alt={p.alt} label={p.ph} class="portal-img" widths={[400, 700, 1000]} sizes="(min-width: 1320px) 320px, (min-width: 700px) 45vw, 100vw" style={`background:${p.bg}${p.pos ? `;--pos:${p.pos}` : ''}`} />
             <div class="portal-scrim" aria-hidden="true"></div>
             <div class="portal-body">
               <span class="portal-num">0{i + 1}</span>
@@ -241,7 +242,7 @@ const dias = diasPara(destaque.inicio);
   .portal { position: relative; display: block; height: clamp(380px, 34vw, 480px); border-radius: 28px; overflow: hidden; color: var(--white); }
   .portal :global(.portal-img) { position: absolute; inset: 0; width: 100%; height: 100%; }
   /* Fotos em pé: ancora embaixo para o rosto ficar acima do texto do card */
-  .portal :global(.portal-img img) { object-position: center 100%; }
+  .portal :global(.portal-img img) { object-position: var(--pos, center 100%); }
   .portal-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12, 27, 61, 0) 30%, rgba(12, 27, 61, 0.88) 100%); }
   .portal-body { position: absolute; left: 0; right: 0; bottom: 0; padding: 28px; display: flex; flex-direction: column; gap: 10px; }
   .portal-num { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: var(--cyan-300); }
