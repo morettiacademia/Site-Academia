@@ -128,12 +128,17 @@ const dias = diasPara(destaque.inicio);
           <h2 class="h2" id="evento-t">{destaque.nome} <span class="hl">{destaque.ano}</span></h2>
           <p class="evento-p">{destaque.texto}</p>
         </div>
-        <dl class="evento-facts">
-          <div><dt>Quando</dt><dd>{destaque.quando}</dd></div>
-          <div><dt>Onde</dt><dd>{destaque.onde}</dd></div>
-          <div><dt>Vagas</dt><dd>{destaque.vagas}</dd></div>
-          <div data-contador={destaque.inicio}><dt>Faltam</dt><dd><span data-dias>{dias}</span> dias</dd></div>
-        </dl>
+        <div class="evento-painel">
+          <div class="countdown-big" data-contador={destaque.inicio} role="timer" aria-live="off">
+            <span class="cd-label">Faltam</span>
+            <span class="cd-num" data-dias>{dias}</span>
+            <span class="cd-unit"><span data-dias-palavra>{dias === 1 ? 'dia' : 'dias'}</span> para o {destaque.nome}</span>
+          </div>
+          <dl class="evento-facts">
+            <div><dt>Quando</dt><dd>{destaque.quando}</dd></div>
+            <div><dt>Onde</dt><dd>{destaque.cidade}</dd></div>
+          </dl>
+        </div>
         <div class="evento-ctas">
           <a href={destaque.url} target="_blank" rel="noopener" class="btn btn-white" data-track="cta_inscricao_click" data-track-slug={destaque.slug} data-track-origem="home_secao_evento">{destaque.cta} →</a>
           <a href={`/${destaque.slug}`} class="evento-more">Ver a programação e os ingressos</a>
@@ -263,6 +268,16 @@ const dias = diasPara(destaque.inicio);
   .evento-inner { padding-block: clamp(48px, 6vw, 88px); display: grid; gap: 32px 56px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); align-items: center; }
   .ev-kicker { display: inline-flex; align-items: center; gap: 8px; color: var(--cyan-200); }
   .evento-p { font-size: 17px; line-height: 1.55; color: var(--ink-on-blue); max-width: 560px; }
+  .evento-painel { display: flex; flex-direction: column; gap: 12px; }
+  .countdown-big {
+    background: var(--cyan-500); color: var(--navy-800); border-radius: 24px;
+    padding: clamp(22px, 3vw, 32px) clamp(24px, 3vw, 36px);
+    display: grid; grid-template-columns: auto 1fr; grid-template-areas: 'label label' 'num unit';
+    align-items: end; gap: 4px 18px;
+  }
+  .cd-label { grid-area: label; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .cd-num { grid-area: num; font-family: var(--font-display); font-weight: 800; font-size: clamp(72px, 9vw, 128px); line-height: .85; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+  .cd-unit { grid-area: unit; font-family: var(--font-display); font-weight: 700; font-size: clamp(18px, 1.8vw, 24px); line-height: 1.15; padding-bottom: 6px; text-wrap: balance; }
   .evento-facts { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--blue-line); border: 1px solid var(--blue-line); border-radius: 24px; overflow: hidden; }
   .evento-facts > div { background: var(--blue-600); padding: 20px 22px; display: flex; flex-direction: column; gap: 6px; }
   .evento-facts dt { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--cyan-200); }
@@ -322,11 +337,16 @@ const dias = diasPara(destaque.inicio);
     setInterval(() => { if (playing && !document.hidden) go(current + 1); }, 5500);
   }
 
-  // Contador de dias para o evento em destaque
-  document.querySelectorAll<HTMLElement>('[data-contador]').forEach((el) => {
-    const n = Math.max(0, Math.ceil((new Date(el.dataset.contador!).getTime() - Date.now()) / 86400000));
-    el.querySelectorAll('[data-dias]').forEach((d) => (d.textContent = String(n)));
-  });
+  // Contador de dias para o evento em destaque: calculado no navegador de quem
+  // visita (sempre atualizado no dia) e recalculado a cada hora com a página aberta.
+  const atualizarContadores = () =>
+    document.querySelectorAll<HTMLElement>('[data-contador]').forEach((el) => {
+      const n = Math.max(0, Math.ceil((new Date(el.dataset.contador!).getTime() - Date.now()) / 86400000));
+      el.querySelectorAll('[data-dias]').forEach((d) => (d.textContent = String(n)));
+      el.querySelectorAll('[data-dias-palavra]').forEach((d) => (d.textContent = n === 1 ? 'dia' : 'dias'));
+    });
+  atualizarContadores();
+  setInterval(atualizarContadores, 3600000);
 
   // Prévia do quiz: seleção ilustrativa (o quiz completo fica em /comece-aqui)
   document.querySelectorAll<HTMLElement>('[data-quiz]').forEach((g) => {

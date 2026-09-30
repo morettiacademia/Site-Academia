@@ -14,6 +14,8 @@ export const destaque = {
   quando: '15 e 16 de maio de 2027',
   quandoCurto: '15 e 16 MAI 2027',
   onde: 'Apogeo Nobre · Alphaville, SP',
+  /** Local curto mostrado na seção da Home. */
+  cidade: 'Alphaville, São Paulo',
   vagas: '300 vagas',
   inicio: '2027-05-15T09:00:00-03:00',
   /** Página de vendas (checkout dos ingressos). */
