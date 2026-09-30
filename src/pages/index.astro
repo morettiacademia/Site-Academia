@@ -10,6 +10,7 @@ import fotoDestinos from '../assets/portais/destinos.jpg';
 import fotoMentorias from '../assets/socios/paulo-soares.jpg';
 import fotoComunidade from '../assets/portais/comunidade.jpg';
 import fotoEspecializacoes from '../assets/portais/especializacoes.jpg';
+import fotoProtagonistas from '../assets/protagonistas.jpg';
 import Socios from '../components/Socios.astro';
 import { SHOW_PENDING } from '../lib/pending';
 import { links } from '../lib/site';
@@ -168,7 +169,7 @@ const dias = diasPara(destaque.inicio);
   <!-- 6. Protagonistas -->
   <section id="protagonistas" class="bg-navy">
     <div class="container quiz">
-      <ImgSlot label="Protagonistas" class="protag-img" />
+      <ImgSlot src={fotoProtagonistas} alt="Joice Ferreira, Camila Moretti e Paulo Soares" label="Protagonistas" class="protag-img" widths={[480, 720, 960, 1280]} sizes="(min-width: 1320px) 620px, (min-width: 900px) 48vw, 100vw" />
       <div class="stack" style="gap:22px">
         <span class="eyebrow hl-cyan">Protagonistas</span>
         <h2 class="h2">Aprender abre caminhos para participar ainda mais.</h2>
@@ -286,7 +287,7 @@ const dias = diasPara(destaque.inicio);
   .quiz-opt:hover { border-color: var(--cyan-300); }
   .quiz-opt[aria-checked='true'] { border-color: var(--cyan-500); background: #e8f2fb; }
   .quiz-go { align-self: flex-start; padding: 16px 26px; }
-  :global(.protag-img) { aspect-ratio: 4 / 3; border-radius: 28px; }
+  :global(.protag-img) { aspect-ratio: 16 / 10; border-radius: 28px; }
   .protag-text { font-size: 17px; line-height: 1.6; max-width: 520px; }
 
   .more-link { color: var(--blue-600); font-weight: 700; font-size: 15px; }
