@@ -23,7 +23,7 @@ Copie `.env.example` para `.env` e preencha o que já estiver definido.
 | `/<slug>` (21 programas) | `src/pages/[slug].astro` (dados em `src/data/programas.json`) |
 | `/blog`, `/blog/<slug>` | `src/pages/blog/` (artigos em `src/content/blog/*.md`) |
 | `/sobre`, `/sobre/socios-e-experts` | `src/pages/sobre/` |
-| `/contato`, `/obrigado` | formulários (enviados por `public/enviar.php`: e-mail + cópia em CSV) |
+| `/contato`, `/obrigado` | formulários (entregues por e-mail pelo FormSubmit; ver `FORM_EMAIL` em `src/lib/site.ts`) |
 | `/privacidade`, `/termos`, `/cookies` | texto-base, **revisar com o jurídico** |
 | `/404`, `/robots.txt`, `/sitemap-index.xml` | gerados no build |
 
@@ -58,13 +58,13 @@ Copie `.env.example` para `.env` e preencha o que já estiver definido.
 
 ## Deploy
 
-**Hospedagem oficial: GoDaddy (cPanel).** A cada push, o GitHub Actions (`.github/workflows/publicar-godaddy.yml`) gera o site e envia a pasta `dist/` por FTP para o `public_html`. O `public/.htaccess` cuida das URLs limpas (`/agir` serve `agir.html`), do HTTPS, do redirecionamento de `www`, da página 404 e do cache; os formulários usam `public/enviar.php`. Passo a passo em `docs/PUBLICAR-NA-GODADDY.md`.
+**Hospedagem oficial: GitHub Pages**, com o domínio registrado na GoDaddy. A cada push, o GitHub Actions (`.github/workflows/publicar-site.yml`) gera o site e publica. O arquivo `public/CNAME` fixa o domínio. Depois do build, `scripts/pastas-index.mjs` cria `sobre/index.html` (e equivalentes), para que `/sobre` e `/sobre/` funcionem. Passo a passo, incluindo o DNS na GoDaddy, em `docs/PUBLICAR-O-SITE.md`.
 
-O build usa `build.format: 'file'` e `trailingSlash: 'never'`. Também funciona em Netlify (`netlify.toml`) ou Vercel (`vercel.json`), mas lá os formulários precisam de outro destino (`PUBLIC_FORM_ACTION`).
+O build usa `build.format: 'file'` e `trailingSlash: 'never'`. Também funciona em Netlify (`netlify.toml`) ou Vercel (`vercel.json`).
 
 ## Próximos passos (handoff, seção 15)
 
 - Quiz completo de 5 a 7 perguntas em `/comece-aqui` (briefing, seção 4).
 - Migrar `programas.json` para um CMS headless (Sanity, Payload, Decap ou Storyblok), com as entidades Turma, Expert e Depoimento.
-- Redirects 301 das URLs antigas (no `public/.htaccess`).
+- Redirecionar URLs do site antigo que tenham tráfego (no GitHub Pages, com páginas de redirecionamento).
 - Pedir o logo oficial em SVG.

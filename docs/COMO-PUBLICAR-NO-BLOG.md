@@ -40,4 +40,4 @@ Para editar ou apagar um artigo, abra-o na lista do painel.
 
 Para tirar o acesso de alguém, remova a pessoa dos Collaborators do repositório.
 
-> Observação técnica: o painel salva na branch configurada em `public/admin/config.yml` (`backend.branch`). Se o site passar a ser publicado a partir de outra branch (por exemplo `main`), atualize esse campo e o arquivo `.github/workflows/publicar-godaddy.yml`.
+> Observação técnica: o painel salva na branch configurada em `public/admin/config.yml` (`backend.branch`). Se o site passar a ser publicado a partir de outra branch (por exemplo `main`), atualize esse campo e o arquivo `.github/workflows/publicar-site.yml`.

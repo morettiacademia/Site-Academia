@@ -1,9 +1,10 @@
 ---
 /**
  * Captura de lista de espera (páginas "Em breve").
- * Envia para public/enviar.php (e-mail + cópia em CSV na hospedagem).
+ * Envio por e-mail via FORM_ACTION (FormSubmit por padrão).
  */
 import { FORM_ACTION } from '../lib/site';
+import FormExtras from './FormExtras.astro';
 interface Props { slug: string; programa: string; botao: string }
 const { slug, programa, botao } = Astro.props;
 const name = `lista-de-espera`;
@@ -12,7 +13,7 @@ const name = `lista-de-espera`;
   <p class="form-erro" role="alert" hidden data-form-erro>Confira o nome, o e-mail e o consentimento e envie de novo.</p>
   <input type="hidden" name="form-name" value={name} />
   <input type="hidden" name="programa" value={slug} />
-  <p class="sr-only"><label>Não preencha: <input name="empresa" tabindex="-1" autocomplete="off" /></label></p>
+  <FormExtras assunto={`Site: lista de espera — ${programa}`} />
   <div class="grid">
     <div class="field">
       <label for={`wl-nome-${slug}`}>Nome</label>

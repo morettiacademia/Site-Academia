@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
+import FormExtras from '../components/FormExtras.astro';
 import { links, whatsappHref, isExternal, FORM_ACTION } from '../lib/site';
 const redes = [
   { label: 'Instagram', href: links.instagram },
@@ -28,7 +29,7 @@ const hasWa = isExternal(whatsappHref);
       <form class="form" name="contato" method="POST" action={FORM_ACTION}>
         <p class="form-erro" role="alert" hidden data-form-erro>Confira o nome, o e-mail e o consentimento e envie de novo.</p>
         <input type="hidden" name="form-name" value="contato" />
-        <p class="sr-only"><label>Não preencha: <input name="empresa" tabindex="-1" autocomplete="off" /></label></p>
+        <FormExtras assunto="Site: nova mensagem pelo Contato" />
         <div class="field"><label for="c-nome">Nome</label><input id="c-nome" name="nome" required autocomplete="name" /></div>
         <div class="field"><label for="c-email">E-mail</label><input id="c-email" name="email" type="email" required autocomplete="email" /></div>
         <div class="field"><label for="c-wa">WhatsApp <span class="opt">(opcional)</span></label><input id="c-wa" name="whatsapp" type="tel" autocomplete="tel" /></div>

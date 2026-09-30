@@ -1,21 +1,24 @@
-# Publica o site na hospedagem da GoDaddy a cada mudança (inclusive artigos
-# salvos pelo painel do blog). Configuração em docs/PUBLICAR-NA-GODADDY.md.
-name: Publicar na GoDaddy
+# Publica o site no GitHub Pages a cada mudança (inclusive artigos salvos
+# pelo painel do blog). Configuração em docs/PUBLICAR-O-SITE.md.
+name: Publicar o site
 
 on:
   push:
     branches: [main, claude/new-session-mul9z7]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 concurrency:
-  group: publicar-godaddy
+  group: pages
   cancel-in-progress: false
 
 jobs:
-  publicar:
+  gerar:
     runs-on: ubuntu-latest
-    env:
-      FTP_SERVER: ${{ secrets.FTP_SERVER }}
     steps:
       - uses: actions/checkout@v4
 
@@ -38,18 +41,16 @@ jobs:
           PUBLIC_PROTAGONISTAS_URL: ${{ vars.PUBLIC_PROTAGONISTAS_URL }}
           PUBLIC_GTM_ID: ${{ vars.PUBLIC_GTM_ID }}
 
-      - name: Enviar para a GoDaddy (FTP)
-        if: env.FTP_SERVER != ''
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - uses: actions/upload-pages-artifact@v3
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
-          server-dir: ${{ vars.FTP_DIR || 'public_html/' }}
-          local-dir: ./dist/
+          path: dist
 
-      - name: Aviso
-        if: env.FTP_SERVER == ''
-        run: |
-          echo "::warning::Site gerado, mas não enviado. Configure os secrets FTP_SERVER, FTP_USERNAME e FTP_PASSWORD (docs/PUBLICAR-NA-GODADDY.md)."
+  publicar:
+    needs: gerar
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

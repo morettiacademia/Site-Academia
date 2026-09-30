@@ -1,0 +1,21 @@
+---
+/**
+ * Campos ocultos comuns aos formulários. Com o FormSubmit (formsubmit.co),
+ * define assunto, página de "obrigado" e o campo anti-robô.
+ */
+import { FORM_ACTION } from '../lib/site';
+interface Props { assunto: string }
+const { assunto } = Astro.props;
+const formsubmit = FORM_ACTION.includes('formsubmit.co');
+const obrigado = new URL('/obrigado', Astro.site).href;
+---
+<p class="sr-only"><label>Não preencha: <input name="empresa" tabindex="-1" autocomplete="off" /></label></p>
+{formsubmit && (
+  <>
+    <input type="hidden" name="_subject" value={assunto} />
+    <input type="hidden" name="_next" value={obrigado} />
+    <input type="hidden" name="_captcha" value="false" />
+    <input type="hidden" name="_template" value="table" />
+    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+  </>
+)}

@@ -28,8 +28,13 @@ export const academia365Href = links.academia365 ?? '/contato';
 export const isExternal = (href: string) => /^https?:\/\//.test(href);
 
 export const SITE_NAME = 'Academia da Magia';
-/** Para onde os formulários enviam (GoDaddy: script PHP em public/enviar.php). */
-export const FORM_ACTION = url(env.PUBLIC_FORM_ACTION) ?? '/enviar.php';
+/**
+ * Para onde os formulários enviam. Padrão: FormSubmit (gratuito), que entrega
+ * cada envio por e-mail. No primeiro envio, o FormSubmit manda um e-mail de
+ * ativação para este endereço; é preciso clicar em "Activate Form" uma vez.
+ */
+export const FORM_EMAIL = 'diretoria@academiadamagia.com.br';
+export const FORM_ACTION = url(env.PUBLIC_FORM_ACTION) ?? `https://formsubmit.co/${FORM_EMAIL}`;
 export const GTM_ID = url(env.PUBLIC_GTM_ID);
 
 export type NavItem = { label: string; href: string; tag?: string };

@@ -1,6 +1,6 @@
 # Painel do blog (Sveltia CMS, compatível com Decap CMS) — https://github.com/sveltia/sveltia-cms
 # Cada artigo salvo vira um commit no GitHub; a publicação automática
-# (.github/workflows/publicar-godaddy.yml) gera o site e envia para a GoDaddy.
+# (.github/workflows/publicar-site.yml) gera o site e publica no GitHub Pages.
 
 backend:
   name: github
