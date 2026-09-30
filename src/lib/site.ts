@@ -7,7 +7,7 @@ const url = (v?: string) => (v && v.trim() ? v.trim() : null);
  * WhatsApp do atendimento (Adriana). Preencha com DDI + DDD + número, só dígitos,
  * ex.: '5511999998888' — ou defina PUBLIC_WHATSAPP_NUMERO na hospedagem.
  */
-const WHATSAPP_NUMERO = (env.PUBLIC_WHATSAPP_NUMERO || '').replace(/\D/g, '');
+const WHATSAPP_NUMERO = (env.PUBLIC_WHATSAPP_NUMERO || '5511993675759').replace(/\D/g, ''); // Adriana
 const WHATSAPP_MENSAGEM = 'Olá! Vim pelo site da Academia da Magia e gostaria de ajuda para escolher meu próximo passo.';
 const whatsappDoNumero = WHATSAPP_NUMERO
   ? `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(WHATSAPP_MENSAGEM)}`
@@ -20,7 +20,7 @@ export const links = {
   instagram: url(env.PUBLIC_INSTAGRAM_URL),
   youtube: url(env.PUBLIC_YOUTUBE_URL),
   podcast: url(env.PUBLIC_PODCAST_URL),
-  protagonistas: url(env.PUBLIC_PROTAGONISTAS_URL),
+  protagonistas: url(env.PUBLIC_PROTAGONISTAS_URL) ?? 'https://protagonistas.academiadamagia.com.br/',
 };
 
 export const whatsappHref = links.whatsapp ?? '/contato';
