@@ -1,0 +1,72 @@
+---
+import type { ImageMetadata } from 'astro';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ImgSlot from '../components/ImgSlot.astro';
+import { imersoes, realityDestinos } from '../data/imersoes';
+import { whatsappHref, isExternal } from '../lib/site';
+
+const fotos = import.meta.glob<{ default: ImageMetadata }>('../assets/imersoes/*.{jpg,jpeg,png,webp}', { eager: true });
+const fotoDe = (id: string) =>
+  Object.entries(fotos).find(([k]) => k.split('/').pop()!.replace(/\.\w+$/, '') === id)?.[1].default ?? null;
+const waExt = isExternal(whatsappHref) ? { target: '_blank', rel: 'noopener' } : {};
+---
+<Base title="Imersões | Academia da Magia" description="Imersões e cursos práticos da Academia da Magia em Orlando, na Califórnia, a bordo da Disney Cruise Line e em Dubai. Aprenda viajando, na prática.">
+  <PageHero
+    selo="Imersões"
+    title="Aprender <span class='hl'>viajando</span>"
+    lead="Cursos práticos nos destinos, com a turma e com quem vive o turismo. É onde a teoria vira vivência."
+    crumbs={[{ label: 'Início', href: '/' }, { label: 'Imersões' }]}
+  />
+
+  <section class="bg-light">
+    <div class="container section grid-auto lista" style="--min:320px">
+      {imersoes.map((im) => (
+        <article id={im.id} class:list={['imersao', { breve: im.breve }]}>
+          <ImgSlot src={fotoDe(im.id)} alt={`Turma da Academia da Magia na imersão ${im.nome}`} label={`última imersão: ${im.nome}`} class="im-foto" widths={[400, 700, 1000]} sizes="(min-width: 1320px) 420px, (min-width: 700px) 45vw, 100vw" />
+          <div class="im-body">
+            <span class:list={['chip', { 'chip-breve': im.breve }]}>{im.selo}</span>
+            <h2 class="im-t">{im.nome}</h2>
+            <p class="im-x">{im.texto}</p>
+            <div class="im-ctas">
+              {im.pagina ? (
+                <a href={im.pagina} class="btn btn-navy btn-sm">Conhecer a imersão →</a>
+              ) : (
+                <a href={whatsappHref} class="btn btn-navy btn-sm" data-track="whatsapp_click" data-track-origem={`imersao_${im.id}`} {...waExt}>{im.breve ? 'Quero ser avisado →' : 'Quero participar da próxima →'}</a>
+              )}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-navy">
+    <div class="container section reality">
+      <div class="stack" style="gap:16px">
+        <span class="eyebrow hl-cyan">Evento virtual</span>
+        <h2 class="h2">Reality de Guiamento <span class="hl-cyan">Virtual</span></h2>
+        <p class="muted r-x">Acompanhe ao vivo um expert da Academia guiando um passageiro real, e veja na prática como cada situação é conduzida.</p>
+        <ul class="r-dest">{realityDestinos.map((d) => <li>{d}</li>)}</ul>
+        <a href="/reality-guiamento-virtual" class="btn btn-cyan" style="align-self:flex-start">Conhecer o Reality →</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lista { gap: 24px; }
+  .imersao { background: var(--white); border: 1px solid var(--line-light-2); border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; scroll-margin-top: 110px; }
+  .imersao:target { box-shadow: 0 0 0 3px var(--cyan-500); }
+  .imersao :global(.im-foto) { aspect-ratio: 4 / 3; background: var(--blue-600); }
+  .imersao.breve :global(.im-foto) { background: var(--navy-800); }
+  .im-body { padding: 24px 26px 28px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .chip-breve { background: var(--cyan-300); color: var(--navy-800); }
+  .im-t { font-family: var(--font-display); font-size: 30px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; color: var(--navy-800); }
+  .im-x { font-size: 15.5px; line-height: 1.55; color: var(--ink-body); }
+  .im-ctas { margin-top: auto; padding-top: 8px; }
+  .reality { max-width: 900px; margin-inline: auto; }
+  .r-x { font-size: 17px; line-height: 1.6; max-width: 620px; }
+  .r-dest { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .r-dest li { font-size: 15px; font-weight: 600; border: 1.5px solid var(--cyan-500); padding: 10px 18px; border-radius: 999px; }
+</style>

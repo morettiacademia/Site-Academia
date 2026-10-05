@@ -5,7 +5,8 @@ import Socios from '../../components/Socios.astro';
 import Pending from '../../components/Pending.astro';
 import { programas } from '../../lib/programas';
 import { pv, SHOW_PENDING } from '../../lib/pending';
-import { socios, iniciais } from '../../lib/pessoas';
+import { socios, iniciais, fotoDe } from '../../lib/pessoas';
+import ImgSlot from '../../components/ImgSlot.astro';
 
 // Experts convidados: agregados a partir dos programas (quem não é sócio).
 type Expert = { nome: string; bio: ReturnType<typeof pv>; programas: { nome: string; slug: string }[] };
@@ -35,10 +36,14 @@ const experts = [...map.values()];
         <div class="grid-auto" style="--min:260px;gap:32px 16px">
           {experts.map((e) => (
             <article class="stack ex">
-              <div class="mono" aria-hidden="true">
-                <span>{iniciais(e.nome)}</span>
-                {SHOW_PENDING && <span class="pending tag">Retrato autorizado pendente</span>}
-              </div>
+              {fotoDe(e.nome) ? (
+                <ImgSlot src={fotoDe(e.nome)} alt={`Retrato de ${e.nome}`} class="mono-foto" widths={[360, 540, 720]} sizes="(min-width: 1320px) 300px, (min-width: 700px) 45vw, 100vw" />
+              ) : (
+                <div class="mono" aria-hidden="true">
+                  <span>{iniciais(e.nome)}</span>
+                  {SHOW_PENDING && <span class="pending tag">Retrato autorizado pendente</span>}
+                </div>
+              )}
               <h3 class="ex-n">{e.nome}</h3>
               {e.bio.show && e.bio.text && <p class="ex-b">{e.bio.text}</p>}
               <Pending tag={e.bio.pending ? e.bio.tag : null} />
@@ -55,6 +60,7 @@ const experts = [...map.values()];
 <style>
   .ex { gap: 14px; }
   .mono { position: relative; aspect-ratio: 4 / 5; border-radius: 28px; background: var(--navy-800); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 88px; color: var(--cyan-300); }
+  .ex :global(.mono-foto) { aspect-ratio: 4 / 5; border-radius: 28px; }
   .mono .tag { position: absolute; left: 12px; bottom: 12px; }
   .ex-n { font-family: var(--font-display); font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
   .ex-b { font-size: 15.5px; line-height: 1.55; color: var(--ink-body); }

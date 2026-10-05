@@ -4,7 +4,7 @@ import type { ImageMetadata } from 'astro';
 
 export type Programa = {
   nome: string;
-  menu: 'Mentorias' | 'Especializações' | 'Destinos' | 'Ferramentas' | 'Comunidade';
+  menu: 'Mentorias' | 'Especializações' | 'Destinos' | 'Ferramentas' | 'Comunidade' | 'Imersões';
   seo?: string; logo?: string; logoDark?: boolean; breve?: boolean; novo?: boolean; hub?: boolean;
   selo: string; titulo: string; subtitulo: string; botao: string; imagem?: string;
   contador?: string;
@@ -18,7 +18,8 @@ export type Programa = {
   gradeTitulo?: string; grade?: string;
   /** Grade de aulas em módulos: [título do módulo, resumo, aulas (opcional)]. Tem prioridade sobre `grade`. */
   modulos?: [string, string, string[]?][];
-  experts?: [string, string][];
+  /** [nome, bio, foto opcional: nome do arquivo em src/assets/experts, sem extensão] */
+  experts?: [string, string, string?][];
   prova?: string; depoimentos?: string;
   investimento?: string; extra?: string; extraLink?: string;
   planos?: [string, string, string][]; planosNota?: string;

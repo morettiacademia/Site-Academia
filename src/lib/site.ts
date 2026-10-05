@@ -103,26 +103,28 @@ export const nav: NavEntry[] = [
       introTitle: 'Comunidade', introText: 'Pessoas, encontros e experiências que movimentam o turismo.',
       introCta: 'Conhecer o Magic Club', introHref: P('magic-club'),
       cols: [
-        { title: 'Faça parte', sub: 'Assinatura, eventos e imersões', wide: true, items: [
+        { title: 'Faça parte', sub: 'Assinatura e eventos', wide: true, items: [
           { label: 'Magic Club', href: P('magic-club'), tag: 'Assinatura' },
           { label: 'Magic Makers ao Vivo', href: P('magic-makers-ao-vivo'), tag: '15 e 16 de maio de 2027' },
-          { label: 'Magic Makers Experience', href: P('magic-makers-experience'), tag: 'Imersão presencial' },
-          { label: 'Reality de Guiamento Virtual', href: P('reality-guiamento-virtual'), tag: 'Evento virtual' },
+          ...ext('Podcast Magic Makers', links.podcast, 'Retomada em 2027'),
         ] },
       ],
     },
   },
   {
-    key: 'conteudos', label: 'Conteúdos', href: '/blog',
+    key: 'imersoes', label: 'Imersões', href: '/imersoes',
     menu: {
-      introTitle: 'Conteúdos', introText: 'Artigos, conversas e bastidores para o seu dia a dia.',
-      introCta: 'Ir para o blog', introHref: '/blog',
+      introTitle: 'Imersões', introText: 'Aprender viajando, na prática, ao lado de quem vive o turismo.',
+      introCta: 'Ver todas as imersões', introHref: '/imersoes',
       cols: [
-        { title: 'Acompanhe', sub: 'Leia, ouça e siga a Academia', wide: true, items: [
-          { label: 'Blog', href: '/blog' },
-          ...ext('Podcast Magic Makers', links.podcast, 'Retomada em 2027'),
-          ...ext('Instagram', links.instagram),
-          ...ext('YouTube', links.youtube),
+        { title: 'Imersões', sub: 'Cursos práticos nos destinos', wide: true, items: [
+          { label: 'Magic Makers Experience', href: P('magic-makers-experience'), tag: 'A bordo da Disney Cruise Line' },
+          { label: 'Orlando', href: '/imersoes#orlando' },
+          { label: 'Califórnia', href: '/imersoes#california' },
+          { label: 'Disney Cruise Line', href: '/imersoes#disney-cruise-line' },
+          { label: 'Dubai', href: '/imersoes#dubai' },
+          { label: 'Connections', href: '/imersoes#connections', tag: 'Em breve' },
+          { label: 'Reality de Guiamento Virtual', href: P('reality-guiamento-virtual'), tag: 'Orlando e Epic · Califórnia · Paris' },
         ] },
       ],
     },
@@ -157,9 +159,10 @@ export const footerCols: { title: string; links: NavItem[] }[] = [
     { label: 'Ferramentas', href: P('ferramentas') },
     { label: 'Comece aqui', href: '/comece-aqui' },
   ] },
-  { title: 'Comunidade', links: [
+  { title: 'Comunidade e imersões', links: [
     { label: 'Magic Club', href: P('magic-club') },
     { label: 'Magic Makers ao Vivo', href: P('magic-makers-ao-vivo') },
+    { label: 'Imersões', href: '/imersoes' },
     { label: 'Magic Makers Experience', href: P('magic-makers-experience') },
     { label: 'Reality de Guiamento', href: P('reality-guiamento-virtual') },
   ] },

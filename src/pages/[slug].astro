@@ -51,10 +51,10 @@ const grade = pv(p.grade);
 const modulos = breve ? [] : (p.modulos ?? []).map(([titulo, resumo, aulas]) => ({ titulo, resumo: pv(resumo), aulas: (aulas ?? []).map(pv).filter((a) => a.show) }));
 const hasGrade = !breve && modulos.length === 0 && !!p.grade && grade.show;
 const experts = breve ? [] : (p.experts ?? [])
-  .map(([n, b]) => {
+  .map(([n, b, arquivo]) => {
     const nome = pv(n);
     const bio = pv(b);
-    return { nome, bio, foto: nome.text ? fotoDe(nome.text) : null };
+    return { nome, bio, foto: nome.text ? fotoDe(nome.text, arquivo) : null };
   })
   .filter((x) => x.nome.show);
 const prova = pv(p.prova);

@@ -1,0 +1,206 @@
+---
+/**
+ * Quiz "Qual formação faz sentido agora?": algumas perguntas sobre o momento
+ * da pessoa e uma recomendação explicada. Roda no navegador; não pede contato.
+ * Cada resposta soma pontos para programas; o de maior pontuação é recomendado.
+ */
+import { programas } from '../lib/programas';
+import { whatsappHref } from '../lib/site';
+
+type Opcao = { texto: string; motivo: string; pontos: Record<string, number> };
+type Pergunta = { titulo: string; opcoes: Opcao[] };
+
+const perguntas: Pergunta[] = [
+  {
+    titulo: 'Em que momento você está no turismo?',
+    opcoes: [
+      { texto: 'Ainda não trabalho com turismo, mas quero começar', motivo: 'você está começando no turismo', pontos: { 'magic-makers': 3, 'guias-de-orlando': 2, 'guiamento-virtual': 2 } },
+      { texto: 'Comecei há pouco e estou estruturando meu trabalho', motivo: 'você está no início da carreira', pontos: { 'magic-makers': 2, 'orlando-lucrativo': 1, 'guiamento-virtual': 1, agir: 1 } },
+      { texto: 'Já vendo viagens e quero me especializar', motivo: 'você já vende e quer se especializar', pontos: { 'orlando-lucrativo': 2, 'disney-cruise-line': 1, 'paris-alem-da-disney': 1, 'rota-california': 1, creations: 1, 'guiamento-virtual': 1 } },
+      { texto: 'Tenho uma agência e quero crescer com estrutura', motivo: 'você tem agência e quer crescer', pontos: { agir: 3, 'mentoria-ia': 2, moneys: 2, 'hands-on': 1 } },
+    ],
+  },
+  {
+    titulo: 'O que você mais quer agora?',
+    opcoes: [
+      { texto: 'Aprender a vender Orlando do zero', motivo: 'quer aprender a vender Orlando', pontos: { 'magic-makers': 3, 'orlando-lucrativo': 1 } },
+      { texto: 'Atuar como guia nos parques', motivo: 'quer atuar como guia', pontos: { 'guias-de-orlando': 3, 'guiamento-virtual': 3 } },
+      { texto: 'Dominar um destino novo', motivo: 'quer dominar um destino novo', pontos: { 'disney-cruise-line': 2, 'paris-alem-da-disney': 2, 'rota-california': 2, japao: 1, 'orlando-lucrativo': 1 } },
+      { texto: 'Organizar processos, finanças ou usar IA', motivo: 'quer organizar o negócio', pontos: { agir: 2, moneys: 2, 'mentoria-ia': 2 } },
+      { texto: 'Atrair clientes pelas redes sociais', motivo: 'quer atrair clientes pelas redes', pontos: { creations: 3 } },
+      { texto: 'Viver experiências e fazer networking', motivo: 'quer viver experiências e fazer networking', pontos: { 'magic-makers-ao-vivo': 3, 'magic-makers-experience': 2, 'magic-club': 2 } },
+    ],
+  },
+  {
+    titulo: 'Como você prefere aprender?',
+    opcoes: [
+      { texto: 'Online, no meu ritmo', motivo: 'prefere estudar online, no seu ritmo', pontos: { 'guiamento-virtual': 1, 'disney-cruise-line': 1, 'paris-alem-da-disney': 1, 'rota-california': 1, moneys: 1, 'orlando-lucrativo': 1, japao: 1 } },
+      { texto: 'Com acompanhamento e uma turma', motivo: 'prefere aprender com acompanhamento', pontos: { 'magic-makers': 2, agir: 2, 'mentoria-ia': 2, creations: 1, 'hands-on': 1, 'magic-club': 1 } },
+      { texto: 'Ao vivo e presencial', motivo: 'prefere aprender ao vivo e presencialmente', pontos: { 'guias-de-orlando': 2, 'magic-makers-ao-vivo': 2, 'magic-makers-experience': 2, 'hands-on': 1 } },
+    ],
+  },
+  {
+    titulo: 'Qual destino mais te interessa?',
+    opcoes: [
+      { texto: 'Orlando', motivo: 'se interessa por Orlando', pontos: { 'magic-makers': 1, 'orlando-lucrativo': 2, 'guias-de-orlando': 1, 'guiamento-virtual': 1 } },
+      { texto: 'Califórnia', motivo: 'se interessa pela Califórnia', pontos: { 'rota-california': 3 } },
+      { texto: 'Europa', motivo: 'se interessa pela Europa', pontos: { 'paris-alem-da-disney': 3 } },
+      { texto: 'Cruzeiros Disney', motivo: 'se interessa por cruzeiros Disney', pontos: { 'disney-cruise-line': 3, 'magic-makers-experience': 1 } },
+      { texto: 'Japão', motivo: 'se interessa pelo Japão', pontos: { japao: 3 } },
+      { texto: 'Ainda não sei', motivo: 'ainda está escolhendo um destino', pontos: { 'magic-makers': 1, 'magic-club': 1 } },
+    ],
+  },
+];
+
+// Dados dos programas que podem ser recomendados (fora os "em breve")
+const progs = Object.fromEntries(
+  Object.entries(programas)
+    .filter(([, p]) => !p.breve && !p.hub)
+    .map(([slug, p]) => [slug, { nome: p.nome, selo: p.selo, texto: p.subtitulo, href: `/${slug}` }]),
+);
+const dados = { perguntas, progs, whatsapp: whatsappHref };
+---
+<div class="quiz" data-quiz-app>
+  <div class="q-head">
+    <span class="q-step" data-step>1 de {perguntas.length}</span>
+    <button type="button" class="q-back" data-back hidden>← Voltar</button>
+  </div>
+  <div class="q-bar" aria-hidden="true"><div data-bar style={`width:${100 / perguntas.length}%`}></div></div>
+
+  <div data-perguntas>
+    {perguntas.map((p, i) => (
+      <fieldset class="q-pergunta" data-pergunta={i} hidden={i !== 0}>
+        <legend class="q-titulo">{p.titulo}</legend>
+        <div class="q-opcoes">
+          {p.opcoes.map((o, j) => (
+            <button type="button" class="q-opcao" data-opcao={j}>{o.texto}</button>
+          ))}
+        </div>
+      </fieldset>
+    ))}
+  </div>
+
+  <div class="q-resultado" data-resultado hidden aria-live="polite">
+    <span class="q-kicker">Sua recomendação</span>
+    <h3 class="q-nome" data-r-nome></h3>
+    <span class="q-selo" data-r-selo></span>
+    <p class="q-texto" data-r-texto></p>
+    <p class="q-motivo" data-r-motivo></p>
+    <div class="q-ctas">
+      <a class="btn btn-blue" data-r-link data-track="quiz_resultado">Conhecer o programa →</a>
+      <a class="btn btn-outline-navy" data-r-wa target="_blank" rel="noopener" data-track="whatsapp_click" data-track-origem="quiz">Tirar dúvidas no WhatsApp</a>
+    </div>
+    <div class="q-outros" data-r-outros-wrap>
+      <span class="q-outros-t">Também combinam com você</span>
+      <ul data-r-outros></ul>
+    </div>
+    <button type="button" class="q-refazer" data-refazer>Refazer o quiz</button>
+  </div>
+</div>
+
+<script is:inline define:vars={{ dados }}>
+  (function () {
+    var app = document.querySelector('[data-quiz-app]');
+    if (!app) return;
+    var P = dados.perguntas, progs = dados.progs;
+    var respostas = [];
+    var passo = app.querySelector('[data-step]'), barra = app.querySelector('[data-bar]');
+    var voltar = app.querySelector('[data-back]'), res = app.querySelector('[data-resultado]');
+    var blocos = app.querySelectorAll('[data-pergunta]');
+
+    function mostrar(i) {
+      blocos.forEach(function (b, k) { b.hidden = k !== i; });
+      res.hidden = true;
+      passo.textContent = (i + 1) + ' de ' + P.length;
+      barra.style.width = ((i + 1) / P.length * 100) + '%';
+      voltar.hidden = i === 0;
+      var primeira = blocos[i] && blocos[i].querySelector('button');
+      if (primeira && respostas.length) primeira.focus();
+    }
+
+    function resultado() {
+      var total = {};
+      respostas.forEach(function (j, i) {
+        var pts = P[i].opcoes[j].pontos;
+        Object.keys(pts).forEach(function (s) { if (progs[s]) total[s] = (total[s] || 0) + pts[s]; });
+      });
+      var ord = Object.keys(total).sort(function (a, b) { return total[b] - total[a]; });
+      var top = progs[ord[0]];
+      var motivos = respostas.map(function (j, i) { return P[i].opcoes[j].motivo; });
+      blocos.forEach(function (b) { b.hidden = true; });
+      res.hidden = false;
+      passo.textContent = 'Resultado';
+      barra.style.width = '100%';
+      voltar.hidden = false;
+      res.querySelector('[data-r-nome]').textContent = top.nome;
+      res.querySelector('[data-r-selo]').textContent = top.selo;
+      res.querySelector('[data-r-texto]').textContent = top.texto;
+      res.querySelector('[data-r-motivo]').textContent = 'Por que indicamos: ' + motivos.slice(0, -1).join(', ') + ' e ' + motivos[motivos.length - 1] + '.';
+      var link = res.querySelector('[data-r-link]');
+      link.href = top.href;
+      link.setAttribute('data-track-programa', ord[0]);
+      var wa = res.querySelector('[data-r-wa]');
+      wa.href = dados.whatsapp;
+      if (!/^https?:/.test(dados.whatsapp)) { wa.removeAttribute('target'); }
+      var ul = res.querySelector('[data-r-outros]');
+      ul.innerHTML = '';
+      ord.slice(1, 3).forEach(function (s) {
+        var li = document.createElement('li'), a = document.createElement('a');
+        a.href = progs[s].href; a.textContent = progs[s].nome + ' →';
+        li.appendChild(a); ul.appendChild(li);
+      });
+      res.querySelector('[data-r-nome]').setAttribute('tabindex', '-1');
+      res.querySelector('[data-r-nome]').focus();
+      if (window.amTrack) window.amTrack('quiz_concluido', { programa: ord[0] });
+    }
+
+    app.addEventListener('click', function (e) {
+      var op = e.target.closest('[data-opcao]');
+      if (op) {
+        var i = Number(op.closest('[data-pergunta]').getAttribute('data-pergunta'));
+        respostas = respostas.slice(0, i);
+        respostas[i] = Number(op.getAttribute('data-opcao'));
+        if (i + 1 < P.length) mostrar(i + 1); else resultado();
+        return;
+      }
+      if (e.target.closest('[data-back]')) {
+        var atual = res.hidden ? respostas.length : P.length;
+        respostas = respostas.slice(0, Math.max(0, atual - 1));
+        mostrar(Math.max(0, atual - 1));
+        return;
+      }
+      if (e.target.closest('[data-refazer]')) { respostas = []; mostrar(0); }
+    });
+  })();
+</script>
+
+<style>
+  .quiz { background: var(--white); color: var(--navy-800); border-radius: 28px; padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 18px; box-shadow: 0 30px 80px rgba(4, 12, 32, 0.35); }
+  .q-head { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; color: var(--ink-muted); min-height: 24px; }
+  .q-back { background: none; border: 0; font-weight: 700; font-size: 14px; color: var(--blue-600); cursor: pointer; padding: 6px 0; }
+  .q-bar { height: 6px; background: #e8f2fb; border-radius: 6px; }
+  .q-bar div { height: 100%; background: var(--cyan-500); border-radius: 6px; transition: width .3s; }
+  .q-pergunta { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+  .q-pergunta[hidden] { display: none; }
+  .q-titulo { padding: 0; font-family: var(--font-display); font-size: clamp(22px, 2.2vw, 28px); font-weight: 700; line-height: 1.15; margin-bottom: 14px; }
+  .q-opcoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 10px; }
+  .q-opcao { text-align: left; border: 2px solid var(--line-light-2); background: var(--white); color: var(--navy-800); font-size: 15px; font-weight: 600; padding: 16px; border-radius: 16px; cursor: pointer; min-height: 64px; transition: border-color .2s, background-color .2s; }
+  .q-opcao:hover, .q-opcao:focus-visible { border-color: var(--cyan-500); background: #e8f2fb; }
+  .q-resultado { display: flex; flex-direction: column; gap: 10px; }
+  .q-resultado[hidden] { display: none; }
+  .q-kicker { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--blue-600); }
+  .q-nome { font-family: var(--font-display); font-size: clamp(32px, 4vw, 48px); font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+  .q-nome:focus { outline: none; }
+  .q-selo { align-self: flex-start; font-size: 13px; font-weight: 700; color: var(--navy-800); background: var(--cyan-300); padding: 6px 12px; border-radius: 999px; }
+  .q-texto { font-size: 16.5px; line-height: 1.55; color: var(--ink-body); }
+  .q-motivo { font-size: 14.5px; line-height: 1.5; color: var(--ink-muted); background: var(--surface-light); border-radius: 14px; padding: 12px 14px; }
+  .q-ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+  .btn-outline-navy { background: transparent; color: var(--navy-800); border: 2px solid var(--navy-800); padding: 16px 24px; }
+  .btn-outline-navy:hover { background: var(--navy-800); color: var(--white); }
+  .q-outros { border-top: 1.5px solid var(--line-light); padding-top: 14px; margin-top: 6px; display: flex; flex-direction: column; gap: 8px; }
+  .q-outros-t { font-size: 13px; font-weight: 700; color: var(--ink-muted); }
+  .q-outros ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+  .q-outros a { color: var(--blue-600); font-weight: 700; }
+  .q-outros a:hover { color: var(--navy-800); text-decoration: underline; }
+  .q-refazer { align-self: flex-start; background: none; border: 0; padding: 6px 0; font-size: 14px; font-weight: 700; color: var(--ink-muted); text-decoration: underline; cursor: pointer; }
+</style>

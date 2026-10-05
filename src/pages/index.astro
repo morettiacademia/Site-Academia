@@ -37,7 +37,7 @@ const portals = [
   { label: 'Mentorias', short: 'mentorias', text: 'Comece, estruture e faça crescer a sua agência com acompanhamento.', bg: '#1f3566', ph: 'mentoria', foto: fotoMentorias, alt: 'Paulo Soares, sócio da Academia da Magia', pos: 'center top' },
 ];
 
-const quizOptions = ['Quero começar no turismo', 'Sou agente em início de carreira', 'Quero me especializar', 'Tenho uma agência e quero crescer'];
+const quizOptions = ['Ainda não trabalho com turismo, mas quero começar', 'Comecei há pouco e estou estruturando meu trabalho', 'Já vendo viagens e quero me especializar', 'Tenho uma agência e quero crescer com estrutura'];
 const posts = await recentPosts(3);
 const dias = diasPara(destaque.inicio);
 ---
@@ -158,15 +158,15 @@ const dias = diasPara(destaque.inicio);
         <p class="quiz-text">Perguntas rápidas. Uma recomendação explicada. Sem pedir contato antes do resultado.</p>
       </div>
       <div class="quiz-card">
-        <div class="quiz-meta"><span>1 de 6</span><span>Seu momento</span></div>
+        <div class="quiz-meta"><span>1 de 4</span><span>Seu momento</span></div>
         <div class="quiz-bar"><div></div></div>
-        <p class="quiz-q" id="quiz-q">Como você descreve sua situação hoje?</p>
+        <p class="quiz-q" id="quiz-q">Em que momento você está no turismo?</p>
         <div role="radiogroup" aria-labelledby="quiz-q" class="quiz-opts" data-quiz>
           {quizOptions.map((o) => (
             <button type="button" role="radio" aria-checked="false" class="quiz-opt">{o}</button>
           ))}
         </div>
-        <a href="/comece-aqui" class="btn btn-navy btn-pill btn-sm quiz-go" data-track="cta_comece_aqui" data-track-origem="home_quiz">Descobrir meu próximo passo →</a>
+        <a href="/comece-aqui#quiz" class="btn btn-navy btn-pill btn-sm quiz-go" data-track="cta_comece_aqui" data-track-origem="home_quiz">Descobrir meu próximo passo →</a>
       </div>
     </div>
   </section>

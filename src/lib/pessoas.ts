@@ -23,9 +23,26 @@ export const socios: Socio[] = [
   },
 ];
 
-/** Retrato de um expert, quando existe foto (hoje apenas os sócios). */
-export function fotoDe(nome: string): ImageMetadata | null {
-  const primeiro = nome.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().split(' ')[0];
+// Retratos de experts: src/assets/experts/<nome-sobrenome>.jpg (ou .png/.webp)
+const expertFiles = import.meta.glob<{ default: ImageMetadata }>('../assets/experts/*.{jpg,jpeg,png,webp}', { eager: true });
+const expertPorArquivo = (arquivo: string) =>
+  Object.entries(expertFiles).find(([k]) => k.split('/').pop()!.replace(/\.\w+$/, '') === arquivo)?.[1].default ?? null;
+
+export const slugNome = (nome: string) =>
+  nome.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+
+/**
+ * Retrato de um expert. Ordem: arquivo indicado no programa (ex.: "joice-parque"),
+ * arquivo com o nome da pessoa em src/assets/experts, retrato de sócio.
+ */
+export function fotoDe(nome: string, arquivo?: string): ImageMetadata | null {
+  if (arquivo) {
+    const f = expertPorArquivo(arquivo);
+    if (f) return f;
+  }
+  const porNome = expertPorArquivo(slugNome(nome));
+  if (porNome) return porNome;
+  const primeiro = slugNome(nome).split('-')[0];
   return socios.find((s) => s.slug.startsWith(primeiro))?.foto ?? null;
 }
 
