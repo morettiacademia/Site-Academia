@@ -16,7 +16,11 @@ import { fotoDe, iniciais, socios } from '../lib/pessoas';
 import { whatsappHref, isExternal } from '../lib/site';
 
 export function getStaticPaths() {
-  return slugs.map((slug) => ({ params: { slug } }));
+  // Programas com página de vendas própria em public/<slug>.html (não gera a ficha padrão).
+  const PAGINAS_PROPRIAS = ['paris-alem-da-disney'];
+  return slugs
+    .filter((slug) => !PAGINAS_PROPRIAS.includes(slug))
+    .map((slug) => ({ params: { slug } }));
 }
 
 const { slug } = Astro.params as { slug: string };

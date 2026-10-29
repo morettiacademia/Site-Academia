@@ -16,6 +16,8 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) => !/\/(404|obrigado)$/.test(page),
+      // Páginas de vendas estáticas em public/ (fora do roteamento do Astro).
+      customPages: [`${SITE}/paris-alem-da-disney`],
     }),
   ],
   prefetch: true,
