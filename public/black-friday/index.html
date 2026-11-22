@@ -282,14 +282,13 @@ const CAMPANHA = {
 };
 
 const OFERTAS = {
-  'foco-total':  { statusDaOferta: null, valorAvulsoTotal: null, precoBlack: null, parcelamentoEJuros: null, inicioDaOferta: null, fimDaOferta: null, prazoDeAcesso: null, formatoDaEntrega: null, linkCheckout: null },
-  'nunca-mais':  { statusDaOferta: null, valorAvulsoTotal: null, precoBlack: null, parcelamentoEJuros: null, inicioDaOferta: null, fimDaOferta: null, prazoDeAcesso: null, formatoDaEntrega: null, linkCheckout: null },
-  'mestre':      { statusDaOferta: null, valorAvulsoTotal: null, precoBlack: null, parcelamentoEJuros: null, inicioDaOferta: null, fimDaOferta: null, prazoDeAcesso: null, formatoDaEntrega: null, linkCheckout: null },
-  'kit':         { statusDaOferta: null, valorAvulsoTotal: null, precoBlack: null, parcelamentoEJuros: null, inicioDaOferta: null, fimDaOferta: null, prazoDeAcesso: null, formatoDaEntrega: null, linkCheckout: null },
+  'foco-total':  { statusDaOferta: null, valorAvulsoTotal: 1211, precoBlack: 597, parcelamentoEJuros: 'À vista ou em até 12x no cartão (juros por conta do comprador)', inicioDaOferta: null, fimDaOferta: null, prazoDeAcesso: null, formatoDaEntrega: null, linkCheckout: 'https://pay.hotmart.com/X108539494W?off=dgrrzk9a' },
+  'nunca-mais':  { statusDaOferta: null, valorAvulsoTotal: 3141, precoBlack: 1497, parcelamentoEJuros: 'À vista ou em até 12x no cartão (juros por conta do comprador)', inicioDaOferta: null, fimDaOferta: null, prazoDeAcesso: null, formatoDaEntrega: null, linkCheckout: 'https://pay.hotmart.com/F108539528U?off=4m3epzsi' },
+  'mestre':      { statusDaOferta: null, valorAvulsoTotal: 1693, precoBlack: 797, parcelamentoEJuros: 'À vista ou em até 12x no cartão (juros por conta do comprador)', inicioDaOferta: null, fimDaOferta: null, prazoDeAcesso: null, formatoDaEntrega: null, linkCheckout: 'https://pay.hotmart.com/Y108539557J?off=fjn1byer' },
+  'kit':         { statusDaOferta: null, valorAvulsoTotal: 444, precoBlack: 247, parcelamentoEJuros: 'À vista ou em até 12x no cartão (juros por conta do comprador)', inicioDaOferta: null, fimDaOferta: null, prazoDeAcesso: null, formatoDaEntrega: null, linkCheckout: 'https://pay.hotmart.com/V108607779C?off=x1hs1146' },
 };
 
 const FAQ_PENDENTES = [
-  { q: 'O Kit Salva-Rotina inclui os mesmos playbooks da Biblioteca do Foco Total?', a: null },
   { q: 'Como recebo os materiais e por quanto tempo tenho acesso?', a: null },
   { q: 'Quais são as formas de pagamento e até quando posso comprar?', a: null },
 ];
@@ -332,16 +331,15 @@ const COMBOS = [
     complement:'As três formações ampliam as opções que você pode apresentar quando um passageiro pede um destino diferente ou quer explorar possibilidades antes de decidir a próxima viagem.',
     audience:'Agentes que querem ampliar o portfólio e conversar com mais segurança sobre os três destinos.',
     cta:'Quero ampliar meu portfólio' },
-  { key:'kit', anchor:'combo-kit-salva-rotina', name:'Kit Salva-Rotina', need:'Facilitar minha rotina de trabalho', summary:'Uma planilha e dois playbooks para consultar no dia a dia.',
+  { key:'kit', anchor:'combo-kit-salva-rotina', name:'Kit Salva-Rotina', need:'Facilitar minha rotina de trabalho', summary:'Uma planilha e um playbook para consultar no dia a dia.',
     accent:'#F5B544', tint:'#FAD38A', ink:'#061022', glow:'rgba(245,181,68,0.16)', line:'rgba(245,181,68,0.45)',
     icon:'M3 7h18v13H3zM8 7V4h8v3M3 12h18',
     benefit:'Chega de improviso! Tenha suas ferramentas de trabalho sempre à mão.',
-    copy:['Na hora de consultar dados de hotéis, organizar um processo ou preparar um guiamento, ajuda ter uma referência pronta. O Kit Salva-Rotina coloca três materiais de apoio à disposição de agentes e guias, para que você gaste menos tempo começando do zero.'],
+    copy:['Na hora de consultar dados de hotéis ou preparar um guiamento, ajuda ter uma referência pronta. O Kit Salva-Rotina coloca dois materiais de apoio à disposição de agentes e guias, para que você gaste menos tempo começando do zero.'],
     products:[
       {name:'Planilha de Hotéis', short:'Planilha de Hotéis', desc:'Uma base de consulta para apoiar o trabalho com hospedagem.'},
-      {name:'Playbook de Processos', short:'Playbook de Processos', desc:'Uma referência para organizar atividades que se repetem na operação.'},
       {name:'Playbook de Guiamento', short:'Playbook de Guiamento', desc:'Material de apoio para consultar ao preparar e conduzir guiamentos.'}],
-    complement:'O kit reúne referências para três situações comuns na rotina: consultar informações, organizar processos e preparar um guiamento.',
+    complement:'O kit reúne referências para duas situações comuns na rotina: consultar informações de hospedagem e preparar um guiamento.',
     audience:'Agentes e guias que precisam de materiais de consulta e apoio para o trabalho diário.',
     cta:'Quero meu Kit Salva-Rotina' },
 ];
@@ -388,7 +386,7 @@ class Component extends DCLogic {
     const by = k => combos.find(c => c.key === k);
     const comparativo = [
       { goal:'Me preparar para guiar', c: by('nunca-mais'), what:'Guiamento virtual, teoria do presencial e planejamento de parques.' },
-      { goal:'Ter materiais de consulta', c: by('kit'), what:'Uma planilha e dois playbooks para apoiar a rotina.' },
+      { goal:'Ter materiais de consulta', c: by('kit'), what:'Uma planilha e um playbook para apoiar a rotina.' },
     ].map(r => ({ goal: r.goal, what: r.what, name: r.c.name, anchor: r.c.anchor, accent: r.c.accent, tint: r.c.tint }));
     const faq = [
       { q:'Qual combo é para mim?', a:'Se o objetivo é organizar a agência, escolha o Foco Total. Para se preparar para guiar, veja o Nunca Mais Eu Vou Dormir. Para ampliar os destinos que você vende, veja o Mestre dos Destinos. Para ter materiais de consulta na rotina, veja o Kit Salva-Rotina.' },
