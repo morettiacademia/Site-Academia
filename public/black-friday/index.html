@@ -39,7 +39,7 @@ details[open] .faq-plus{transform:rotate(45deg)}
     </a>
     <nav aria-label="Navegação principal" style="flex:1;min-width:0;height:44px;overflow:hidden;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px 28px;align-items:center">
       <a href="#escolha-seu-combo" style="font-size:15px;font-weight:500;color:#C3CEE6;line-height:44px">Escolha seu combo</a>
-      <a href="#combo-foco-total" style="font-size:15px;font-weight:500;color:#C3CEE6;line-height:44px">{{ navOfertas }}</a>
+      <a href="#combo-agencia-no-controle" style="font-size:15px;font-weight:500;color:#C3CEE6;line-height:44px">{{ navOfertas }}</a>
       <a href="#duvidas" style="font-size:15px;font-weight:500;color:#C3CEE6;line-height:44px">Dúvidas</a>
     </nav>
     <a href="#escolha-seu-combo" style="flex-shrink:0;height:44px;padding:0 18px;border-radius:999px;background:#22C55E;color:#04210F;font-weight:700;font-size:14px;display:flex;align-items:center;box-shadow:0 6px 24px rgba(34,197,94,0.35)">Encontrar meu combo</a>
@@ -57,7 +57,7 @@ details[open] .faq-plus{transform:rotate(45deg)}
       <p style="margin:0;font-size:18px;line-height:1.6;color:#C3CEE6;max-width:520px;text-wrap:pretty">Organizar a operação, começar no guiamento ou vender novos destinos? A Black Friday da Academia da Magia reúne quatro combos para quem quer avançar em um objetivo profissional específico. Escolha o seu e veja o que vem junto.</p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;padding-top:6px">
         <a href="#escolha-seu-combo" style="height:54px;padding:0 26px;border-radius:999px;background:#22C55E;color:#04210F;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;box-shadow:0 10px 36px rgba(34,197,94,0.4)">Encontrar meu combo <span aria-hidden="true">↓</span></a>
-        <a href="#combo-foco-total" style="height:54px;padding:0 24px;border-radius:999px;border:1px solid rgba(139,203,255,0.4);color:#F2F5FC;font-weight:500;font-size:16px;display:flex;align-items:center">Ver tudo que está incluso</a>
+        <a href="#combo-agencia-no-controle" style="height:54px;padding:0 24px;border-radius:999px;border:1px solid rgba(139,203,255,0.4);color:#F2F5FC;font-weight:500;font-size:16px;display:flex;align-items:center">Ver tudo que está incluso</a>
       </div>
     </div>
   </div>
@@ -294,22 +294,22 @@ const FAQ_PENDENTES = [
 ];
 
 const COMBOS = [
-  { key:'foco-total', anchor:'combo-foco-total', name:'Foco Total', need:'Organizar minha agência', summary:'Finanças, processos e planejamento em uma mesma oferta.',
+  { key:'foco-total', anchor:'combo-agencia-no-controle', name:'Agência no Controle', need:'Organizar minha agência', summary:'Finanças, processos e planejamento em uma mesma oferta.',
     accent:'#365CFF', tint:'#8BCBFF', ink:'#FFFFFF', glow:'rgba(54,92,255,0.22)', line:'rgba(54,92,255,0.45)',
     icon:'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20zM12 7a5 5 0 1 0 0 10a5 5 0 1 0 0-10zM12 11a1 1 0 1 0 0 2a1 1 0 1 0 0-2z',
     benefit:'Organize as finanças e os processos da sua agência e transforme seus planos em prioridades.',
-    copy:['Você tem ideias para a agência, mas o dia passa entre atender clientes, fechar vendas e resolver o que apareceu de última hora. O Foco Total reúne três produtos para entender os números do negócio, organizar o que se repete e decidir onde colocar sua energia nos próximos meses.'],
+    copy:['Você tem ideias para a agência, mas o dia passa entre atender clientes, fechar vendas e resolver o que apareceu de última hora. O Agência no Controle reúne três produtos para entender os números do negócio, organizar o que se repete e decidir onde colocar sua energia nos próximos meses.'],
     products:[
       {name:'Money’s', short:'Money’s', desc:'Ganhe clareza sobre as finanças da agência para tomar decisões com base nos números.'},
       {name:'Biblioteca de Playbooks', short:'Biblioteca de Playbooks', desc:'Consulte referências para estruturar processos e dar mais consistência à operação.'},
       {name:'Planejamento Estratégico', short:'Planejamento Estratégico', desc:'Transforme objetivos em prioridades e ações para a agência.'}],
     complement:'Use os números para entender seu ponto de partida, o planejamento para decidir o que vem primeiro e os playbooks para organizar a execução.',
     audience:'Donos de agência e agentes que querem organizar o negócio e ter mais clareza sobre o que fazer a seguir.',
-    cta:'Quero o Foco Total' },
-  { key:'nunca-mais', anchor:'combo-nunca-mais-eu-vou-dormir', name:'Nunca Mais Eu Vou Dormir', need:'Me preparar para guiar', summary:'Guiamento virtual, teoria do guiamento presencial e planejamento de parques.',
+    cta:'Quero a Agência no Controle' },
+  { key:'nunca-mais', anchor:'combo-formacao-especialista-em-orlando', name:'Formação Especialista em Orlando', need:'Me preparar para guiar', summary:'Guiamento virtual, teoria do guiamento presencial e planejamento de parques.',
     accent:'#7C4DFF', tint:'#C2AEFF', ink:'#FFFFFF', glow:'rgba(124,77,255,0.24)', line:'rgba(124,77,255,0.5)',
     icon:'M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z',
-    sub:'Guiamento virtual, guiamento presencial e planejamento de parques.',
+    sub:'Guia de Orlando (técnico), guiamento virtual e planejamento de parques.',
     photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Magic_Kingdom_-_Cinderella_Castle_panorama_-_by_mrkathika.jpg?width=1200', photoAlt:'Castelo da Cinderela no Magic Kingdom, Walt Disney World, Flórida', photoCaption:'Magic Kingdom · Walt Disney World, Flórida',
     copy:['Para quem sonha com parques até de olhos fechados, chegou a hora de se preparar para guiar.','Cada família chega ao parque com um ritmo, uma lista de prioridades e expectativas diferentes. Este combo reúne três produtos para você aprender a planejar esse dia, entender como funciona o acompanhamento remoto e estudar a teoria por trás da condução presencial de grupos em Orlando.'],
     products:[
@@ -318,8 +318,8 @@ const COMBOS = [
       {name:'Parqueamento', short:'Parqueamento', desc:'Aprenda a planejar dias de parque de acordo com o perfil, o ritmo e as prioridades do passageiro.'}],
     complement:'O planejamento orienta o dia de parque. Os conteúdos de guiamento ajudam você a entender como acompanhar o passageiro à distância e como funciona a condução presencial.',
     audience:'Quem quer começar ou se aprofundar no guiamento e agentes que desejam acompanhar melhor seus passageiros ou grupos. Prática presencial, viagem, ingressos e hospedagem não fazem parte da oferta.',
-    cta:'Quero me preparar para guiar' },
-  { key:'mestre', anchor:'combo-mestre-dos-destinos', name:'Mestre dos Destinos', need:'Vender novos destinos', summary:'Três formações sobre Paris, Califórnia e Orlando.',
+    cta:'Quero ser especialista em Orlando' },
+  { key:'mestre', anchor:'combo-mestre-dos-destinos', name:'Mestre dos Destinos', need:'Vender novos destinos', summary:'Três formações sobre Orlando, Califórnia e Paris.',
     accent:'#2DD4BF', tint:'#7EEBDC', ink:'#061022', glow:'rgba(45,212,191,0.18)', line:'rgba(45,212,191,0.45)',
     icon:'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20zM2 12h20M12 2c3 3 4 6.5 4 10s-1 7-4 10c-3-3-4-6.5-4-10s1-7 4-10z',
     benefit:'Amplie os destinos que você vende com três formações sobre Paris, Califórnia e Orlando.',
@@ -389,8 +389,8 @@ class Component extends DCLogic {
       { goal:'Ter materiais de consulta', c: by('kit'), what:'Uma planilha e um playbook para apoiar a rotina.' },
     ].map(r => ({ goal: r.goal, what: r.what, name: r.c.name, anchor: r.c.anchor, accent: r.c.accent, tint: r.c.tint }));
     const faq = [
-      { q:'Qual combo é para mim?', a:'Se o objetivo é organizar a agência, escolha o Foco Total. Para se preparar para guiar, veja o Nunca Mais Eu Vou Dormir. Para ampliar os destinos que você vende, veja o Mestre dos Destinos. Para ter materiais de consulta na rotina, veja o Kit Salva-Rotina.' },
-      { q:'O combo Nunca Mais Eu Vou Dormir inclui prática presencial em Orlando?', a:'A oferta inclui a etapa teórica online de Guias de Orlando, além de Guiamento Virtual e Parqueamento. Prática presencial, viagem, ingressos e hospedagem ficam fora da oferta.' },
+      { q:'Qual combo é para mim?', a:'Se o objetivo é organizar a agência, escolha o Agência no Controle. Para se tornar especialista em Orlando e se preparar para guiar, veja a Formação Especialista em Orlando. Para ampliar os destinos que você vende, veja o Mestre dos Destinos. Para ter materiais de consulta na rotina, veja o Kit Salva-Rotina.' },
+      { q:'A Formação Especialista em Orlando inclui prática presencial em Orlando?', a:'A oferta inclui a etapa teórica online de Guias de Orlando, além de Guiamento Virtual e Parqueamento. Prática presencial, viagem, ingressos e hospedagem ficam fora da oferta.' },
       ...FAQ_PENDENTES.filter(f => f.a),
     ];
     return {
